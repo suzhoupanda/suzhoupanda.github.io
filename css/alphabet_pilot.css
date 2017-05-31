@@ -1,0 +1,64 @@
+
+
+/* Provide padding for the top of the page so that content doesn't underlap the header */
+
+body{
+
+	padding-top: 5em;
+}
+
+
+.carousel{
+	margin-bottom: 2em;
+}
+
+.title{
+	margin-left: 1em;
+	margin-bottom: 1em;
+}
+
+
+.faq-title{
+	text-align: center;
+	margin-bottom: 1em;
+}
+
+.faq-container{
+	padding-left: 2em;
+	padding-right: 2em;
+}
+
+.media{
+	margin-bottom: 1.5em;
+}
+
+
+.enemy-cards{
+	padding: 5em;
+	}
+
+
+.enemy-cards .card-text{
+	font-size: 20px;
+}
+
+.enemy-cards img{
+	margin-top: 1em;
+	margin-left: auto;
+	margin-right: auto;
+	
+	width: 300px;
+	height: auto;
+
+}
+
+
+
+/* Provide a bottom margin for the cards so that they don't stack vertically; also, provide a minimum
+ inter-card, horizontal spacing so that adjacent cards don't appear to compacted together for samller device screen 
+ widths */
+
+.card{
+	margin-right: 1em;
+	margin-bottom: 3em;
+}

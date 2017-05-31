@@ -1,0 +1,227 @@
+/**
+Google Font API: Font Families;
+font-family: 'Cherry Swash', cursive;
+font-family: 'Josefin Slab', serif;
+font-family: 'News Cycle', sans-serif;
+
+**/
+
+
+/** General Settings**/
+*{
+	box-sizing: border-box;
+}
+
+a{
+	text-decoration: none;
+}
+
+
+.row{
+	margin-bottom:1em;
+}
+
+
+
+/** HEADER SETTINGS **/
+
+.header-box{
+	display: none;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width:100%;
+
+}
+
+.header-box img{
+	position:absolute;
+	top: 0;
+	left: 0;
+	width:100%;
+}
+
+
+
+/** FOOTER SETTINGS **/
+
+.footer-box{
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	height:5em;
+	background-color: #131742;
+
+	border-top-size: 5px;
+	border-top-style: solid;
+	border-top-color: #8C74A8;
+
+	padding-bottom: 2em;
+
+}
+
+.footer-wrapper{
+	position: relative;
+	width:100%;
+	height:100%;
+}
+
+.footer-box h2{
+	position: absolute;
+	color: #C19105;
+	font-family: 'Cherry Swash', cursive;
+	top:50%;
+	left: 3em;
+	font-size: 40px;
+	text-shadow: 1px 2px 1px #8C74A8;
+	transition: transform 1s;
+
+}
+
+.footer-box a{
+	position: absolute;
+	color: #C19105;
+	font-family: 'Cherry Swash', cursive;
+	top:50%;
+	left: -15em;
+	text-shadow: 1px 2px 1px #8C74A8;
+	font-size: 40px;
+	transition: transform 1s;
+}
+
+
+.footer-box:hover h2{
+	text-shadow: 2px 4px 2px blue;
+	transform: translateX(30em);
+}
+
+.footer-box:hover a{
+	transform: translateX(20em);
+}
+
+
+
+
+
+.main-wrapper{
+	border-bottom-size: 5px;
+	border-bottom-style: solid;
+	border-bottom-color: #8C74A8;
+
+}
+
+
+.secondary-wrapper{
+	width:100%;
+	height:100%;
+	background-image: url(../img/header_img2.png);
+	background-size: cover;
+
+}
+
+
+
+@media (max-width: 580px){
+	.footer-box a{
+		font-size: 25px;
+	}
+
+	.footer-box  h2{
+		font-size: 25px;
+	}
+
+}
+
+@media (min-width: 1080px){
+	.secondary-wrapper{
+		background-image: none;
+	}
+
+	.header-box{
+		display: block;
+	}
+
+	.footer-box h2{
+		left: 7em;
+	}
+
+	.footer-box:hover a{
+		transform: translateX(23em);
+	}
+}
+
+
+@media (max-width: 768px){
+	.footer-box:hover a{
+		transform: translateX(17em);
+	}
+}
+
+.main-wrapper img{
+	width: 10em;
+	height:auto;
+	transition: transform 0.2s;
+
+}
+
+/** Formatting for image containers  **/
+
+.img-box{
+	position: relative;
+	float:left;
+	text-align: center;
+	margin-bottom:4em;
+}
+
+
+
+
+
+/** Transitions Effects for each image container **/
+
+#img-box-1 img:hover{
+	transform: scale(1.2) rotate(30deg);
+}
+
+
+#img-box-2 img:hover{
+	transform: scale(1.4) translateX(10px);
+}
+
+
+#img-box-3 img:hover{
+	transform: scale(1.4) translateY(10px) skewX(10deg);
+}
+
+#img-box-4 img:hover{
+	transform: scale(1.2) rotate(30deg);
+}
+
+
+#img-box-5 img:hover{
+	transform: scale(1.2) translateY(4px);
+}
+
+
+#img-box-6 img:hover{
+	transform: translateY(10px) skewX(10deg);
+}
+
+#img-box-7 img:hover{
+	transform: rotate(30deg) scale(2);
+}
+
+
+#img-box-8 img:hover{
+	transform: scale(1.4) translateX(10px);
+}
+
+
+#img-box-9 img:hover{
+	transform: scale(1.4) skewX(10deg);
+}
+
+
+
+
