@@ -1,0 +1,92 @@
+/**
+font-family: 'Nunito', sans-serif;
+font-family: 'Crimson Text', serif;
+font-family: 'Dosis', sans-serif;
+
+font-family: 'Keania One', cursive;
+font-family: 'Khand', sans-serif;
+font-family: 'Shrikhand', cursive;
+font-family: 'Coiny', cursive;
+**/
+
+body{
+	padding-top: 5em;
+}
+
+
+.title{
+	margin-top: 1em;
+}
+
+#carousel-box img{
+	width: 500px;
+	height: 300px;
+}
+
+/** Features Section **/
+
+.media-body{
+	color:white;
+	font-family: 'Dosis', sans-serif;
+}
+
+/** FAQ SECTION **/
+
+#faq-section .card{
+	margin-bottom: 1em;
+	margin-top: 1em;
+}
+
+
+
+/** VIDEO PREVIEWS SECTION **/
+
+#video-container{
+
+	margin: auto;
+}
+
+
+#video-preview-title{
+	text-align: center;
+	font-family: 'Dosis', sans-serif;
+	
+	
+}
+
+video{
+
+	width: 90%;
+	height: auto;
+	margin: auto;
+	margin-bottom: 3em;
+	
+
+}
+
+/** ENEMY DESCRIPTIONS **/
+.media-list img{
+	width: 4em;
+	height: auto;
+}
+
+
+
+
+/** MEDIA QUERIES CORRESPONDING TO BOOTSTRAP RESPONSIVE BREAKPOINTSs **/
+
+/** Small devices (landscape phones, 576px and up) **/
+@media (min-width: 576px) {  }
+
+/** Medium devices (tablets, 768px and up) **/
+@media (min-width: 768px) {  }
+
+/** Large devices (desktops, 992px and up) **/
+@media (min-width: 992px) {  }
+
+/** Extra large devices (large desktops, 1200px and up) **/
+@media (min-width: 1200px) {  }
+
+
+
+
