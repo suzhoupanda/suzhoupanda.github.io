@@ -124,3 +124,17 @@ nav ul{
 	text-align: center;
 	margin: 0 auto;
 }
+
+.enemy-cards img{
+	width: 10em;
+	height: 10em;
+	text-align: center;
+	margin: 0 auto;
+}
+
+.enemy-cards .card-block{
+	width:17em;
+	height:22em;
+	margin-bottom:2em;
+	margin-right:2em;
+}
