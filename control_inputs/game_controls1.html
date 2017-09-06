@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Control Input: Tutorial 1</title>
+	<link rel="stylesheet" href="">
+	<link rel="stylesheet" type="text/css" href="./game_control.css">
+	<link href="https://fonts.googleapis.com/css?family=Anton|Cabin|Merriweather|Varela+Round" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+
+</head>
+
+<body>
+
+	<div class="main-wrapper">
+	
+		
+
+
+<h1 class="title">Game Control Inputs: Using On-Screen Controls /Part 1</h1>
+
+<div class="jumbotron">
+    <div class="container">
+	<img src="player_movement_screen.png" alt="">
+	<p class="img-caption"> There are many ways of implementing control inputs (i.e. Core Motion, gesture recognizers, touch handling, etc.).  In this tutorial, we explore one way of implementing control inputs - on-screen controls.  </p>
+</div>
+</div>
+
+<br>
+<br>
+
+
+<!-- <div class="subtitle-box">
+    <p class="img-caption"> There are many ways of implementing control inputs (i.e. Core Motion, gesture recognizers, touch handling, etc.).  In this tutorial, we explore one way of implementing control inputs - on-screen controls.  </p>
+</div> -->
+
+<div class="subwrapper">
+
+<p class="code-explanation"> In our Game Scene class, define a private function <span class="reserved">loadControls:position:</span>  This function will be called in the GameScene <span class="reserved">didMoveToView:</span> function, and will load the SKS file that contains our UI elements such as menu buttons and game controls.  Make sure to call move(toParent:) on the node obtained from the SKS file so that it is moved into the GameScene's node hierarchy. If you call <span class="reserved">addChile</span>, an compiler error will be thrown because the node still belongs in the SKS file's node hierarchy:</p>
+
+<pre>
+	<code>
+
+<span class="reserved">func</span> loadControls(atPosition position: CGPoint){
+        
+        <span class="comment">/** Load the control set **/</span>
+
+        <span class="reserved">guard let</span> user_interface = SKScene(fileNamed: "user_interface") else {
+            fatalError("Error: User Interface SKSCene file could not be found or failed to load")
+        }
+        
+        <span class="reserved">guard let</span> controlSet = user_interface.childNode(withName: "ControlSet_flatDark") else {
+            fatalError("Error: Control Buttons from user_interface SKScene file either could not be found or failed to load")
+        }
+ 
+        controlSet.position = position
+        controlSet.move(toParent: overlayNode)
+ 
+       <span class="comment">/** Load the control buttons **/</span>
+ 
+        <span class="reserved">guard let</span> leftButton = controlSet.childNode(withName: "left") as? SKSpriteNode, let rightButton = controlSet.childNode(withName: "right") as? SKSpriteNode, let upButton = controlSet.childNode(withName: "up") as? SKSpriteNode, let downButton = controlSet.childNode(withName: "down") as? SKSpriteNode else {
+            fatalError("Error: One of the control buttons either could not be found or failed to load")
+        }
+ 
+        self.leftButton = leftButton
+        self.rightButton = rightButton
+        self.upButton = upButton
+        self.downButton = downButton
+ 
+        buttonsAreLoaded = true
+        print("buttons successfully loaded!")
+
+    }
+	</code>
+</pre>
+		
+
+<p class="code-explanation"> Now that the control buttons have been added to the GameScene node hierarchy, we can begin to implement their touch handlers in the GameScene's <span class="reserved">touchesBegan</span> function.  The code snippet below is just a stub that we will finish by the end of the tutorial.  In our <span class="reserved">touchesBegan:</span> function below, we loop through all the nodes in the overlayNode (which we added previously in the <span class="reserved">didMoveToView</span>function, and use the node names for each individual control button (as defined in the SKS file) to implement logic specific to that button: </p>
+
+
+<pre>
+	<code>
+<span class="reserved">override func</span> touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+       
+        <span class="reserved">guard let</span> touch = touches.first else { return }
+        
+        <span class="reserved">let</span> overlayNodeLocation = touch.location(in: overlayNode)
+        
+        <span class="reserved">if</span> buttonsAreLoaded{
+
+            <span class="reserved">for</span> node <span class="reserved">in</span> self.overlayNode.nodes(at: overlayNodeLocation){
+          
+                    <span class="reserved">if</span> node.name == "up"{
+			<span class="comment">//Not yet implemented</span>
+                    }
+                    
+                    <span class="reserved">if</span> node.name == "down"{
+            <span class="comment">///Not yet implemented</span>
+
+                    }
+                    
+                    <span class="reserved">if</span> node.name == "right"{
+            <span class="comment">///Not yet implemented</span>
+
+                    }
+                    
+                    <span class="reserved">if</span> node.name == "left"{
+			<span class="comment">///Not yet implemented</span>
+                    }
+ 
+                }
+            }
+            
+      }
+	</code>
+</pre>
+
+	<p class="code-explanation"> Create a nested type in the player class to represent the orientation of the player.  In addition, the nested type will have convenience functions that allow us to get the orientation opposite of the player's current orientation, as well as the clockwise and counterclockwise orientations immediately adjacent to the player. These functions will come in handy when we want to determine the shortest angle by which the player should rotate to align to the new orientation.</p>
+
+	<pre><code>
+<span class="reserved">enum</span>  Orientation{
+        <span class="reserved">case</span> up,down,left,right
+        
+        <span class="reserved">func</span> getOppositeOrientation() -> Orientation{
+            <span class="reserved">switch</span> self {
+            <span class="reserved">case</span> .up:
+                <span class="reserved">return</span> .down
+            <span class="reserved">case</span> .down:
+                <span class="reserved">return</span> .up
+            <span class="reserved">case</span> .left:
+                <span class="reserved">return</span> .right
+            <span class="reserved">case</span> .right:
+                <span class="reserved">return</span> .left
+
+            }
+        }
+        
+        <span class="reserved">func</span> getAdjacentCounterClockwiseOrientation() -> Orientation{
+            <span class="reserved">switch</span> self {
+            <span class="reserved">case</span> .up:
+                <span class="reserved">return</span> .left
+            <span class="reserved">case</span> .down:
+                <span class="reserved">return</span> .right
+            <span class="reserved">case</span> .left:
+                <span class="reserved">return</span> .down
+            <span>case</span> .right:
+                <span class="reserved">return</span> .up
+                
+            }
+            
+        }
+        
+        <span class="reserved">func</span> getAdjacentClockwiseOrientation() -> Orientation{
+            <span class="reserved">swith</span> self {
+            <span class="reserved">case</span> .up:
+                <span class="reserved">return</span> .right
+            <span class="reserved">case</span> .down:
+                <span class="reserved">return</span> .left
+            <span class="reserved">case</span> .left:
+                <span class="reserved">return</span> .up
+            <span class="reserved">case</span> .right:
+                <span class="reserved">return</span> .down
+                
+            }
+            
+        }
+    }
+		</code></pre>
+
+
+<p class="code-explanation"> Now that our Orientation nested type is already to go, define public variable of Orientation type on the Player class. This variable will also include a property observer, so that whenever a new orientation is set for the player, an animation is run that rotates the player the smallest angle necessary to align with the new orientation. This property observer will make use of the helper functions defined in the Orientation enum, so that we can avoid having to write switch statement cases for each of the player's possible current orientations and nested switch statements for each of the possible previous orientations.  </p>
+
+
+<pre>
+	<code>
+<span class="reserved">var</span> currentOrientation: Orientation{
+        didSet{
+            
+            <span class="reserved">guard</span> oldValue != currentOrientation else { return }
+            
+            
+            <span class="reserved">var</span> angleOfRotaiton: Double = 0.00
+            
+            <span class="reserved">if</span> (oldValue == currentOrientation.getOppositeOrientation()){
+                angleOfRotaiton = Double.pi
+            } <span class="reserved">else if</span> (oldValue == currentOrientation.getAdjacentClockwiseOrientation()){
+                angleOfRotaiton = Double.pi/2
+            } <span class="reserved">else if</span> (oldValue == currentOrientation.getAdjacentCounterClockwiseOrientation()){
+                angleOfRotaiton = -Double.pi/2
+            }
+            
+            run(SKAction.rotate(byAngle: CGFloat(angleOfRotaiton), duration: 0.30))
+        }
+     
+     }
+	</code>
+</pre>
+
+
+<p class="code-explanation"> Remember to provide an initial value for the player orientation in the default initializer. We use .right to default initialize the player since the default texture for the player is right-facing: </p>
+
+
+<pre>
+	<code>
+<span class="reserved">override init</span>(texture: SKTexture?, color: UIColor, size: CGSize) {
+        
+        ... 
+
+	<u>self.currentOrientation = .right</u>
+        
+       	...
+        
+        super.init(texture: texture, color: color, size: size)
+        
+        ....
+        
+    }
+	</code>
+</pre>
+
+<p class="code-explanation"> In the player class, add a private variable for a computed property that will represent the unit vector corresponding to the player's current orientation.  This unit vector will make it easier to apply impulse and forces of varying magnitude, giving the user the option to increase and decrease the speed of player movement during gameplay.</p>
+
+	<pre><code>
+		
+<span class="reserved">private var</span> appliedUnitVector: CGVector{
+        
+        <span class="reserved">switch</span> currentOrientation {
+        <span class="reserved">case</span> .up:
+            <span class="reserved">return</span> CGVector(dx: 0.00, dy: 1.00)
+        <span class="reserved">case</span> .down:
+            <span class="reserved">return</span> CGVector(dx: 0.00, dy: -1.00)
+        <span class="reserved">case</span> .left:
+            <span class="reserved">return</span> CGVector(dx: -1.00, dy: 0.0)
+        <span class="reserved">case</span> .right:
+            <span class="reserved">return</span> CGVector(dx: 1.00, dy: 0.0)
+        }
+       
+    }
+	</code></pre>
+
+<p class="code-explanation"> Now, in the player class, add a convenience function that takes parameter for the magnitude of the force that we want to apply for player movements.  This function will be called in our game scene when the user taps the control buttons corresponding to different player orientations.  The force will be varied with a control separate from that of the directional controls.</p>
+
+<code><pre>
+<span class="reserved">func</span> applyMovementImpulse(withMagnitudeOf forceUnits: CGFloat){
+        
+        <span class="reserved">let</span> dx = self.appliedUnitVector.dx*forceUnits
+        <span class="reserved">let</span> dy = self.appliedUnitVector.dy*forceUnits
+        
+        self.physicsBody?.applyImpulse(CGVector(dx: dx, dy: dy))
+    }
+</code></pre>
+
+
+<p class="code-explanation"> Now, back in our GameScene class, return to the touchesBegan function.  For each different control button (i.e. left, right, up, and down), we'll go ahead and set the orientation of the player appropriately, as well as call the applyMovementImpulse function so that the player will move in a direction consistent with his alignment.  Also, make sure to set the linear damping of the player's physics body to around 1.00 or more to give the sense that the player is walking forward in short bursts, otherwise the player will appear to be sliding like a pinball. </p>
+
+
+
+
+<pre>
+	<code>
+<span class="reserved">override func</span> touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+       
+        <span class="reserved">guard let</span> touch = touches.first else { return }
+        
+        <span class="reserved">let</span> overlayNodeLocation = touch.location(in: overlayNode)
+        
+        <span class="reserved">if</span> buttonsAreLoaded{
+
+            <span class="reserved">for</span> node <span class="reserved">in</span> self.overlayNode.nodes(at: overlayNodeLocation){
+          
+                    <span class="reserved">if</span> node.name == "up"{
+                     <u>player.currentOrientation = .up</u>
+                     <u>player.applyMovementImpulse(withMagnitudeOf: 1.5)</u>
+
+                    }
+                    
+                    <span class="reserved">if</span> node.name == "down"{
+                   <u>player.currentOrientation = .down</u>
+                   <u>player.applyMovementImpulse(withMagnitudeOf: 1.5)</u>
+
+                    }
+                    
+                    <span class="reserved">if</span> node.name == "right"{
+                    <u>player.currentOrientation = .right</u>
+                    <u>player.applyMovementImpulse(withMagnitudeOf: 1.5)</u>
+
+                    }
+                    
+                    <span>if</span> node.name == "left"{
+                        <u>player.currentOrientation = .left</u>
+                        <u>player.applyMovementImpulse(withMagnitudeOf: 1.5)</u>
+
+                    }
+ 
+                }
+            }
+            
+      }
+        
+		
+	</pre>
+</code>
+
+
+<p class="code-explanation"> And voila! Our player should now be moving just the way we like when tested in the simulator: </p>
+
+
+<video controls>
+  <source src="player_movement.mp4" type="video/mp4">
+		Your browser does not support the video tag.
+</video>
+
+
+	</div>
+
+
+	</div>
+	
+    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+
+</body>
+
+
+</html>
