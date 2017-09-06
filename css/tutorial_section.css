@@ -1,0 +1,40 @@
+
+
+/**
+font-family: 'Nunito', sans-serif;
+font-family: 'Crimson Text', serif;
+font-family: 'Dosis', sans-serif;
+
+font-family: 'Keania One', cursive;
+font-family: 'Khand', sans-serif;
+font-family: 'Shrikhand', cursive;
+font-family: 'Coiny', cursive;
+**/
+
+
+.list-group{
+		background-color:  #99ff99;
+
+}
+
+.section-list{
+
+	margin-bottom: 3em;
+	background-color:  #99ff99;
+
+}
+
+h5{
+	font-family: 'Crimson Text', serif;
+
+}
+
+p{
+	font-family: 'Crimson Text', serif;
+
+}
+
+small{
+font-family: 'Coiny', cursive;
+
+}
