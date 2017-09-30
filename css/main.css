@@ -26,6 +26,10 @@ nav{
 		width:20%;
 	}
 
+.container{
+	float: left;
+	width: 80%;
+}
 
 
 .adcontainer{
