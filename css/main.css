@@ -20,6 +20,16 @@ nav{
 }
 
 
+.master-container{
+	width: 80%;
+	float: left;
+}
+
+.sidebar{
+	width:20%;
+	float:right;
+}
+
 .container h1{
 	text-align: center;
 	font-family: 'Coiny', cursive;
