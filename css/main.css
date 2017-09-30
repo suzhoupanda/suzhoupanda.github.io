@@ -120,18 +120,7 @@ nav{
 
 	}
 
-	.sidebar{
-		display: visible;
-		float: right;
-		width:20%;
-	}
-
 	
-
-	.container{
-	float: left;
-	width: 80%;
-}
 
 
  }
@@ -141,16 +130,6 @@ nav{
 
 
 
-.sidebar{
-		display: visible;
-		float: right;
-		width:20%;
-	}
-
-	.container{
-	float: left;
-	width: 80%;
-}
  }
 
 /** Extra large devices (large desktops, 1200px and up) **/
@@ -158,14 +137,5 @@ nav{
 
 
 
-.sidebar{
-		display: visible;
-		float: right;
-		width:20%;
-	}
 
-	.container{
-	float: left;
-	width: 80%;
-}
  }
