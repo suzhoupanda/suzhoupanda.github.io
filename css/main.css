@@ -18,9 +18,13 @@ nav{
 	font-family: 'Coiny', cursive;
 }
 
+
+
 .sidebar{
-	display: none;
-}
+		display: visible;
+		float: right;
+		width:20%;
+	}
 
 
 
