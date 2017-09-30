@@ -19,14 +19,10 @@ nav{
 }
 
 .sidebar{
-	float: right;
-	width:20%;
+	display: none;
 }
 
-.container{
-	float: left;
-	width: 80%;
-}
+
 
 .adcontainer{
 	padding-bottom: 1em;
@@ -96,6 +92,11 @@ nav{
 		margin-bottom: 1em;
 	}
 
+	.adcontainer{
+		padding-bottom: 1em;
+		margin-bottom: 2em;
+	}
+
  }
 
 /** Medium devices (tablets, 768px and up) **/
@@ -111,14 +112,58 @@ nav{
 
 	}
 
+	.sidebar{
+		display: visible;
+		float: right;
+		width:20%;
+	}
+
+	.adcontainer{
+		display: none
+	}
+
+	.container{
+	float: left;
+	width: 80%;
+}
+
+
  }
 
 /** Large devices (desktops, 992px and up) **/
 @media (min-width: 992px) { 
 
+.adcontainer{
+		display: none
+	}
+
+.sidebar{
+		display: visible;
+		float: right;
+		width:20%;
+	}
+
+	.container{
+	float: left;
+	width: 80%;
+}
  }
 
 /** Extra large devices (large desktops, 1200px and up) **/
 @media (min-width: 1200px) { 
 
+.adcontainer{
+		display: none
+	}
+
+.sidebar{
+		display: visible;
+		float: right;
+		width:20%;
+	}
+
+	.container{
+	float: left;
+	width: 80%;
+}
  }
