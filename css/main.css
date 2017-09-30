@@ -118,9 +118,7 @@ nav{
 		width:20%;
 	}
 
-	.adcontainer{
-		display: none
-	}
+	
 
 	.container{
 	float: left;
@@ -133,9 +131,7 @@ nav{
 /** Large devices (desktops, 992px and up) **/
 @media (min-width: 992px) { 
 
-.adcontainer{
-		display: none
-	}
+
 
 .sidebar{
 		display: visible;
@@ -152,9 +148,7 @@ nav{
 /** Extra large devices (large desktops, 1200px and up) **/
 @media (min-width: 1200px) { 
 
-.adcontainer{
-		display: none
-	}
+
 
 .sidebar{
 		display: visible;
