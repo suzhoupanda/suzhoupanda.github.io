@@ -7,6 +7,16 @@ body{
 	padding-top: 5em;
 }
 
+footer{
+	margin-top: 2em;
+}
+
+
+.adcontainer{
+	width: 80%;
+	margin-top: 2em;
+	margin-bottom: 2em;
+}
 
 .carousel{
 	margin-bottom: 2em;
