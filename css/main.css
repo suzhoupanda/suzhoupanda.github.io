@@ -21,13 +21,17 @@ nav{
 
 
 .adcontainer{
+	display: block;
 	width: 100%;
-	
+	height: 5em;
+
+
 }
 
 .sidebar{
 	float: right;
-	width: 20%;
+	width: 15%;
+	margin-left: 10px;
 }
 
 .container{
