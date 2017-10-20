@@ -18,7 +18,11 @@ nav{
 	font-family: 'Coiny', cursive;
 }
 
+#websites .thumbnail img{
+	
+	width: 90%;
 
+}
 
 .sidebar{
 		display: visible;
@@ -70,11 +74,7 @@ nav{
 
 }
 	
-#websites .thumbnail img{
-	
-	width: 90%;
 
-}
 
 .thumbnail h3{
 	font-family: 'Shrikhand', cursive;
