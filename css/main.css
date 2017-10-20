@@ -18,6 +18,10 @@ nav{
 	font-family: 'Coiny', cursive;
 }
 
+.thumbnail p{
+		font-size: 12px;
+	}
+
 .website-thumbnail-image{
 	
 	width: 90%;
