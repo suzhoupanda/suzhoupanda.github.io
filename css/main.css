@@ -18,7 +18,7 @@ nav{
 	font-family: 'Coiny', cursive;
 }
 
-#websites .thumbnail img{
+.website-thumbnail-image{
 	
 	width: 90%;
 
@@ -114,8 +114,9 @@ nav{
  }
 
 
- #appicon-caption{
-		font-size: 15px;
+.brand-text{
+
+			font-size: 15px;
 	}
 
 
@@ -132,11 +133,11 @@ nav{
 
 	}
 
-	#appicon-caption{
+.brand-text{
 		font-size: 20px;
 	}
 
-	#websites .thumbnail img{
+	.website-thumbnail-image{
 	
 	width: 80%;
 
@@ -148,7 +149,7 @@ nav{
 /** Large devices (desktops, 992px and up) **/
 @media (min-width: 992px) { 
 
-	#appicon-caption{
+.brand-text{
 		font-size: 25px;
 	}
 
