@@ -96,6 +96,12 @@ nav{
 /** MEDIA QUERIES (BASED ON BOOTSTRAP BREAKPOINTS) **/ 
 
 
+@media (min-width: 300px){
+	.thumbnail p{
+		font-size: 12px;
+	}
+}
+
 /** Small devices (landscape phones, 576px and up) **/
 @media (min-width: 576px) { 
 
