@@ -69,7 +69,12 @@ nav{
 	margin-bottom: 0.5em;
 
 }
+	
+#websites .thumbnail img{
+	
+	width: 90%;
 
+}
 
 .thumbnail h3{
 	font-family: 'Shrikhand', cursive;
@@ -83,6 +88,7 @@ nav{
 
 
 /** MEDIA QUERIES (BASED ON BOOTSTRAP BREAKPOINTS) **/ 
+
 
 /** Small devices (landscape phones, 576px and up) **/
 @media (min-width: 576px) { 
@@ -107,6 +113,12 @@ nav{
 
  }
 
+
+ #appicon-caption{
+		font-size: 15px;
+	}
+
+
 /** Medium devices (tablets, 768px and up) **/
 @media (min-width: 768px) { 
 
@@ -120,7 +132,15 @@ nav{
 
 	}
 
+	#appicon-caption{
+		font-size: 20px;
+	}
+
+	#websites .thumbnail img{
 	
+	width: 80%;
+
+}
 
 
  }
@@ -128,13 +148,15 @@ nav{
 /** Large devices (desktops, 992px and up) **/
 @media (min-width: 992px) { 
 
+	#appicon-caption{
+		font-size: 25px;
+	}
 
 
  }
 
 /** Extra large devices (large desktops, 1200px and up) **/
 @media (min-width: 1200px) { 
-
 
 
 
