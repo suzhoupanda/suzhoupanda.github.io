@@ -121,6 +121,41 @@ h5{
 }
 
 
+.attribution-cards img{
+
+	margin-top: 1em;
+	margin-left: auto;
+	margin-right: auto;
+	
+
+}
+
+
+#attribution-title{
+	text-align: center;
+	margin-bottom: 1em;
+}
+
+#silverbullet{
+	width: 20px;
+	height: auto;
+}
+
+#ricebowl{
+width: 50px;
+	height: auto;
+}
+
+#redenvelope{
+width: 50px;
+	height: auto;
+}
+
+#gun{
+
+	width: 50px;
+	height: auto;
+}
 
 /* Provide a bottom margin for the cards so that they don't stack vertically; also, provide a minimum
  inter-card, horizontal spacing so that adjacent cards don't appear to compacted together for samller device screen 
