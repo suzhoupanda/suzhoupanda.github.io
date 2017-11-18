@@ -132,7 +132,7 @@
       <img class="d-flex mr-3" src="./img/accessory_ui_elements/blue_boxCheckmark@2x.png" alt="Generic placeholder image">
         <div class="media-body">
         <h5 class="mt-0">Choose Plane</h5>
-        Choose from 3 different biplanes: yellow, red, and blue.
+        Choose from 3 different biplanes: yellow, red, and blue.  Each plane is moved by using swipe gestures.  Swipe left or right to roll left or right, respectively.  Swipe up or down to pitch up or down, respectively.
         </div>
       </div>
 
@@ -141,7 +141,7 @@
       <img class="d-flex mr-3" src="./img/accessory_ui_elements/blue_boxCheckmark@2x.png" alt="Generic placeholder image">
         <div class="media-body">
         <h5 class="mt-0">Choose Difficulty Level</h5>
-        Gam
+        Adjust the difficulty level by choosing from Easy, Medium, or Hard options.  Harder levels requires the player to spell longer and more complicated words, whereas simpler words, conversely, often use shorter words as the target word for each level.
         </div>
       </div>
 
@@ -150,7 +150,7 @@
       <img class="d-flex mr-3" src="./img/accessory_ui_elements/blue_boxCheckmark@2x.png" alt="Generic placeholder image">
         <div class="media-body">
         <h5 class="mt-0">Choose Enemies</h5>
-        Game sessions can be saved at any time in the course of gameplay.  If your player is on the verge of losing yet very closing to reaching the endpoint, no need to despair! Save your game, and you can pick up from where you left off to ensure that your hard work in avoiding so many obstacles wasn't in vain. All information related to game state is saved in a database located in your app.
+        Choose different level tracks based on the enemies spawned during gameplay.  Spacecraft will spawn randomly and fly towards the player as well as shoot missiles targeting the player.  Fireballs, spikeballs, and alien heads will likewise spawn from random locations. 
         </div>
       </div>
 
@@ -194,8 +194,8 @@
   				</div>
   			<div class="card-block">
     			<blockquote class="card-blockquote">
-      			<p>When the total coin value exceeds 20 points, an additional life is earned, as indicated in the life meter.   A full health point corresponds to one-half of a heart, while 2 health points correspond to a single heart in the health meter.</p>
-      			<footer>Coins and Collectibles<cite title="Source Title">Help Topics</cite></footer>
+      			<p>Harder levels require the user to spell larger words, whereas shorter levels require the user to spell simpler words, often as short as 3 letters.</p>
+      			<footer>Level Difficulty<cite title="Source Title">Help Topics</cite></footer>
     			</blockquote>
   				</div>
 		  </div>
@@ -206,8 +206,8 @@
           </div>
         <div class="card-block">
           <blockquote class="card-blockquote">
-            <p>Gold coins are worth 5 points, silvers coins worth 3 points, and bronze coins worth 2 points. Once 20 points are earned, the player health level is increased by 1 point, and the accumulated coin value is reset to zero.</p>
-            <footer>Coins and Collectibles <cite title="Source Title">Help Topics</cite></footer>
+            <p>As the game progresses, more enemies are spawned, and the time between successive spawn events becomes much short.  Likewise, the total number of spawn events and the time between spawn events is shorter, giving the user a shorter time to spell the target word.</p>
+            <footer>Game Difficulty <cite title="Source Title">Help Topics</cite></footer>
           </blockquote>
           </div>
       </div>
@@ -218,7 +218,7 @@
           </div>
         <div class="card-block">
           <blockquote class="card-blockquote">
-            <p>Some enemies can be static (e.g. harmful barriers such as spikes, ice water, etc). Some enemies (e.g. aliens) will chase the player and follow the player's path.  Other enemies will perform randomized movements and actions but not necessarily chase the player.  In addition, some enemies only become active when they detect the player within close proximity. </p>
+            <p>A series of enemy encounters is generated from a linked list, which in turn is generated dynamically using random values for the spawning intervals and the number of enemies spawned per encounter. </p>
             <footer>Enemies <cite title="Source Title">Help Topics</cite></footer>
           </blockquote>
           </div>
@@ -231,8 +231,8 @@
           </div>
         <div class="card-block">
           <blockquote class="card-blockquote">
-            <p>No, enemies can only be avoided through skillful maneuvering of the player, though some enemies be damaged by contact with the player. </p>
-            <footer>Enemies <cite title="Source Title">Help Topics</cite></footer>
+            <p>In order to spell a word, the user must fly through the letter rings whose letter corresponds to the letters in the target word.  The plane must fly through letter rings in the order in which letters occur in the target word or else the words won't be spelled.</p>
+            <footer>Letter Rings <cite title="Source Title">Help Topics</cite></footer>
           </blockquote>
           </div>
       </div>
@@ -247,19 +247,19 @@
           </div>
         <div class="card-block">
           <blockquote class="card-blockquote">
-            <p>No, contact with any enemy results in the same amount of damage to the player. </p>
-            <footer>Enemies <cite title="Source Title">Help Topics</cite></footer>
+            <p>The player loses when health level falls to zero or when the total number of encounters for a given series of encounters, as determined by the number nodes in a linked list, runs its course.   </p>
+            <footer>Game Loss Condition <cite title="Source Title">Help Topics</cite></footer>
           </blockquote>
           </div>
       </div>
 
  <div class="card">
         <div class="card-header">
-           When is a player considered to have lost the game?
+           When is a player considered to have won the game?
           </div>
         <div class="card-block">
           <blockquote class="card-blockquote">
-            <p>When the player reaches the letter at the end of the scene, a level is considered completed. </p>
+            <p>The playe will complete a level when the target word for a given level is spelled in completion, which means the player's plane has passed through all the letter rings whose letters correspond to the letters in the target word in the order in which these letters occur in the target word.</p>
             <footer>Game Rules <cite title="Source Title">Help Topics</cite></footer>
           </blockquote>
           </div>
@@ -284,7 +284,7 @@
           </div>
         <div class="card-block">
           <blockquote class="card-blockquote">
-            <p>The player moves vertically by tilting the phone away from or towards the user.  The player's horizontal speed can be adjusted by tapping to the right or left of the player.  The player can move in the forward direction or the reverse direction, but propeller speed only changes for movement in the forward direction. </p>
+            <p>The player is moved via swipe gestures. Swiping left or right causes the biplane to roll left or right, respectively, while swiping up or down causes the biplane to pitch up or down respectively. </p>
             <footer>Player Movement <cite title="Source Title">Help Topics</cite></footer>
           </blockquote>
           </div>
@@ -301,7 +301,7 @@
           </div>
         <div class="card-block">
           <blockquote class="card-blockquote">
-            <p>The player's starting health is always set to 8. </p>
+            <p>The player's starting health is set to 6 and can be determined by checking the number of hearts in the HUD display at the top of the screen. </p>
             <footer>Player Movement <cite title="Source Title">Help Topics</cite></footer>
           </blockquote>
           </div>
@@ -543,8 +543,8 @@
    					 <img class="card-img-top" src="./img/SpikeBall.png" width="90" height="120" alt="Card image cap">
     				<div class="card-block">
       				<h4 class="card-title">Spikeballs</h4>
-     				 <p class="card-text">This deadly critter paces back and forth, only to jump and strike unsuspecting planes when they least expect it.  Try not to fly to close to Spikeman at the wrong moment.</p>
-    				  <p class="card-text"><small class="text-muted">Appears in several levels; invulnerable</small></p>
+     				 <p class="card-text">Spikeballs turn and rotate while moving towards the player.  Be careful to avoid contact with the spikes, which vary in number and arrangement.</p>
+    				  <p class="card-text"><small class="text-muted">Can be selected in game optinos menu</small></p>
     				</div>
   					</div>
 
@@ -552,8 +552,8 @@
    					 <img class="card-img-top" src="./img/FireBall.png" width="90" height="120" alt="Card image cap">
    					 <div class="card-block">
      				 <h4 class="card-title">Fireballs/Meteors</h4>
-     				 <p class="card-text">This fiendish foes moves along unpredictable paths at regular intervals and will try to keep you from reaching your final goal.  Only the most skilled pilots dare attempt to navigate past him.</p>
-     				 <p class="card-text"><small class="text-muted">Appears frequently in multiple levels; invulnerable</small></p>
+     				 <p class="card-text">Fire balls spawn randomly in the skies ahead and appraoch the player biplane at rapid speeds, blazing a firy trail in their wake.</p>
+     				 <p class="card-text"><small class="text-muted">Can be selected in game optinos menu</small></p>
    					 </div>
   				</div>
 
@@ -561,8 +561,8 @@
     				<img class="card-img-top" src="./img/AlienHead.png" width="90" height="120" alt="Card image cap">
    					 <div class="card-block">
      				 <h4 class="card-title">Alien Heads</h4>
-    				  <p class="card-text">This evil enemy will not cease to follow and pursue you if you get too close.  Once he's on your tail pursuing you, getting away from him can be a huge problem to say the least.</p>
-    				  <p class="card-text"><small class="text-muted">Appears in limited number of game levels</small></p>
+    				  <p class="card-text">This critters have deadly spikes which are constantly oriented towards the player.  The player must be carefuly to navigate away from the deadly spike while flying ahead.</p>
+    				  <p class="card-text"><small class="text-muted">Can be selected in game optinos menu</small></p>
    					 </div>
   					</div>
 
@@ -570,8 +570,8 @@
             <img class="card-img-top" src="./img/AlienCraft.png" width="90" height="120" alt="Card image cap">
              <div class="card-block">
              <h4 class="card-title">Alien SpaceCraft</h4>
-              <p class="card-text">This deadly weapon fires as soon as it detects you cross its target path.  Sometimes, many of these firing foes can be array above and below, left and right, making it difficult to maneuver past them without a scratch.</p>
-              <p class="card-text"><small class="text-muted">Appears in limited number of game levels</small></p>
+              <p class="card-text">Alien ships fly on a trajectory towards the player while firing missiles at the same time.  The player must avoid contacting the alien ships as well as being hit by their missiles.</p>
+              <p class="card-text"><small class="text-muted">Can be selected in game optinos menu</small></p>
              </div>
             </div>
 
