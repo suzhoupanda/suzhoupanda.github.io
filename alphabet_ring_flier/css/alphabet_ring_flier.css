@@ -1,0 +1,138 @@
+
+
+/* Provide padding for the top of the page so that content doesn't underlap the header
+
+
+font-family: 'Spectral SC', serif;
+font-family: 'Vollkorn SC', serif;
+font-family: 'Raleway', sans-serif;
+font-family: 'Merriweather', serif;
+font-family: 'Lora', serif;
+ */
+
+body{
+
+	padding-top: 5em;
+	background-color: #8b0000;
+	color: #ffdab9;
+	font-family: 'Lora', serif;
+
+}
+
+#appicon-caption{
+	color: #31698a;
+	font-family: 'Spectral SC', serif;
+
+}
+
+.navbar-option{
+	color: #31698a;
+	font-family: 'Vollkorn SC', serif;
+
+}
+
+h1{
+
+	font-family: 'Spectral SC', serif;
+
+   color: #ffdab9;
+
+}
+
+h2{
+	color: #ffdab9;
+	font-family: 'Vollkorn SC', serif;
+
+
+
+}
+
+
+footer{
+	margin-top: 2em;
+}
+
+
+.adcontainer{
+	width: 80%;
+	margin-top: 2em;
+	margin-bottom: 2em;
+}
+
+.carousel{
+	margin-bottom: 2em;
+}
+
+#carousel-box img{
+	height: 30em;
+	width: auto;
+}
+
+.title{
+	margin-left: 1em;
+	margin-bottom: 1em;
+}
+
+
+.faq-title{
+	text-align: center;
+	margin-bottom: 1em;
+}
+
+.faq-container{
+	padding-left: 2em;
+	padding-right: 2em;
+}
+
+.media{
+	margin-bottom: 1.5em;
+}
+
+.card-header{
+	background-color: #ffc3a0;
+	color: #31698a;
+
+
+}
+
+.card{
+	background-color: #ffc3a0;
+	color: #31698a;
+
+}
+
+.card img{
+	margin-left: 2em;
+	width: 20em;
+	height: auto;
+}
+
+.enemy-cards{
+	padding: 5em;
+	}
+
+
+.enemy-cards .card-text{
+	font-size: 20px;
+}
+
+.enemy-cards img{
+	margin-top: 1em;
+	margin-left: auto;
+	margin-right: auto;
+	
+	width: 300px;
+	height: auto;
+
+}
+
+
+
+/* Provide a bottom margin for the cards so that they don't stack vertically; also, provide a minimum
+ inter-card, horizontal spacing so that adjacent cards don't appear to compacted together for samller device screen 
+ widths */
+
+.card{
+	margin-right: 1em;
+	margin-bottom: 3em;
+}
