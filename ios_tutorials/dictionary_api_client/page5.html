@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title></title>
+	<link rel="stylesheet" href="">
+
+	
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Crimson+Text|Dosis|Nunito" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Coiny|Keania+One|Khand|Shrikhand" rel="stylesheet">
+		<link rel="stylesheet" href="./css/index.css">
+
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+      (adsbygoogle = window.adsbygoogle || []).push({
+       google_ad_client: "ca-pub-3595969991114166",
+       enable_page_level_ads: true
+     });
+  </script>
+
+</head>
+
+<body>
+
+
+  <!-- BEGIN  NAVIGATION BAR -->
+ <nav class="navbar navbar-toggleable-md navbar-light fixed-top " style="background-color: #7fffd4;">
+    
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <a class="navbar-brand text-warning" href="#"><img src="../../img/panda.png" alt="" id="app-icon-navbar"/ width="40px" height="30px"> <span class="brand-text" id="appicon-caption">iOS Panda Developers</span></a>
+
+  
+
+  <div class="collapse navbar-collapse" id="navbarNavDropdown">
+    <ul class="navbar-nav">
+      
+       <li class="nav-item">
+        <a class="nav-link" href="#"> <span class="sr-only">(current)</span></a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" href="../../index.html">Homepage</a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" href="../../swift_tutorials/index.html">Swift Tutorials</a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" href="../index.html">iOS Tutorials</a>
+      </li>
+  
+
+    
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Additional Information
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" href="#footer">Other Information</a>
+          <a class="dropdown-item" href="#footer">Developer Contact Info</a>
+        </div>
+        </li>
+      </ul>
+      </div>
+  </nav>
+
+
+  <!-- END  NAVIGATION BAR -->
+
+<div class="container">
+
+<p>Now that we have a wrapper struct for all the data needed to construct the url for our API request as well as the URL request object itself, we can proceed develop an API client class that will interact with the API REST endpoint.  This class will be implemented as a singleton, and it will have a variable for a delegate that conforms to the OxfordDictionaryAPIDelegate protocol defined previously.  The singleton will also act as a wrapper for URLSession's sharedSession singleton.  That said, let's begin by defining our class as follows below: </p>
+
+<div class="code-wrapper">
+<pre>
+    <span class="keyword">class</span> OxfordAPIClient: OxfordDictionaryAPIDelegate{
+    
+    <span class="keyword">static let</span> sharedClient = OxfordAPIClient()
+    
+    /** Instance variables **/
+    
+    <span class="keyword">private var</span> urlSession: URLSession!
+    <span class="keyword">private var</span> delegate: OxfordDictionaryAPIDelegate?
+    
+    <span class="keyword">private init</span>(){
+        urlSession = URLSession.shared
+        delegate = self
+    }
+    
+    <span class="keyword">func</span> setOxfordDictionaryAPIClientDelegate(with apiDelegate: OxfordDictionaryAPIDelegate){
+        
+        self.delegate = apiDelegate
+        
+    }
+    
+    <span class="keyword">func</span> resetDefaultDelegate(){
+        self.delegate = self
+    }
+
+}
+</pre>
+</div>
+
+<p>So far, we have our sharedClient singleton as well as getter/setter functions for the delegate.  In order for the singleton to conform with the OxfordDictionaryAPIDelegateProtocol, we define an extension for the OxfordAPIClient which will contain the delegate methods that we have to implement: </p>
+
+
+<div class="code-wrapper">
+<pre>
+    
+    //MARK: ********* Conformance to DictionaryAPIClient protocol methods
+
+<span class="keyword">extension</span> OxfordAPIClient{
+    
+    /** Unable to establish a connection with the server **/
+    
+    <span class="keyword">internal func</span> didFailToConnectToEndpoint(withError error: Error) {
+        
+        print("Error occurred while attempting to connect to the server: \(error.localizedDescription)")
+        
+        
+    }
+    
+    /** Proper credentials are provided, the API request can be authenticated; an HTTP Response is received but no data is provided **/
+    
+    
+    <span class="keyword">internal func</span> didFailToGetJSONData(withHTTPResponse httpResponse: HTTPURLResponse){
+        print("Unable to get JSON data with http status code: \(httpResponse.statusCode)")
+        showOxfordStatusCodeMessage(forHTTPResponse: httpResponse)
+        
+        
+        
+    }
+    
+    /** Proper credentials are provided, and the API request is fully authenticated; an HTTP Response is received and the data is provided by the raw data could not be parsed into a JSON object **/
+    
+    <span class="keyword">internal func</span> didFailToSerializeJSONData(withHTTPResponse httpResponse: HTTPURLResponse){
+        
+        print("Unable to serialize the data into a json response, http status code: \(httpResponse.statusCode)")
+        showOxfordStatusCodeMessage(forHTTPResponse: httpResponse)
+        
+    }
+    
+    
+    
+    /** If erroneous credentials are provided, the API request can't be authenticated; an HTTP Response is received but no data is provided **/
+    
+    i<span class="keyword">internal func</span> didFinishReceivingHTTPResponse(withHTTPResponse httpResponse: HTTPURLResponse){
+        
+        print("HTTP response received with status code: \(httpResponse.statusCode)")
+        showOxfordStatusCodeMessage(forHTTPResponse: httpResponse)
+    }
+    
+    /** Proper credentials are provided, and the API request is fully authenticated; an HTTP Response is received and serialized JSON data is provided **/
+    
+    <span class="keyword">internal func</span> didFinishReceivingJSONData(withJSONResponse jsonResponse: JSONResponse, withHTTPResponse httpResponse: HTTPURLResponse) {
+        
+        print("JSON response received, http status code: \(httpResponse.statusCode)")
+        showOxfordStatusCodeMessage(forHTTPResponse: httpResponse)
+        
+        
+        print("JSON data received as follows:")
+        print(jsonResponse)
+    }
+    
+    <span class="keyword">func</span> showOxfordStatusCodeMessage(forHTTPResponse httpResponse: HTTPURLResponse){
+        
+        if let oxfordStatusCode = OxfordHTTPStatusCode(rawValue: httpResponse.statusCode){
+            let statusCodeMessage = oxfordStatusCode.statusCodeMessage()
+            print("Status Code Message: \(statusCodeMessage)")
+        }
+        
+        
+    }
+}
+</pre>
+</div>
+
+
+<p>As you can see, the singleton's implementation of these delegate methods is very minimal, logging the JSON responses, error messages, and HTTP status codes to the console.  However, to provide more information for debugging purposes, we define a function showOxfordStatusCodeMessage(forHTTPResponse httpResponse: HTTPURLResponse) that will provide more detail information for the particular HTTP status code received from the server. </p>
+
+
+
+
+<p>The primary responsibility for this API client will be to interact with REST API endpoint, so we define a method called startDataTask(withURLRequest: URLRequest) that will act as a wrapper for the URL shared session's singleton method startTask(with:completionHandler), whose completion handler processes input parameters of type NSData, URLResponse, and NSError.  The wrapper function allows us to recast the URLResponse to an HTTPURLResponse, as well as to serialize the data into a JSON object.  THe JSON object, HTTP status code obtained from the HTTPURLResponse, and the error objects are then passed to different delegate methods based on how the server responds to our API request. For example, via our delegate method, we can deal with a situation where a HTTP status code of 200 is obtained but where no data is returned from the server, or even the case where the data is provided by the server but fails to be parsed successfully for whatever reason.   The implementation for this method is shown below: </p>
+
+<div class="code-wrapper">
+<pre>
+    /** Wrapper function for executing aynchronous download of JSON data from Oxford Dictionary API **/
+    
+    <span class="keyword">private func</span> startDataTask(withURLRequest request: URLRequest){
+        
+        <span class="keyword">guard let</span> delegate = self.delegate <span class="keyword">else</span> {
+            <span class="keyword">fatalError</span>("Error: no delegate specified for Oxford API download task")
+        }
+        
+        _ = self.urlSession.dataTask(with: request, completionHandler: { data, response, error in
+            
+            <span class="keyword">switch</span> (data,response,error){
+             <span class="keyword">case</span> (.some,.some,.none),(.some,.some,.some): //Able to connect to the server, data received
+                
+                let httpResponse = (response! as! HTTPURLResponse)
+                
+                
+                <span class="keyword">if let</span> jsonResponse = try? JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.mutableContainers) as! JSONResponse{
+                    <span class="comment">//Data received, and JSON serialization successful</span>
+                    
+                    delegate.didFinishReceivingJSONData(withJSONResponse: jsonResponse, withHTTPResponse: httpResponse)
+                    
+                } else{
+                <span class="comment">//Data received, but JSON serialization not successful</span>
+
+                    delegate.didFailToGetJSONData(withHTTPResponse: httpResponse)
+                }
+                
+                <span class="keyword">break</span>
+             <span class="keyword">case</span> (.none,.some,.none),(.none,.some,.some): //Able to connect to the server but failed to get data or received a bad HTTP Response
+                if let httpResponse = (response as? HTTPURLResponse){
+                    delegate.didFailToGetJSONData(withHTTPResponse: httpResponse)
+                }
+                <span class="keyword">break</span>
+             <span class="keyword">case</span> (.none,.none,.some): //Unable to connect to the server, with an error received
+                delegate.didFailToConnectToEndpoint(withError: error!)
+                <span class="keyword">break</span>
+             <span class="keyword">case</span> (.none,.none,.none): //Unable to connect to the server, no error received
+                 <span class="keyword">let</span> error = NSError(domain: "Failed to get a response: Error occurred while attempting to connect to the server", code: 0, userInfo: nil)
+                delegate.didFailToConnectToEndpoint(withError: error)
+                 <span class="keyword">break</span>
+             <span class="keyword">default</span>:
+                <span class="keyword">break</span>
+            }
+            
+        }).resume()
+    }
+    
+</pre>
+
+</div> 
+
+<p>Finally, we are not able to define publicly-accessible and human-readable functions that can interact with REST API endpoint based on the specific demands of the user.  That is, the public accessible methods roughly correspond to the different kinds of API requests that can be made to the server. There is one caveat, however.  From the previous tutorials, we understand that our OxfordAPIRequest struct has a method for generating URL request objects and that this is a throwing method, which means that our API client class must have a way of handling this possible error.  Lo and behold, our delegate methods come to the rescue.  If an error is thrown due to an invalid filter parameter, then we pass the error to our didFailToConnnectToEndpoint delegate method, which will log the error message to the console and notify the user that a connection could not be established because of an invalid filter parameter.  Apart from the filters, validation for the other parameters is not necessary since they are either enum types or booleans, whose range of possible values is restricted.  </p>
+
+
+<div class="code-wrapper">
+<pre>
+     
+    <span class="keyword">func</span> downloadWordlistJSONDataWithValidation(forFilters filters: [OxfordAPIEndpoint.OxfordAPIFilter]?, forLanguage language: OxfordAPILanguage = OxfordAPILanguage.English){
+        
+        <span class="keyword">let</span> apiRequest = OxfordAPIRequest(withEndpoint: OxfordAPIEndpoint.wordlist, withQueryWord: String(), withFilters: filters, withQueryLanguage: language)
+        
+        <span class="keyword">do</span> {
+            
+            let urlRequest = try apiRequest.generateValidatedURLRequest()
+            
+            self.startDataTask(withURLRequest: urlRequest)
+
+        } <span class="keyword">catch let</span> error <span class="keyword">as</span> NSError {
+            
+            <span class="keyword">guard let</span> apiDelegate = self.delegate <span class="keyword">else</span> {
+                <span class="keyword">fatalError</span>("Error: no delegate specified for Oxford API download task")
+            }
+            
+            apiDelegate.didFailToConnectToEndpoint(withError: error)
+        }
+        
+        
+    }
+    
+
+</pre>
+
+</div>
+
+<p>The remainder of our API client functions are provided below, and they include functions for downloading lemmatron JSON data,, wordlist JSON data, diciontary entry data, as well as antonyms, synonyms, and example sentences derived from the thesaurus.  These methods are provided below: </p>
+
+
+<div class="code-wrapper">
+<pre>
+	
+    
+
+    
+    <span class="keyword">func</span> downloadLemmatronJSONData(forHeadWord headWord: String, andWithFilters filters: [OxfordAPIEndpoint.OxfordAPIFilter]?){
+        
+        <span class="keyword">let</span> apiRequest = OxfordAPIRequest()
+        
+        <span class="keyword">let</span> urlRequest = apiRequest.generateURLRequest()
+        
+        self.startDataTask(withURLRequest: urlRequest)
+        
+    }
+    
+    <span class="keyword">func</span> downloadWordListJSONData(forDomainFilters domainFilters: [OxfordAPIEndpoint.OxfordAPIFilter], forRegionFilters regionFilters: [OxfordAPIEndpoint.OxfordAPIFilter], forRegisterFilters registerFilters: [OxfordAPIEndpoint.OxfordAPIFilter], forTranslationFilters translationFilters: [OxfordAPIEndpoint.OxfordAPIFilter], forLexicalCategoryFilters lexicalCategoryFilters: [OxfordAPIEndpoint.OxfordAPIFilter]){
+        
+        <span class="keyword">let</span> apiRequest = OxfordAPIRequest(withDomainFilters: domainFilters, withRegionFilters: regionFilters, withRegisterFilters: registerFilters, withTranslationsFilters: translationFilters, withLexicalCategoryFilters: lexicalCategoryFilters)
+        
+        <span class="keyword">let</span> urlRequest = apiRequest.generateURLRequest()
+        
+        self.startDataTask(withURLRequest: urlRequest)
+    }
+    
+    <span class="keyword">func</span> downloadDictionaryEntryJSONData(forWord word: String, withFilters filters: [OxfordAPIEndpoint.OxfordAPIFilter]?){
+        
+        <span class="keyword">let</span> apiRequest = OxfordAPIRequest(withWord: word, withFilters: filters)
+
+        <span class="keyword">let</span> urlRequest = apiRequest.generateURLRequest()
+        
+        self.startDataTask(withURLRequest: urlRequest)
+    }
+    
+    <span class="keyword">func</span> downloadExampleSentencesJSONData(forWord word: String){
+        
+        <span class="keyword">let</span> apiRequest = OxfordAPIRequest(withWord: word, hasRequestedExampleSentencesQuery: true, forLanguage: OxfordAPILanguage.English)
+        
+        <span class="keyword">let</span> urlRequest = apiRequest.generateURLRequest()
+        
+        self.startDataTask(withURLRequest: urlRequest)
+    }
+    
+    <span class="keyword">func</span> downloadThesaurusJSONData(forWord word: String, withAntonyms hasRequestedAntonyms: Bool, withSynonyms hasRequestedSynonyms: Bool){
+        
+        <span class="keyword">let</span> apiRequest = OxfordAPIRequest(withWord: word, hasRequestedAntonymsQuery: hasRequestedAntonyms, hasRequestedSynonymsQuery: hasRequestedSynonyms)
+        
+        <span class="keyword">let</span> urlRequest = apiRequest.generateURLRequest()
+        
+        self.startDataTask(withURLRequest: urlRequest)
+    }
+    
+       
+
+
+</pre>
+</div> 
+
+
+<p>Our API client class is finished, but our work is not finished! What good programmer writes code without testing it.  With that in mind, we will create a test target and test classes for the OxfordAPIRequest struct and the OxfordAPIClient class in order to make sure our code is doing what it's supposed to.  The delegate methods we've defined will prove ver convenient for that goal as well. </p>
+
+  
+  <p>To continue, please <a href="./page6.html">click here</a></p>
+    <p>If you feel confused or are having trouble following, you can go back to the <a href="./page4.html">previous page</a> or back to the table of contents <a href="./index.html">table of contents</a>.</p>
+
+</div>
+	
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+</body>
+</html>

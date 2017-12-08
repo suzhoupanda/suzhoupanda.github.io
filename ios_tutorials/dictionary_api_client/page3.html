@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title></title>
+	<link rel="stylesheet" href="">
+
+
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Crimson+Text|Dosis|Nunito" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Coiny|Keania+One|Khand|Shrikhand" rel="stylesheet">
+
+		<link rel="stylesheet" href="./css/index.css">
+
+
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+      (adsbygoogle = window.adsbygoogle || []).push({
+       google_ad_client: "ca-pub-3595969991114166",
+       enable_page_level_ads: true
+     });
+  </script>
+</head>
+
+<body>
+
+    
+    <div class="container">
+  <!-- BEGIN  NAVIGATION BAR -->
+
+  <nav class="navbar navbar-toggleable-md navbar-light fixed-top " style="background-color: #7fffd4;">
+    
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <a class="navbar-brand text-warning" href="#"><img src="../../img/panda.png" alt="" id="app-icon-navbar"/ width="40px" height="30px"> <span class="brand-text" id="appicon-caption">iOS Panda Developers</span></a>
+
+  
+
+  <div class="collapse navbar-collapse" id="navbarNavDropdown">
+    <ul class="navbar-nav">
+      
+       <li class="nav-item">
+        <a class="nav-link" href="#"> <span class="sr-only">(current)</span></a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" href="../../index.html">Homepage</a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" href="../../swift_tutorials/index.html">Swift Tutorials</a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" href="../index.html">iOS Tutorials</a>
+      </li>
+  
+
+    
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Additional Information
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" href="#footer">Other Information</a>
+          <a class="dropdown-item" href="#footer">Developer Contact Info</a>
+        </div>
+        </li>
+      </ul>
+      </div>
+  </nav>
+
+
+  <!-- END  NAVIGATION BAR -->
+
+
+
+<p> In order for our API Client to function smoothly, we will define a wrapper struct to encapsulate all of the data required to build an url string for the API request, and we'll call this struct <b>OxfordAPIRequest</b>, though you can call it anything else you want.  So let's go ahead and define an empty struct and name it accordintly as follows: </p>
+
+<div class="code-wrapper">
+<pre>
+    <span class="keyword">struct</span> OxfordAPIRequest{
+
+    }
+</pre>
+</div>
+
+<p>For this struct, we will also define three private static constants, one for the baseURL string, one for the appID, and other for the appKey.  The latter two, the appID and the appKey, are unique to the app or user making the request and must obtained from Oxford Dictionary's websites.  THhe ones provided in this tutorial are arbitrary and will not work if you are attempting to implement this code in your own app. So please make sure to apply for your own appID and appKey.  These private static variables are defined as shown below: </p> 
+
+<div class="code-wrapper">
+<pre>
+    <span class="keyword">private static let</span> baseURLString = "https://od-api.oxforddictionaries.com/api/v1"
+    <span class="keyword">private static let</span> appID = "bdeb81211"
+    <span class="keyword">private static let</span> appKey = "481e889739r497ff881168989b4a111b"
+    
+    <span class="keyword">private static var</span> baseURL: URL{
+        <span class="keyword">return</span> URL(string: baseURLString)!
+    }
+</pre>
+</div>
+
+<p>You'll notice that an additional computed property is defined for the baseURL for convenience.  This makes it possible to access the baseURL as an instance variable for any given OxfordAPIRequest object. </p>
+
+
+<p>In addition, we will also define some variables whose values the user will provide via selective initializers.  Specifically, the user can specify a word (which will be a string), as well as the endpoint, language, and an array of query parameter filters(all of which have types that were defined previously). In addition, we will define some Boolean variables whose default values are set to false, as these will only be relevant to API requests that connect to the dictionary entries endpoint </p>
+
+<div class="code-wrapper">
+<pre>
+    <span class="keyword">var</span>  endpoint: OxfordAPIEndpoint
+    <span class="keyword">var</span>  word: String
+    <span class="keyword">var</span>  language: OxfordAPILanguage
+    <span class="keyword">var</span>  filters: [OxfordAPIEndpoint.OxfordAPIFilter]?
+    
+    <span class="keyword">var</span>  hasRequestedSynonyms: Bool = false
+    <span class="keyword">var</span>  hasRequestAntonyms: Bool = false
+    <span class="keyword">var</span>  hasRequestedExampleSentences: Bool = false
+    
+</pre>
+</div>
+
+<p>Next, we will define a set of selective intializers whose parameters are specific to the particular enpoint being called on.  Some parameters are available only for specific endpoints, while others are available for several endpoints.  In either case, since some of these parameteres are mutually exclusive, we use selective initialization to create API requests tailored to specific enpoints. </p>
+
+
+<p>This initializer will be used to obtain all of the example sentences that are provided for a specific word and a specific langauge, where English is set as the default value. This initializer will create an API request that connects to the dictionary entries enpoint, but since the "sentences" parameters is mutually exclusive with the synonyms and antonyms parameters, we provide default values for those in the initializer function.  Furthemore, since no filters are available for this kind of API request, the filters variable is automatically set to zero. </p>
+
+<div class="code-wrapper">
+<pre>
+     init(withWord queryWord: <span class="data-type">String</span> , hasRequestedExampleSentencesQuery: <span class="data-type">Bool</span> ,forLanguage queryLanguage: <span class="data-type">OxfordAPILanguage</span>  = .English){
+        
+        <span class="keyword">self</span>.endpoint = OxfordAPIEndpoint.entries
+        <span class="keyword">self</span>.word = queryWord
+        <span class="keyword">self</span>.language = OxfordAPILanguage.English
+        <span class="keyword">self</span>.filters = nil
+        
+        <span class="keyword">self</span>.hasRequestedExampleSentences = hasRequestedExampleSentencesQuery
+        <span class="keyword">self</span>.hasRequestedSynonyms = false
+        <span class="keyword">self</span>.hasRequestAntonyms = false
+    }
+</pre>
+</div>
+
+<p>The initializer provided below will also connect to the dictionary entries endpoint, but it will specify antonym and synonym parameters, which will enable the user to obtain either the antonyms,synonyms, or both from the Oxford Thesaurus for the queryWord passeed into the initializer.  This kind of API request is mutually exclusive with the previous one, which requested example sentences for a specific word.  Hence, the hasRequestedExamplesSentences boolean flag is set to zero.</p>
+
+<div class="code-wrapper">
+<pre>
+    init(withWord queryWord: String, hasRequestedAntonymsQuery: Bool, hasRequestedSynonymsQuery: Bool, forLanguage queryLanguage: OxfordAPILanguage = .English){
+        
+        <span class="keyword">self</span>.endpoint = OxfordAPIEndpoint.entries
+        <span class="keyword">self</span>.word = queryWord
+        <span class="keyword">self</span>.language = OxfordAPILanguage.English
+        <span class="keyword">self</span>.filters = nil
+        
+        <span class="keyword">self</span>.hasRequestedExampleSentences = false
+        <span class="keyword">self</span>.hasRequestedSynonyms = hasRequestedSynonymsQuery
+        <span class="keyword">self</span>.hasRequestAntonyms = hasRequestedAntonymsQuery
+    }
+</pre>
+</div>
+
+<p>Other selective initalizers are provided defined as shown below: </p>
+
+<div class="code-wrapper">
+<pre>
+      
+    <span class="keyword">init</span>(withWord queryWord: String, withFilters filters: [OxfordAPIEndpoint.OxfordAPIFilter]?,forLanguage queryLanguage: OxfordAPILanguage = .English){
+        
+        <span class="keyword">self</span>.endpoint = OxfordAPIEndpoint.entries
+        <span class="keyword">self</span>.word = queryWord
+        <span class="keyword">self</span>.language = OxfordAPILanguage.English
+        <span class="keyword">self</span>.filters = filters
+        
+        <span class="keyword">self</span>.hasRequestedExampleSentences = <span class="keyword">false</span>
+        <span class="keyword">self</span>.hasRequestedSynonyms = <span class="keyword">false</span>
+        <span class="keyword">self</span>.hasRequestAntonyms = <span class="keyword">false</span>
+    }
+
+
+    
+    <span class="keyword">init</span>(withHeadword headWord: String, withFilters queryFilters: [OxfordAPIEndpoint.OxfordAPIFilter]?, withQueryLanguage queryLanguage: OxfordAPILanguage = .English){
+        
+        <span class="keyword">self</span>.endpoint = OxfordAPIEndpoint.inflections
+        <span class="keyword">self</span>.word = headWord
+        <span class="keyword">self</span>.filters = queryFilters
+        <span class="keyword">self</span>.language = queryLanguage
+        
+        <span class="keyword">self</span>.hasRequestedExampleSentences = false
+        <span class="keyword">self</span>.hasRequestAntonyms = false
+        <span class="keyword">self</span>.hasRequestedSynonyms = false
+    }
+    
+    
+    <span class="keyword">init</span>(withEndpoint queryEndpoint: OxfordAPIEndpoint, withQueryWord queryWord: String, withFilters queryFilters: [OxfordAPIEndpoint.OxfordAPIFilter]?, withQueryLanguage queryLanguage: OxfordAPILanguage = .English){
+        
+        
+        <span class="keyword">self</span>.endpoint = queryEndpoint
+        <span class="keyword">self</span>.word = queryWord
+        <span class="keyword">self</span>.filters = queryFilters
+        <span class="keyword">self</span>.language = queryLanguage
+        
+        <span class="keyword">self</span>.hasRequestedExampleSentences = false
+        <span class="keyword">self</span>.hasRequestAntonyms = false
+        <span class="keyword">self</span>.hasRequestedSynonyms = false
+        
+    }
+</pre>
+</div> 
+
+<p>Furthermore, it's always good to provide a default initializer to serve as a placeholder for debugging and other purposes. </p>
+
+<div class="code-wrapper">
+<pre>
+      <span class="keyword">init</span>(){
+        <span class="keyword">self</span>.endpoint = OxfordAPIEndpoint.entries
+        <span class="keyword">self</span>.word = "love"
+        <span class="keyword">self</span>.language = OxfordAPILanguage.English
+        <span class="keyword">self</span>.filters = nil
+        
+        <span class="keyword">self</span>.hasRequestedExampleSentences = false
+        <span class="keyword">self</span>.hasRequestedSynonyms = false
+        <span class="keyword">self</span>.hasRequestAntonyms = false
+        
+    }
+</pre> 
+</div> 
+
+<p>The intializer with the most parameters will be that which calls to the wordlist endpoint, wince wordlists can be obtained for different regions, different language registers, different language domains, as well as different translations and lexical categories.</p>
+
+
+<div class="code-wrapper">
+
+
+<pre>
+    
+    <span class="keyword">init</span>(withDomainFilters domainFilters: [OxfordAPIEndpoint.OxfordAPIFilter], withRegionFilters regionFilters: [OxfordAPIEndpoint.OxfordAPIFilter], withRegisterFilters registerFilters: [OxfordAPIEndpoint.OxfordAPIFilter], withTranslationsFilters translationsFilters: [OxfordAPIEndpoint.OxfordAPIFilter], withLexicalCategoryFilters lexicalCategoryFilters: [OxfordAPIEndpoint.OxfordAPIFilter], withQueryLanguage queryLanguage: OxfordAPILanguage = .English){
+        
+        
+        <span class="keyword">self</span>.endpoint = OxfordAPIEndpoint.wordlist
+        <span class="keyword">self</span>.word = String()
+        <span class="keyword">self</span>.filters = domainFilters + regionFilters + registerFilters + translationsFilters + lexicalCategoryFilters
+        <span class="keyword">self</span>.language = queryLanguage
+        
+        <span class="keyword">self</span>.hasRequestedExampleSentences = false
+        <span class="keyword">self</span>.hasRequestAntonyms = false
+        <span class="keyword">self</span>.hasRequestedSynonyms = false
+        
+    }
+</pre>
+</div>
+
+
+<p> The heart of this struct's functionality will be implemented via the private function below, getURLString(), which constructs the URL string based on the values provided via the initializer.  Thi sfunction will append endpoint and language parameter values to the base url, after which it will append on ther types of parameters based on the endpoint to which the user is connecting.  If you want to re-implement this function using switch statements or some other configuration of if-then statements, feel free to do so, but the one below has been tested and is adequate for our purposes here.</p>
+
+
+
+<div class="code-wrapper">
+
+
+<pre>
+
+
+    <span class="keyword">private func</span>  getURLString() -> String{
+        
+        
+        <span class="keyword">let</span>  baseURLString = OxfordAPIRequest.baseURLString.appending("/")
+        
+        <span class="keyword">let</span>  endpointStr = self.endpoint.rawValue.appending("/")
+        
+        <span class="keyword">let</span>  endpointURLString = baseURLString.appending(endpointStr)
+        
+        <span class="keyword">let</span>  languageStr = self.language.rawValue.appending("/")
+        
+        <span class="keyword">var</span>  languageURLString = endpointURLString.appending(languageStr)
+        
+        
+        if(<span class="keyword">self</span>.endpoint == .wordlist){
+            
+            if(<span class="keyword">self</span>.filters == nil){
+                
+                /** Remove the final slash **/
+                languageURLString.removeLast()
+                
+                <span class="keyword">return</span>  languageURLString
+                
+            } <span class="keyword">else</span>  {
+                
+                <span class="keyword">let</span> allFilters = self.filters!
+                
+                addFilters(filters: allFilters, toURLString: &languageURLString)
+                
+                <span class="keyword">return</span>  languageURLString
+
+            }
+            
+        } <span class="keyword">else</span>  {
+            
+            <span class="keyword">let</span>  wordStr = self.getProcessedWord().appending("/")
+            
+            <span class="keyword">var</span>  wordURLString = languageURLString.appending(wordStr)
+            
+            if(self.endpoint == .entries){
+                
+                if(hasRequestAntonyms || hasRequestedSynonyms){
+                    
+                    if(hasRequestedSynonyms && hasRequestAntonyms){
+                        
+                        <span class="keyword">let</span>  finalURLString = wordURLString.appending("synonyms;antonyms")
+                        
+                        <span class="keyword">return</span>  finalURLString
+                        
+                    } else if(hasRequestedSynonyms){
+                        
+                        <span class="keyword">let</span>  finalURLString = wordURLString.appending("synonyms")
+                        
+                        <span class="keyword">return</span>  finalURLString
+                        
+                    } else if(hasRequestAntonyms){
+                        
+                        <span class="keyword">let</span>  finalURLString = wordURLString.appending("antonyms")
+                        
+                        <span class="keyword">return</span>  finalURLString
+                    }
+                    
+                } else if(hasRequestedExampleSentences) {
+                    
+                    <span class="keyword">let</span>  finalURLString = wordURLString.appending("sentences")
+                    
+                    <span class="keyword">return</span>  finalURLString
+                    
+                } else if(self.filters != nil) {
+                    //Add filters for dictionary entries request for the given word
+                    
+                    <span class="keyword">let</span>  allFilters = self.filters!
+                    
+                    addFilters(filters: allFilters, toURLString: &wordURLString)
+                   
+                    <span class="keyword">return</span>  wordURLString
+                     
+                    
+                    
+                } <span class="keyword">else</span>  {
+                    
+                    wordURLString.removeLast()
+                    
+                    <span class="keyword">return</span>  wordURLString
+                    
+                }
+                
+            } <span class="keyword">else</span>  {
+                
+                if(self.filters != nil){
+                    
+                    <span class="keyword">let</span>  allFilters = self.filters!
+                    
+                    addFilters(filters: allFilters, toURLString: &wordURLString)
+                    
+                    <span class="keyword">return</span>  wordURLString
+                }
+            }
+            
+        }
+        
+        <span class="keyword">return</span>  String()
+    }
+    
+    
+</pre>
+
+</div>
+
+
+<p> The URL constructor function above calls upon a private helper function that adds filter parameters to the end of the url string.  Since filter parameters can be added for different endpoints, we make use of a single function to perform this role. I've implemented this function such that it modifies the url string that is passed in by reference, which is why the <span class="keyword">inout</span> prefix is used for the parameter type, making it unnecessary to return any value, but you can implement such that it return a new string, inwhich case the parameter type wouldn't need the <span class="keyword">inout</span> prefix. </p>
+
+
+<div class="code-wrapper">
+
+
+<pre>
+     p<span class="keyword">private func</span>  addFilters(filters: [OxfordAPIEndpoint.OxfordAPIFilter], toURLString urlString: inout String){
+
+        
+        if(filters.isEmpty){
+            return
+        }
+        
+        filters.forEach({
+            var filterString = $0.getQueryParameterString(isLastQueryParameter: false)
+            urlString = urlString.appending(filterString)
+        })
+        
+        
+        <span class="keyword">repeat</span> {
+            
+            if(urlString.last! == ";"){
+                urlString.removeLast()
+            }
+            
+        }<span class="keyword">while</span>(urlString.last! == ";")
+        
+    }
+</pre>
+
+</div>
+
+<p>An additional private function is provided in order to make sure that the queryWord passed into the initializer and used to build the query string is properly formatted.  This function makes sure that the word is percent-encoded and lowercased, and that spaces are replaced with underscoes.  In this way, the user can passed in words such as "historical cost accounting" and get a valid JSON response.</p>
+
+<div class="code-wrapper">
+
+<pre>
+    <span class="keyword">private func</span>  getProcessedWord() -> String{
+        
+        <span class="comment">//Declare mutable, local version of word parameter </span> 
+        <span class="keyword">var</span>  word_id = self.word
+        
+        <span class="comment">//Make the word lowercased </span> 
+        word_id = word_id.lowercased()
+        
+        <span class="comment">//Add percent encoding to the query parameter </span> 
+        <span class="keyword">let</span>  percentEncoded_word_id = word_id.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)
+        
+        word_id = percentEncoded_word_id == nil ? word_id : percentEncoded_word_id!
+        
+        <span class="comment">//Replace spaces with underscores </span> 
+        word_id = word_id.replacingOccurrences(of: " ", with: "_")
+        
+        <span class="keyword">return</span>  word_id
+    }
+</pre>
+</div>
+
+
+
+<p>But the fun doesn't end there.  Who would've thought that building a URL string could such a hassle? In any case, we also provided an additional helper function that helps to validate the filters that are passed into the initializers, since each endpoint is compatible with different kinds of filters, and it's not inconceivable that at some future time, you may forget which filters correspond to which endpoint.  For that reason, it would be nice to do a little validation on the filters passed in, in case invalid filters get passed in accidentally in the future:</p>
+
+
+<div class="code-wrapper">
+
+<pre>
+      private func hasValidFilters(filters: [OxfordAPIEndpoint.OxfordAPIFilter]?,forEndpoint endpoint: OxfordAPIEndpoint) -> Bool {
+        
+        if(filters == nil || (filters != nil && filters!.isEmpty)){
+            return true
+        }
+        
+        let toCheckFilters = filters!
+        
+        let allowableFilterSet = endpoint.getAvailableFilters()
+
+        print("Checking if the filters passed in are allowable")
+        
+        for filter in toCheckFilters{
+            print("Testing the filter: \(filter.getDebugName())")
+            if !allowableFilterSet.contains(filter){
+                print("The allowable filters don't contain: \(filter.getDebugName())")
+                return false
+            }
+        }
+        
+        return true
+        
+        
+    }
+</pre>
+
+</div>
+
+
+<p>The validator function will be used to throw an error in the generateURLRequest() function, which the only publicly accessible function for this struct and which we define as a throwing function.  Before we get to this publicly-available function, though, we still have some work to do.  There are still implementation details that need to be ironed out. Specifically, we have to define the authorization headers that are sent with API request.  A URL string alone will not suffice.  The API request must be authenticated, and this can only be achieved by providing values for the different header fields that will be checked by the server, namely for the appID, appKey, and the type of data (in this case, JSON) reqeusted:</p>
+
+
+<div class="code-wrapper">
+
+<pre>
+      private func getURLRequest(forURL url: URL) -> URLRequest{
+        
+        var request = URLRequest(url: url)
+        
+        request.addValue("application/json", forHTTPHeaderField: "Accept")
+        request.addValue(OxfordAPIRequest.appID, forHTTPHeaderField: "app_id")
+        request.addValue(OxfordAPIRequest.appKey, forHTTPHeaderField: "app_key")
+        
+        return request
+    }
+</pre>
+
+</div>
+
+<p>Finally, the fruit of our labor culimnates in the publicly-accessiblle function that generates the URL request, as shown below.  I've provided two versions of this function, one that validates the query filters parameter and another that doesn't.  The latter is merely convenient for development purposes, while the former will ultimately be the function of choice for the release version of any software or app you develop.  Note that the generateValidatedURLRequest function is a throwing function, which means that it will throw an error if the user passes in an invalid query filter.</p>
+
+
+<div class="code-wrapper">
+
+<pre>
+    func generateValidatedURLRequest() throws -> URLRequest{
+        
+       
+        guard hasValidFilters(filters: self.filters, forEndpoint: self.endpoint) else {
+            
+            throw NSError(domain: "OxfordAPIClientErrorDomain", code: 0, userInfo: nil)
+            
+        }
+        
+        let urlString = getURLString()
+        
+        let url = URL(string: urlString)!
+        
+        return getURLRequest(forURL: url)
+    }
+    
+    func generateURLRequest() -> URLRequest{
+        
+        let urlString = getURLString()
+        
+        let url = URL(string: urlString)!
+        
+        return getURLRequest(forURL: url)
+    }
+
+</pre>
+
+</div>
+
+
+
+
+
+<p> If you made it this far, congratulations.  That was a lot of work just to get a query string constructed.  </p>
+
+
+  
+  <p>To continue, please <a href="./page4.html">click here</a></p>
+    <p>If you feel confused or are having trouble following, you can go back to the <a href="./page2.html">previous page</a> or back to the table of contents <a href="./index.html">table of contents</a>.</p>
+
+</div>
+	
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+</body>
+</html>
