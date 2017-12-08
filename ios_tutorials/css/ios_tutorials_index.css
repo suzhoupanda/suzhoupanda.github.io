@@ -11,6 +11,10 @@ nav{
 	font-family: 'Coiny', cursive;
 }
 
+.row{
+	margin-bottom: 3em;
+}
+
 .thumbnail p{
 		font-size: 12px;
 	}
@@ -20,7 +24,13 @@ nav{
 	width: 90%;
 }
 
+.img-container img{
+	width: 5em;
+	height: auto;
+}
+
 .attribution-box{
+	font-size: 1em;
 	padding-right: 1em;
 }
 
@@ -29,12 +39,12 @@ nav{
 	float: right;
 	margin-bottom: 2em;
 	font-family: 'Dosis';
-	font-size: 1.3em;
+	font-size: 1.1em;
 }	
 
 .intro-text a{
 
-	font-size: 2em;
+	font-size: 1.2em;
 	font-style: italic;
 	color: white;
 }
