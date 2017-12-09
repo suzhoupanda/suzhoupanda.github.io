@@ -8,6 +8,10 @@
 	<title>Control Input: Tutorial 1</title>
 	<link rel="stylesheet" href="">
 	<link rel="stylesheet" type="text/css" href="./game_control.css">
+
+      <link href="https://fonts.googleapis.com/css?family=Crimson+Text|Dosis|Nunito" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Coiny|Keania+One|Khand|Shrikhand" rel="stylesheet">
+    
 	<link href="https://fonts.googleapis.com/css?family=Anton|Cabin|Merriweather|Varela+Round" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
 
@@ -15,22 +19,68 @@
 
 <body>
 
+      
+  <!-- BEGIN  NAVIGATION BAR -->
+ <nav class="navbar navbar-toggleable-md navbar-light fixed-top " style="background-color: #7fffd4;">
+    
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <a class="navbar-brand text-warning" href="#"><img src="../../img/panda.png" alt="" id="app-icon-navbar"/ width="40px" height="30px"> <span class="brand-text" id="appicon-caption">iOS Panda Developers</span></a>
+
+  
+
+  <div class="collapse navbar-collapse" id="navbarNavDropdown">
+    <ul class="navbar-nav">
+      
+       <li class="nav-item">
+        <a class="nav-link" href="#"> <span class="sr-only">(current)</span></a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" href="../../index.html">Homepage</a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" href="../../swift_tutorials/index.html">Swift Tutorials</a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" href="../index.html">iOS Tutorials</a>
+      </li>
+  
+
+    
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Additional Information
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" href="#footer">Other Information</a>
+          <a class="dropdown-item" href="#footer">Developer Contact Info</a>
+        </div>
+        </li>
+      </ul>
+      </div>
+  </nav>
+
+
+
 	<div class="main-wrapper">
 	
 		
 
 
-<h1 class="title">Game Control Inputs: Direct On-Screen Touch /Part 2</h1>
+<h1 class="title">Making a Top-Down Shooter Game</h1>
+<h2 class="subtitle">Game Control Inputs: Using Direct Touch Control</h2>
 
-<div class="jumbotron">
+<div class="jumbotron bg-warning">
     <div class="container">
 	<img src="game_controls2.png" alt="">
 	<p class="img-caption"> There are many ways of implementing control inputs (i.e. Core Motion, gesture recognizers, touch handling, etc.).  In this tutorial, we explore one way of implementing control inputs - direct on-screen touch.  </p>
 </div>
 </div>
 
-<br>
-<br>
 
 
 <!-- <div class="subtitle-box">
@@ -240,7 +290,7 @@
 <p class="code-explanation"> And voila! Our player should now be moving just the way we like when tested in the simulator: </p>
 
 
-<div>
+<div class="code-explanation">
     Send any comments for feedback to <b>2081439477@qq.com</b>.
 </div>
 

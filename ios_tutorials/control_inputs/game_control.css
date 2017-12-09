@@ -8,12 +8,40 @@ font-family: 'Varela Round', sans-serif;
 **/
 
 
+body{
+	font-size: 1.5em;
+	color: #fbead1;
+
+}
+
+
+
+nav{
+	font-family: 'Coiny', cursive;
+}
+
+
+
+.main-wrapper{
+	padding-top: 5em;
+	padding-left: 2em;
+	padding-right: 2em;
+	padding-bottom: 1em;
+	background-color: #30a294;
+	width: 100%;
+	color: #fbead1;
+
+}
 
 .subwrapper{
 	margin-top: 3em;
 }
 
 
+
+h1{
+	margin-bottom: 1em;
+}
 
 .title{
 	margin-left: 2em;
@@ -23,20 +51,34 @@ font-family: 'Varela Round', sans-serif;
 	font-size: 3em;
 }
 
-.jumbotron{
-	width: 80%;
+.subtitle{
+
+	margin-left: 2em;
+	text-align: center; 
+	margin: 0 auto;
+	font-family: 'Varela Round', sans-serif;
+	font-size: 1.5em;
+}
+
+
+
+	.jumbotron{
+	width: 100%;
 	position: relative;
 	display: block;
-	margin-left: 10%;
-	margin-right:10%;
+	margin-left: 2%;
+	margin-right:2%;
 	margin-top: 2em;
+
 }
+
 
 
 .jumbotron img{
 	display: inline-block;
 	height: auto;
-	width: 10em;
+	width: 7em;
+
 
 }
 
@@ -45,27 +87,15 @@ font-family: 'Varela Round', sans-serif;
 .jumbotron p{
 	position: absolute;
 	display: inline-block;
-	margin-left: 2em;
-	margin-right:2em;
+	margin-left: 2%;
+	margin-right:2%;
 	font-family: 'Anton', sans-serif;
-	font-size: 1.3em;
+	font-size: 1em;
+	color: black;
+	
 
 }
 
-/*.subtitle-box{
-	display: block;
-	width: 90%;
-
-	display: block;
-	margin-left: 0;
-	margin-right:0;
-	padding: 1em;
-	font-family: 'Anton', sans-serif;
-	font-size: 1.3em;
-
-
-}
-*/
 
 
 
@@ -127,9 +157,10 @@ code {
 	margin-left: 2em;
 	margin-right:2em;
 	font-family: 'Anton', sans-serif;
-	font-size: 1.8em;
 
 }
+
+
 
 	video{
 		margin-left: 5%;
@@ -190,33 +221,42 @@ code {
 	font-size: 1em;
 	}
 
-	/*.title-box{
-		position: relative;
-		display: block;
-		padding: 3em;
-		margin-left: 30%;
-		margin-top: 2em;
-	}
 
-	.title-box img{
-		display: inline-block;
-		float: left;
-		height: 18em;
-		width: auto;
+	.jumbotron{
+	width: 80%;
+	position: relative;
+	display: block;
+	margin-left: 10%;
+	margin-right:10%;
+	margin-top: 2em;
 
-	}
+}
 
-	.title-box p{
-		visibility: hidden;
-		display: inline-block;
-		float: left;
-		margin-left: 2em;
-			margin-right:2em;
-		font-family: 'Anton', sans-serif;
-		font-size: 1.8em;
 
-}*/
 
+.jumbotron img{
+	display: inline-block;
+	height: auto;
+	width: 10em;
+
+
+}
+
+
+
+.jumbotron p{
+	position: absolute;
+	display: inline-block;
+	margin-left: 2em;
+	margin-right:2em;
+	font-family: 'Anton', sans-serif;
+	font-size: 1.3em;
+	color: black;
+	
+
+}
+
+	
 .subtitle-box{
 	visibility: visible;
 }
@@ -225,25 +265,13 @@ code {
 
 @media (min-width: 900px) {
 
-/*.title-box{
-	margin-left: 10%;
 
-}*/
 
 .subtitle-box{
 	visibility: hidden;
 }
 
-/*.title-box p{
-		visibility: visible;
-		display: inline-block;
-		float: left;
-		margin-left: 2em;
-			margin-right:2em;
-		font-family: 'Anton', sans-serif;
-		font-size: 1.8em;
 
-}*/
 	video{
 		margin-left: 40%;
 	}
