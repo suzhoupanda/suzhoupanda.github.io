@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title></title>
+	<link rel="stylesheet" href="">
+
+
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Crimson+Text|Dosis|Nunito" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Coiny|Keania+One|Khand|Shrikhand" rel="stylesheet">
+
+		<link rel="stylesheet" href="./css/index.css">
+
+
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+      (adsbygoogle = window.adsbygoogle || []).push({
+       google_ad_client: "ca-pub-3595969991114166",
+       enable_page_level_ads: true
+     });
+  </script>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+</head>
+
+<body>
+
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+      (adsbygoogle = window.adsbygoogle || []).push({
+       google_ad_client: "ca-pub-3595969991114166",
+       enable_page_level_ads: true
+     });
+  </script>
+
+
+    
+  <!-- BEGIN  NAVIGATION BAR -->
+ <nav class="navbar navbar-toggleable-md navbar-light fixed-top " style="background-color: #7fffd4;">
+    
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <a class="navbar-brand text-warning" href="#"><img src="../../img/panda.png" alt="" id="app-icon-navbar"/ width="40px" height="30px"> <span class="brand-text" id="appicon-caption">iOS Panda Developers</span></a>
+
+  
+
+  <div class="collapse navbar-collapse" id="navbarNavDropdown">
+    <ul class="navbar-nav">
+      
+       <li class="nav-item">
+        <a class="nav-link" href="#"> <span class="sr-only">(current)</span></a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" href="../../index.html">Homepage</a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" href="../../swift_tutorials/index.html">Swift Tutorials</a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" href="../index.html">iOS Tutorials</a>
+      </li>
+  
+
+    
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Additional Information
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" href="#footer">Other Information</a>
+          <a class="dropdown-item" href="#footer">Developer Contact Info</a>
+        </div>
+        </li>
+      </ul>
+      </div>
+  </nav>
+
+
+   
+
+  <!-- END  NAVIGATION BAR -->
+
+<div class="container adcontainer">
+  
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-3595969991114166"
+     data-ad-slot="6717344725"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</div>
+
+ 
+
+<div class="container">
+
+<p></p>
+
+<div class="code-wrapper">
+  <pre>
+  extension EncounterSeries{
+
+  static func GenerateEncounterSeries(forPlaneViewController planeViewController: PlaneViewController,withMaxLetter maxLetters: Int, withNumberOfEncounters numberOfEncounters: Int, withMaxFireballs maxFireballs: Int, withMaxSpikeBalls maxSpikeBalls: Int, withMaxSpaceCraft maxSpaceCraft: Int, withMaxAlienHeads maxAlienHeads: Int, withMaxWaitTime maxWaitTime: Int) -> EncounterSeries{
+        
+        if(numberOfEncounters < 2){
+            fatalError("Error: there must be at least two encounters minimum in order for an encounter series to be generated")
+        }
+        
+        let getMaxWaitTime = {
+            
+            return Double(4.00 + Double(arc4random_uniform(UInt32(maxWaitTime))))
+
+        }
+        
+        
+        let getRandomNumberOfSpikeBalls: ()->Int = {
+            
+            let maximumNum = maxSpikeBalls <= 0 ? 0: maxSpikeBalls
+            
+            return Int(arc4random_uniform(UInt32(maximumNum)))
+        }
+        
+        let getRandomNumberOfFireballs: ()->Int = {
+            
+            let maximumNum = maxFireballs <= 0 ? 0: maxFireballs
+            
+            return Int(arc4random_uniform(UInt32(maximumNum)))
+        }
+        
+        let getRandomNumberOfSpaceCraft: ()->Int = {
+            
+            let maximumNum = maxSpaceCraft <= 0 ? 0: maxSpaceCraft
+            
+            return Int(arc4random_uniform(UInt32(maximumNum)))
+        }
+        
+        let getRandomNumberOfAlienHeads: ()->Int = {
+            let maximumNum = maxAlienHeads <= 0 ? 0: maxAlienHeads
+            
+            return Int(arc4random_uniform(UInt32(maximumNum)))
+        }
+        
+        let getRandomNumberOfLetters: ()->Int = {
+            let maximumNum = maxLetters <= 0 ? 0: maxLetters
+            
+            return Int(arc4random_uniform(UInt32(maximumNum)))
+            
+        }
+       
+        
+        let (firstWaitTime,fireballNum1,spikeBallNum1,spaceCraftNum1,letterNum1,alienHeadsNum1) = (getMaxWaitTime(),getRandomNumberOfFireballs(),getRandomNumberOfSpikeBalls(),getRandomNumberOfSpaceCraft(),getRandomNumberOfLetters(),getRandomNumberOfAlienHeads())
+       
+     
+        
+        let firstEncounter = Encounter(waitTime: firstWaitTime, numberOfSpikeBalls: spikeBallNum1, numberOfSpaceCraft: spaceCraftNum1, numberOfLetters: letterNum1, numberOfAlienHeads: alienHeadsNum1, numberOfFireballs: fireballNum1)
+        
+        let (secondWaitTime,fireballNum2,spikeBallNum2,spaceCraftNum2,letterNum2,alienHeadsNum2) = (getMaxWaitTime(),getRandomNumberOfFireballs(),getRandomNumberOfSpikeBalls(),getRandomNumberOfSpaceCraft(),getRandomNumberOfLetters(),getRandomNumberOfAlienHeads())
+        
+        
+        
+        var nextEncounter = firstEncounter.setNextEncounter(waitTime: secondWaitTime, numberOfSpikeBalls: spikeBallNum2, numberOfSpaceCraft: spaceCraftNum2, numberOfLetters: letterNum2, numberOfFireballs: fireballNum2, numberOfAlienHeads: alienHeadsNum2)
+        
+        for _ in 1..< numberOfEncounters-2{
+            
+            let (nextWaitTime,nextFireballNum,nextSpikeBallNum,nextSpaceCraftNum,nextNumberOfLetters,nextNumberOfAlienHeads) = (getMaxWaitTime(),getRandomNumberOfFireballs(),getRandomNumberOfSpikeBalls(),getRandomNumberOfSpaceCraft(),getRandomNumberOfLetters(),getRandomNumberOfAlienHeads())
+            
+            nextEncounter = nextEncounter.setNextEncounter(waitTime: nextWaitTime, numberOfSpikeBalls: nextSpikeBallNum, numberOfSpaceCraft: nextSpaceCraftNum, numberOfLetters: nextNumberOfLetters, numberOfFireballs: nextFireballNum, numberOfAlienHeads: nextNumberOfAlienHeads)
+            
+        }
+        
+        return EncounterSeries(planeViewController: planeViewController, firstEncounter: firstEncounter)
+    }
+    
+    static func generateRandomNumberFunction(withDefaultValue defaultNum: Int, andWithMaxNumber max: Int) -> ()->Int{
+        
+        return {
+            let maximumNum = max <= defaultNum ? defaultNum: max
+        
+            return Int(arc4random_uniform(UInt32(maximumNum)))
+        }
+    }
+    
+    static func showNumberOf(spikeballs: Int, spaceCraft: Int, alienHeads: Int, fireballs: Int, letters: Int, andWaitTime waitTime: Double){
+        
+        print("The generated wait time is: \(waitTime), generated spikeballs are: \(spikeballs), generated space craft are: \(spaceCraft), generated alien heads are: \(alienHeads), generated fireballs: \(fireballs), letters: \(letters)")
+    }
+
+}
+  </pre>
+</div>
+
+
+
+<p></p>
+<div class="code-wrapper">
+  <pre>
+     
+   
+extension EncounterSeries{
+    
+    
+    static func GenerateEncounterSeries(forPlaneViewController planeViewController: PlaneViewController, forLevelTrack levelTrack: GameHelper.LevelTrack, andforLevel level: Int) -> EncounterSeries{
+        
+        switch level {
+            
+            /** Get encounter series for fireball track  **/
+        case 0...3 where levelTrack == .FireBalls:
+            return EncounterSeries.GenerateEncounterSeries(forPlaneViewController: planeViewController, withMaxLetter: 6, withNumberOfEncounters: 200, withMaxFireballs: level+10, withMaxSpikeBalls: 0, withMaxSpaceCraft: 0,withMaxAlienHeads: 0, withMaxWaitTime: 5)
+        case 4...7 where levelTrack == .FireBalls:
+            return EncounterSeries.GenerateEncounterSeries(forPlaneViewController: planeViewController, withMaxLetter: 4, withNumberOfEncounters: 50, withMaxFireballs: level+5, withMaxSpikeBalls: 0, withMaxSpaceCraft: 0, withMaxAlienHeads: 0, withMaxWaitTime: 4)
+        case 8...11 where levelTrack == .FireBalls:
+            return EncounterSeries.GenerateEncounterSeries(forPlaneViewController: planeViewController, withMaxLetter: 3, withNumberOfEncounters: 25, withMaxFireballs: level, withMaxSpikeBalls: 0, withMaxSpaceCraft: 0,withMaxAlienHeads: 0, withMaxWaitTime: 4)
+        case 12...15 where levelTrack == .FireBalls:
+            return EncounterSeries.GenerateEncounterSeries(forPlaneViewController: planeViewController, withMaxLetter: 2, withNumberOfEncounters: 25, withMaxFireballs: level-2, withMaxSpikeBalls: 0, withMaxSpaceCraft: 0,withMaxAlienHeads: 0, withMaxWaitTime: 3)
+        case 16...30 where levelTrack == .FireBalls:
+            return EncounterSeries.GenerateEncounterSeries(forPlaneViewController: planeViewController, withMaxLetter: 2, withNumberOfEncounters: 25, withMaxFireballs: level-5, withMaxSpikeBalls: 0, withMaxSpaceCraft: 0,withMaxAlienHeads: 0, withMaxWaitTime: 3)
+        case 31...10000 where levelTrack == .FireBalls:
+            return EncounterSeries.GenerateEncounterSeries(forPlaneViewController: planeViewController, withMaxLetter: 2, withNumberOfEncounters: 20, withMaxFireballs: level-5, withMaxSpikeBalls: 0, withMaxSpaceCraft: 0,withMaxAlienHeads: 0, withMaxWaitTime: 3)
+
+            
+            /** Get encounter series for spaceship track  **/
+
+        case 0...3 where levelTrack == .SpaceShips:
+            return EncounterSeries.GenerateEncounterSeries(forPlaneViewController: planeViewController, withMaxLetter: 5, withNumberOfEncounters: 150, withMaxFireballs: 0, withMaxSpikeBalls: 0, withMaxSpaceCraft: level+9,withMaxAlienHeads: 0, withMaxWaitTime: 3)
+        case 4...7 where levelTrack == .SpaceShips:
+            return EncounterSeries.GenerateEncounterSeries(forPlaneViewController: planeViewController, withMaxLetter: 6, withNumberOfEncounters: 50, withMaxFireballs: 0, withMaxSpikeBalls: 0, withMaxSpaceCraft: level+10,withMaxAlienHeads: 0, withMaxWaitTime: 4)
+        case 8...11 where levelTrack == .SpaceShips:
+            return EncounterSeries.GenerateEncounterSeries(forPlaneViewController: planeViewController, withMaxLetter: 6, withNumberOfEncounters: 25, withMaxFireballs: 0, withMaxSpikeBalls: 0, withMaxSpaceCraft: level+5,withMaxAlienHeads: 0, withMaxWaitTime: 3)
+        case 12...15 where levelTrack == .SpaceShips:
+            return EncounterSeries.GenerateEncounterSeries(forPlaneViewController: planeViewController, withMaxLetter: 2, withNumberOfEncounters: 25, withMaxFireballs: 0, withMaxSpikeBalls: 0, withMaxSpaceCraft: level,withMaxAlienHeads: 0, withMaxWaitTime: 2)
+        case 16...30 where levelTrack == .SpaceShips:
+            return EncounterSeries.GenerateEncounterSeries(forPlaneViewController: planeViewController, withMaxLetter: 2, withNumberOfEncounters: 25, withMaxFireballs: 0, withMaxSpikeBalls: 0, withMaxSpaceCraft: level,withMaxAlienHeads: 0, withMaxWaitTime: 2)
+        case 31...10000 where levelTrack == .SpaceShips:
+            return EncounterSeries.GenerateEncounterSeries(forPlaneViewController: planeViewController, withMaxLetter: 2, withNumberOfEncounters: 20, withMaxFireballs: 0, withMaxSpikeBalls: 0, withMaxSpaceCraft: level,withMaxAlienHeads: 0, withMaxWaitTime: 2)
+
+            
+            /** Get encounter series for spikeball track  **/
+
+        case 0...3 where levelTrack == .SpikeBalls:
+            return EncounterSeries.GenerateEncounterSeries(forPlaneViewController: planeViewController, withMaxLetter: 6, withNumberOfEncounters: 100, withMaxFireballs: 0, withMaxSpikeBalls: level+9, withMaxSpaceCraft: 0,withMaxAlienHeads: 0, withMaxWaitTime: 5)
+        case 4...7 where levelTrack == .SpikeBalls:
+            return EncounterSeries.GenerateEncounterSeries(forPlaneViewController: planeViewController, withMaxLetter: 6, withNumberOfEncounters: 50, withMaxFireballs: 0, withMaxSpikeBalls: level+5, withMaxSpaceCraft: 0,withMaxAlienHeads: 0, withMaxWaitTime: 5)
+        case 8...11 where levelTrack == .SpikeBalls:
+            return EncounterSeries.GenerateEncounterSeries(forPlaneViewController: planeViewController, withMaxLetter: 4, withNumberOfEncounters: 25, withMaxFireballs: 0, withMaxSpikeBalls: level, withMaxSpaceCraft: 0,withMaxAlienHeads: 0, withMaxWaitTime: 5)
+        case 12...15 where levelTrack == .SpikeBalls:
+            return EncounterSeries.GenerateEncounterSeries(forPlaneViewController: planeViewController, withMaxLetter: 4, withNumberOfEncounters: 25, withMaxFireballs: 0, withMaxSpikeBalls: level, withMaxSpaceCraft: 0,withMaxAlienHeads: 0, withMaxWaitTime: 5)
+        case 16...30 where levelTrack == .SpikeBalls:
+            return EncounterSeries.GenerateEncounterSeries(forPlaneViewController: planeViewController, withMaxLetter: 4, withNumberOfEncounters: 25, withMaxFireballs: 0, withMaxSpikeBalls: level, withMaxSpaceCraft: 0,withMaxAlienHeads: 0, withMaxWaitTime: 5)
+        case 31...10000 where levelTrack == .SpikeBalls:
+            return EncounterSeries.GenerateEncounterSeries(forPlaneViewController: planeViewController, withMaxLetter: 4, withNumberOfEncounters: 20, withMaxFireballs: 0, withMaxSpikeBalls: level, withMaxSpaceCraft: 0,withMaxAlienHeads: 0, withMaxWaitTime: 5)
+
+        
+            /** Get encounter series for turret track  **/
+
+        case 0...3 where levelTrack == .AlienHeads:
+            return EncounterSeries.GenerateEncounterSeries(forPlaneViewController: planeViewController, withMaxLetter: 6, withNumberOfEncounters: 100, withMaxFireballs: 0, withMaxSpikeBalls: 0, withMaxSpaceCraft: 0,withMaxAlienHeads: level+6, withMaxWaitTime: 5)
+        case 4...7 where levelTrack == .AlienHeads:
+            return EncounterSeries.GenerateEncounterSeries(forPlaneViewController: planeViewController, withMaxLetter: 6, withNumberOfEncounters: 50, withMaxFireballs: 0, withMaxSpikeBalls: 0, withMaxSpaceCraft: 0,withMaxAlienHeads: level+5, withMaxWaitTime: 5)
+        case 8...11 where levelTrack == .AlienHeads:
+            return EncounterSeries.GenerateEncounterSeries(forPlaneViewController: planeViewController, withMaxLetter: 4, withNumberOfEncounters: 25, withMaxFireballs: 0, withMaxSpikeBalls: 0, withMaxSpaceCraft: 0,withMaxAlienHeads: level, withMaxWaitTime: 5)
+        case 12...15 where levelTrack == .AlienHeads:
+            return EncounterSeries.GenerateEncounterSeries(forPlaneViewController: planeViewController, withMaxLetter: 4, withNumberOfEncounters: 25, withMaxFireballs: 0, withMaxSpikeBalls: 0, withMaxSpaceCraft: 0,withMaxAlienHeads: level, withMaxWaitTime: 5)
+        case 16...30 where levelTrack == .AlienHeads:
+            return EncounterSeries.GenerateEncounterSeries(forPlaneViewController: planeViewController, withMaxLetter: 4, withNumberOfEncounters: 25, withMaxFireballs: 0, withMaxSpikeBalls: 0, withMaxSpaceCraft: 0,withMaxAlienHeads: level, withMaxWaitTime: 5)
+        case 31...10000 where levelTrack == .AlienHeads:
+            return EncounterSeries.GenerateEncounterSeries(forPlaneViewController: planeViewController, withMaxLetter: 4, withNumberOfEncounters: 25, withMaxFireballs: 0, withMaxSpikeBalls: 0, withMaxSpaceCraft: 0,withMaxAlienHeads: level, withMaxWaitTime: 5)
+        default:
+            return EncounterSeries.GenerateEncounterSeries(forPlaneViewController: planeViewController, withMaxLetter: 3, withNumberOfEncounters: 25, withMaxFireballs: 2, withMaxSpikeBalls: 2, withMaxSpaceCraft: 2,withMaxAlienHeads: level, withMaxWaitTime: 5)
+
+        }
+        
+    }
+    
+  
+}
+
+
+
+  </pre>
+</div>
+
+
+<p>Now, we define an <i>executeEncounter()</i> function, which will will be the key function of this class.  After performing a check for game state (i.e. if the game is in a paused state or the hasTerminatedEncounterSeries boolean flag is set to true), the no further encounters are executed.  The hasTerminatedEncounterSeries boolean flag was added here as workaround to a bug that occurred during development and provided an additional means of stopping the execution of the encounter series, since it is accessible from the main game view controller, but the implementation details of this are not provided here in order to keep focused on the main point of the tutorial.</p>
+
+
+
+
+
+<div class="code-wrapper">
+    <pre>
+  
+     
+    </pre>
+</div>
+
+
+
+   
+
+<div class="adcontainer">
+  
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-3595969991114166"
+     data-ad-slot="6717344725"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</div>
+
+
+
+    <p>Now that we have our linked list defined, we are ready to go one step further, and create a generator class that can use customizable parameters for creating EncounterSeries that we can customize for different game levels based on the difficulty level or the specific enemies that should appear for that level. Stay tuned! </p>
+
+
+
+
+    <p>To continue, please <a href="./page2.html">click here</a></p>
+    <p>If you feel confused or are having trouble following, you can go back to the <a href="../index.html">previous page</a> or back to the iOS tutorials table of contents <a href="../../index.html">table of contents</a>.</p>
+
+</div>
+	
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+</body>
+</html>

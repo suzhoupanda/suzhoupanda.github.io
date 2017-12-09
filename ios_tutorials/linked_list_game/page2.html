@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title></title>
+	<link rel="stylesheet" href="">
+
+
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Crimson+Text|Dosis|Nunito" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Coiny|Keania+One|Khand|Shrikhand" rel="stylesheet">
+
+		<link rel="stylesheet" href="./css/index.css">
+
+
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+      (adsbygoogle = window.adsbygoogle || []).push({
+       google_ad_client: "ca-pub-3595969991114166",
+       enable_page_level_ads: true
+     });
+  </script>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+</head>
+
+<body>
+
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+      (adsbygoogle = window.adsbygoogle || []).push({
+       google_ad_client: "ca-pub-3595969991114166",
+       enable_page_level_ads: true
+     });
+  </script>
+
+
+    
+  <!-- BEGIN  NAVIGATION BAR -->
+ <nav class="navbar navbar-toggleable-md navbar-light fixed-top " style="background-color: #7fffd4;">
+    
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <a class="navbar-brand text-warning" href="#"><img src="../../img/panda.png" alt="" id="app-icon-navbar"/ width="40px" height="30px"> <span class="brand-text" id="appicon-caption">iOS Panda Developers</span></a>
+
+  
+
+  <div class="collapse navbar-collapse" id="navbarNavDropdown">
+    <ul class="navbar-nav">
+      
+       <li class="nav-item">
+        <a class="nav-link" href="#"> <span class="sr-only">(current)</span></a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" href="../../index.html">Homepage</a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" href="../../swift_tutorials/index.html">Swift Tutorials</a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" href="../index.html">iOS Tutorials</a>
+      </li>
+  
+
+    
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Additional Information
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" href="#footer">Other Information</a>
+          <a class="dropdown-item" href="#footer">Developer Contact Info</a>
+        </div>
+        </li>
+      </ul>
+      </div>
+  </nav>
+
+
+   
+
+  <!-- END  NAVIGATION BAR -->
+
+<div class="container adcontainer">
+  
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-3595969991114166"
+     data-ad-slot="6717344725"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</div>
+
+ 
+
+<div class="container">
+
+<p>Now that we have our Encounter "node" defined, we are ready to create a class <i>EncounterSeries</i> that will represent a series of encounters. We will define several variables for this class, including <i>firstEncounter</i>, which will correspond to the root node in the linked list of node, <i>planeViewController</i>, which is the name of the main view controller for game play, <i>hasTerminatedEncounterSeries</i>, a Boolean value that will be used stop the execution of the encounter series, and <i>currentEncounter</i>, of optional Encounter type and for which we define a property observer that will call the executeEncounter() function if the current encounter is not nil. </p>
+
+<p>Now that we have our variables defined, we have to define an initializer, which will take the view controller for game play as well as an encounter corresponding to the firstEncounter.</p>
+
+<div class="code-wrapper">
+  <pre>
+    class EncounterSeries{
+    
+    var firstEncounter: Encounter
+    var planeViewController: PlaneViewController
+    
+    var hasTerminatedEncounterSeries: Bool = false
+    
+    var currentEncounter: Encounter?{
+        didSet{
+            
+            print("Current encounter has been set, executing nextencounter.....")
+
+            if(currentEncounter != nil){
+                executeEncounter()
+            }
+        }
+    }
+
+    init(planeViewController: PlaneViewController, firstEncounter: Encounter) {
+        self.firstEncounter = firstEncounter
+        self.planeViewController = planeViewController
+        
+   
+        
+    }
+
+  }
+  </pre>
+</div>
+
+
+
+<p>
+  We will also define a private helper function <i>addGameObjects()</i> whose main purpose will be to add the enemies to the SceneKit scene.  Our main view controller, the planeViewController, has variables defined for manager classes (not shown here), such as spikeBallManager, spaceCraftManager, etc.), whose main purpose is to add, remove, update, and manage the enemies in the SceneKit scene and which we have not shown here in order to avoid getting bogged down in the implementation details of the game.  Suffice it to say, each time an encounter is "executed," it will add enemy objects to the SceneKit scene depending on whether or not a given encounter has a nubmer specified for a given enemy.
+</p>
+
+<p>
+  One other thing to note is that the <i>addGameObject()</i> function will not execute if the game is not in a playing state or if the SceneKit scene, or the worldNode in the SceneKit scene, are presently in the paused state.  This prevents enemies from constantly being spawned while the game is in a paused state.
+</p>
+
+<div class="code-wrapper">
+  <pre>
+     
+    private func addGameObjects(){
+        
+        
+        if(GameHelper.sharedInstance.state != .Playing || self.planeViewController.scnScene.isPaused || self.planeViewController.worldNode.isPaused){
+            return
+        }
+        
+        if let numberOfSpikeBalls = self.currentEncounter!.numberOfSpikeBalls{
+            planeViewController.spikeBallManager.addRandomSpikeBalls(number: numberOfSpikeBalls)
+        }
+        
+        if let numberOfSpaceCraft = self.currentEncounter!.numberOfSpaceCraft{
+            planeViewController.spaceCraftManager.addRandomSpaceCraft(number: numberOfSpaceCraft)
+        }
+        
+        if let numberOfLetters = self.currentEncounter!.numberOfLetters{
+            
+            planeViewController.letterRingManager.addRandomizedMovingRing(with: numberOfLetters, fromWord: planeViewController.currentWord)
+        }
+        
+        if let numberOfFireballs = self.currentEncounter!.numberOfFireballs{
+            planeViewController.fireballManager.addRandomFireballs(number: numberOfFireballs)
+        }
+        
+        if let numberOfAlienHeads = self.currentEncounter!.numberOfAlienHeads{
+            planeViewController.alienHeadManager.addRandomAlienHeads(number: numberOfAlienHeads)
+        }
+        
+    }
+
+
+
+  </pre>
+</div>
+
+
+<p>Now, we define an <i>executeEncounter()</i> function, which will will be the key function of this class.  After performing a check for game state (i.e. if the game is in a paused state or the hasTerminatedEncounterSeries boolean flag is set to true), the no further encounters are executed.  The hasTerminatedEncounterSeries boolean flag was added here as workaround to a bug that occurred during development and provided an additional means of stopping the execution of the encounter series, since it is accessible from the main game view controller, but the implementation details of this are not provided here in order to keep focused on the main point of the tutorial.</p>
+
+<p>
+  The <i>executeEncounter()</i> function is wrapped in the 
+  DispatchQueue.global().asyncAfter(deadline:execute:) function, where waitTime for the currentEncounter is added to the current clock time (<i>.now() + waitTime</i>) so that the spawning of the enemies is managed asynchronously by the global dispatch queue.  In the operation block passed into this function, we call our addGameObjects() function, after which we retrieve the reference to the next encounter from the current encounter and set that to the value of the first encounter, which in turn triggers the property observer defined for the current encounter, which in turn recursively calls the executeEncounter() function.
+ </p>
+
+<p> In addition, in order for our linked list to work properly, we define a <i>start()</i> function, which basically will set the current encounter to the first encounter and thereby set in motion, so to speak, the entire series of encounters since each time the current encounter is set, the property server defined for the current encounter will call <i>executeEncounter()</i>, which in turn sets the value of the currentEncounter to the nextEncounter defined for the current encounter, unless the next encounter is nil, in which case the encounter series ends, in which case we can send a notification to the plane view controller to end the game or, since we have direct access to the planeViewController, set a boolean flag (i.e. planeViewController.encounterIsFinished) to true, so that when this boolean flag is checked in the next run of the game update loop, the game can come to a graceful conclusion.</p>
+
+
+
+
+<div class="code-wrapper">
+    <pre>
+  
+    
+    func start(){
+        print("Starting the encounter series....setting the first encounter...")
+        self.currentEncounter = self.firstEncounter
+    }
+    
+  
+    
+    func executeEncounter(){
+    
+        if(GameHelper.sharedInstance.state != .Playing || hasTerminatedEncounterSeries){
+            return
+        }
+        
+        if(self.currentEncounter == nil){
+            return
+        }
+        
+        let waitTime = self.currentEncounter!.waitTime
+        
+        print("Preparing to execute next encounter....")
+        
+        DispatchQueue.global().asyncAfter(deadline: .now() + waitTime, execute: {
+            
+            if(GameHelper.sharedInstance.state != .Playing || self.hasTerminatedEncounterSeries){
+                return
+            }
+            
+            print("Adding game objects for encounter....")
+
+            self.addGameObjects()
+            
+            
+            print("Getting next encounter....")
+
+            if let nextEncounter = self.currentEncounter!.getNextEncounter(){
+                
+                print("Setting next encounter....")
+
+                self.currentEncounter = nextEncounter
+        
+            } else {
+                print("No more encounters in series...")
+                self.planeViewController.encounterIsFinished = true
+            }
+            
+        })
+    }
+
+    
+    
+   
+
+    </pre>
+</div>
+
+<p>One last note on the <i>hasTerminatedEncounterSeries</i> boolean flag mention earlier with respect to the executeEncounter() function.  An alternative to setting this flag from the main game view controller would be to define a function that can be called upon receiving a notification that can be sent from the game view controller or any other class or game object that might be responsible for ending the game.  An example of such a function is shown below: </p>
+
+<div class="code-wrapper">
+
+	<pre>
+
+  @objc func terminateEncounterSeries(){
+        print("Notification received by EncounterSeries....requesting restart")
+        self.hasTerminatedEncounterSeries = true
+    }
+
+		
+	</pre>
+
+</div>
+
+   
+
+<div class="adcontainer">
+  
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-3595969991114166"
+     data-ad-slot="6717344725"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</div>
+
+
+
+    <p>Now that we have our linked list defined, we are ready to go one step further, and create a generator class that can use customizable parameters for creating EncounterSeries that we can customize for different game levels based on the difficulty level or the specific enemies that should appear for that level. Stay tuned! </p>
+
+
+
+
+    <p>To continue, please <a href="./page3.html">click here</a></p>
+    <p>If you feel confused or are having trouble following, you can go back to the <a href="../index.html">previous page</a> or back to the iOS tutorials table of contents <a href="../../index.html">table of contents</a>.</p>
+
+</div>
+	
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+</body>
+</html>

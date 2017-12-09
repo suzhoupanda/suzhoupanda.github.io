@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title></title>
+	<link rel="stylesheet" href="">
+
+
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Crimson+Text|Dosis|Nunito" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Coiny|Keania+One|Khand|Shrikhand" rel="stylesheet">
+
+		<link rel="stylesheet" href="./css/index.css">
+
+
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+      (adsbygoogle = window.adsbygoogle || []).push({
+       google_ad_client: "ca-pub-3595969991114166",
+       enable_page_level_ads: true
+     });
+  </script>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+</head>
+
+<body>
+
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+      (adsbygoogle = window.adsbygoogle || []).push({
+       google_ad_client: "ca-pub-3595969991114166",
+       enable_page_level_ads: true
+     });
+  </script>
+
+
+    
+  <!-- BEGIN  NAVIGATION BAR -->
+ <nav class="navbar navbar-toggleable-md navbar-light fixed-top " style="background-color: #7fffd4;">
+    
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <a class="navbar-brand text-warning" href="#"><img src="../../img/panda.png" alt="" id="app-icon-navbar"/ width="40px" height="30px"> <span class="brand-text" id="appicon-caption">iOS Panda Developers</span></a>
+
+  
+
+  <div class="collapse navbar-collapse" id="navbarNavDropdown">
+    <ul class="navbar-nav">
+      
+       <li class="nav-item">
+        <a class="nav-link" href="#"> <span class="sr-only">(current)</span></a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" href="../../index.html">Homepage</a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" href="../../swift_tutorials/index.html">Swift Tutorials</a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" href="../index.html">iOS Tutorials</a>
+      </li>
+  
+
+    
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Additional Information
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" href="#footer">Other Information</a>
+          <a class="dropdown-item" href="#footer">Developer Contact Info</a>
+        </div>
+        </li>
+      </ul>
+      </div>
+  </nav>
+
+
+   
+
+  <!-- END  NAVIGATION BAR -->
+
+<div class="container adcontainer">
+  
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-3595969991114166"
+     data-ad-slot="6717344725"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</div>
+
+ 
+
+<div class="container">
+
+<p>This tutorial will hopefully provide some introductory insights into incorporating data structures into game design.  The app on which this tutorial is based is a game called  <a href="https://itunes.apple.com/us/app/alphabet-ring-flier/id1314880008?ls=1&mt=8">"Alphabet Ring Flier,"</a>  available in the AppStore, where the user must control a biplane in order to fly through letter rings with the goal of spelling specific words.  In the meantime, the player must avoid a series of enemies that are spawned randomly at different times and places.</p>
+
+
+<p>First, we define an <i>Encounter</i> class, which will encapsulate the data required to generate an encounter with enemy characters.  This <i>Encounter</i> class also corresponds to a node in a linked list.  Hence, by linking together a series of nodes in this way, we can obtain a data structure that contains all the data necessary to create a series of enemy encounters for a single level of gameplay.  </p>
+
+<p>To begin with, we define a class called <i>Encounter</i> and define a series of variables with optional integer types. These optional integer variables include our enemies (i.e. numberOfSpaceCraft, numberOfAlienHeads, numberOfFireballs) as well as the letter rings through which the player must fly (i.e. numberOfLetters). Another variable <i>waitTime</i> will be a non-optional double and will represent the amount of time between enemy encounters.  Finally, another variable <i>nextEncounter</i>  will be of the Encounter type, that is, the same type as that which we are currently defining, and will represent the next encounter in a series of encounters (i.e. the next node in a series of linked nodes) </p>
+
+
+<div class="code-wrapper">
+    <pre>
+  <span class="keyword">var</span> nextEncounter: <span class="data-type">Encounter?</span>
+    
+    <span class="keyword">var</span> waitTime: <span class="data-type">Double</span> = 5.00
+    
+    <span class="keyword">var</span> numberOfSpikeBalls: <span class="data-type">Int?</span>
+    <span class="keyword">var</span> numberOfLetters: <span class="data-type">Int?</span>
+    <span class="keyword">var</span> numberOfFireballs: <span class="data-type">Int?</span>
+    <span class="keyword">var</span> numberOfSpaceCraft: <span class="data-type">Int?</span>
+    <span class="keyword">var</span> numberOfAlienHeads: <span class="data-type">Int?</span>
+    
+
+    <span class="keyword">init</span>(waitTime: <span class="data-type">Double</span>, numberOfSpikeBalls: <span class="data-type">Int?</span>, numberOfSpaceCraft: <span class="data-type">Int?</span>, numberOfLetters: <span class="data-type">Int?</span>,numberOfAlienHeads: <span class="data-type">Int?</span>, numberOfFireballs: <span class="data-type">Int?</span>){
+        
+        <span class="keyword">self</span>.waitTime = waitTime
+        <span class="keyword">self</span>.numberOfSpikeBalls = numberOfSpikeBalls
+        <span class="keyword">self</span>.numberOfSpaceCraft = numberOfSpaceCraft
+        <span class="keyword">self</span>.numberOfLetters = numberOfLetters
+        <span class="keyword">self</span>.numberOfFireballs = numberOfFireballs
+        <span class="keyword">self</span>.numberOfAlienHeads = numberOfAlienHeads
+        
+        nextEncounter = nil
+    }
+    </pre>
+</div>
+
+<p>In addition to the variables and the initializer defined above, we will also define two functions <i>setNextEncounter(waitTime:numberOfSpikeBalls:numberOfSpaceCraft:numberOfLetters:numberOfAlienHeads:numberOfFireballs) which will be used to set the next encounter in a series.  This function will return the next encounter in the series, allowing us to chain these functions together so as to create an encounter series. </i> </p>
+
+<p>The other function <i>getNextEncounter()</i> is simply a getter for returning the next encounter in the series for the current enemy encounter.</p>
+
+<div class="code-wrapper">
+
+	<pre>
+
+
+<span class="keyword">class</span> Encounter{
+    
+  
+    
+    <span class="keyword">func</span> setNextEncounter(waitTime: <span class="data-type">Double</span>, numberOfSpikeBalls: <span class="data-type">Int?</span>, numberOfSpaceCraft: <span class="data-type">Int?</span>, numberOfLetters: <span class="data-type">Int?</span>, numberOfFireballs: <span class="data-type">Int?</span>, numberOfAlienHeads: <span class="data-type">Int?</span>) -> <span class="data-type">Encounter</span>{
+        
+        <span class="keyword">self</span>.nextEncounter = Encounter(waitTime: waitTime, numberOfSpikeBalls: numberOfSpikeBalls, numberOfSpaceCraft: numberOfSpaceCraft, numberOfLetters: numberOfLetters, numberOfAlienHeads: numberOfAlienHeads, numberOfFireballs: numberOfFireballs)
+        
+        <span class="keyword">return</span> <span class="keyword">self</span>.nextEncounter!
+    }
+    
+    <span class="keyword">func</span> getNextEncounter() -> <span class="data-type">Encounter?</span>{
+        
+        <span class="keyword">return</span> nextEncounter
+    }
+}
+
+
+		
+	</pre>
+
+</div>
+
+   
+
+<div class="adcontainer">
+  
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-3595969991114166"
+     data-ad-slot="6717344725"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</div>
+
+
+
+    <p>Now that we have our "node" defined, we are to define an encounter series, and after that, a class that will generate a series of encounter series so that we can conveniently and scalably configure customizable game levels.  This provides an alternative to the common technique of using timers to spawn enemies after regular intervals. </p>
+
+
+
+
+    <p>To continue, please <a href="./page2.html">click here</a></p>
+    <p>Or you can return to the tutorials table of contents: <a href="../index.html">tutorials table of contents</a> </p>
+
+</div>
+	
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+</body>
+</html>
