@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title></title>
+	<link rel="stylesheet" href="">
+
+	
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Crimson+Text|Dosis|Nunito" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Coiny|Keania+One|Khand|Shrikhand" rel="stylesheet">
+
+		<link rel="stylesheet" href="./css/index.css">
+
+
+</head>
+
+<body>
+
+
+  <!-- BEGIN  NAVIGATION BAR -->
+ <nav class="navbar navbar-toggleable-md navbar-light fixed-top " style="background-color: #7fffd4;">
+    
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <a class="navbar-brand text-warning" href="#"><img src="../../img/panda.png" alt="" id="app-icon-navbar"/ width="40px" height="30px"> <span class="brand-text" id="appicon-caption">iOS Panda Developers</span></a>
+
+  
+
+  <div class="collapse navbar-collapse" id="navbarNavDropdown">
+    <ul class="navbar-nav">
+      
+       <li class="nav-item">
+        <a class="nav-link" href="#"> <span class="sr-only">(current)</span></a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" href="../../index.html">Homepage</a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" href="../../swift_tutorials/index.html">Swift Tutorials</a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" href="../index.html">iOS Tutorials</a>
+      </li>
+  
+
+    
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Additional Information
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" href="#footer">Other Information</a>
+          <a class="dropdown-item" href="#footer">Developer Contact Info</a>
+        </div>
+        </li>
+      </ul>
+      </div>
+  </nav>
+
+
+  <!-- END  NAVIGATION BAR -->
+
+<div class="container">
+
+<div class="code-wrapper">
+	<pre>
+		
+<span class="keyword">import</span> XCTest
+
+<span class="keyword">@testable import</span> Scrambled_Messenger
+
+<span class="keyword">class</span> OxfordAPIRequestTests: XCTestCase {
+    
+    /** Most basic api requests **/
+    
+    <span class="keyword">var</span> oxfordAPIRequest1: OxfordAPIRequest!
+    <span class="keyword">var</span> oxfordAPIRequest2: OxfordAPIRequest!
+    <span class="keyword">var</span> oxfordAPIRequest3: OxfordAPIRequest!
+    
+    /** Dictionary Entries requests: example sentences, synonyms, antonyms, both synonyms and antonyms **/
+    
+    <span class="keyword">var</span> antonymAPIRequest: OxfordAPIRequest!
+    <span class="keyword">var</span> synonymAPIRequest: OxfordAPIRequest!
+    <span class="keyword">var</span> antonymAndSynonymAPIRequest: OxfordAPIRequest!
+    <span class="keyword">var</span> exampleSentencesAPIRequest: OxfordAPIRequest!
+
+    <span class="keyword">var</span> dictEntryRequestWithRegionFilters: OxfordAPIRequest!
+    
+    <span class="keyword">var</span> wordListRequestWithDomainFilters: OxfordAPIRequest!
+    <span class="keyword">var</span> wordListRequestWithRegisterFilters: OxfordAPIRequest!
+    <span class="keyword">var</span> wordListRequestWithRegisterAndRegionFilters: OxfordAPIRequest!
+    <span class="keyword">var</span> wordListRequestWithInvalidFilterParameters: OxfordAPIRequest!
+    
+    <span class="keyword">var</span> dictEntryRequestWithFilters3: OxfordAPIRequest!
+    <span class="keyword">var</span> dictEntryRequestWithFilters4: OxfordAPIRequest!
+
+
+    <span class="keyword">override func</span> setUp() {
+        super.setUp()
+        // Put setup code here. This method is called before the invocation of each test method in the class.
+        
+        /** Basic API Requests **/
+        oxfordAPIRequest1 = OxfordAPIRequest(withEndpoint: .entries, withQueryWord: "love", withFilters: nil)
+        
+        oxfordAPIRequest2 = OxfordAPIRequest(withEndpoint: .inflections, withQueryWord: "eat", withFilters: nil)
+        
+        oxfordAPIRequest3 = OxfordAPIRequest(withEndpoint: .wordlist, withQueryWord: "practice", withFilters: nil)
+        
+        /** Dictionary entry API requests **/
+        
+        antonymAPIRequest = OxfordAPIRequest(withWord: "love", hasRequestedAntonymsQuery: true, hasRequestedSynonymsQuery: false)
+        
+        synonymAPIRequest = OxfordAPIRequest(withWord: "love", hasRequestedAntonymsQuery: false, hasRequestedSynonymsQuery: true)
+        
+        antonymAndSynonymAPIRequest = OxfordAPIRequest(withWord: "love", hasRequestedAntonymsQuery: true, hasRequestedSynonymsQuery: true)
+        
+        exampleSentencesAPIRequest = OxfordAPIRequest(withWord: "love", hasRequestedExampleSentencesQuery: true)
+
+        dictEntryRequestWithRegionFilters = OxfordAPIRequest(withWord: "love", withFilters: [OxfordAPIEndpoint.OxfordAPIFilter.regions([OxfordRegion.us.rawValue])])
+
+        wordListRequestWithDomainFilters = OxfordAPIRequest(
+            withDomainFilters: [OxfordAPIEndpoint.OxfordAPIFilter.domains([OxfordDomain.anatomy.rawValue])],
+            withRegionFilters: [],
+            withRegisterFilters: [],
+            withTranslationsFilters: [],
+            withLexicalCategoryFilters: [],
+            withQueryLanguage: .English)
+        
+        wordListRequestWithRegisterFilters = OxfordAPIRequest(
+            withDomainFilters: [],
+            withRegionFilters: [],
+            withRegisterFilters: [OxfordAPIEndpoint.OxfordAPIFilter.registers([OxfordLanguageRegister.dialect.rawValue])],
+            withTranslationsFilters: [],
+            withLexicalCategoryFilters: [],
+            withQueryLanguage: .English)
+
+        wordListRequestWithRegisterAndRegionFilters = OxfordAPIRequest(
+            withDomainFilters: [],
+            withRegionFilters: [OxfordAPIEndpoint.OxfordAPIFilter.regions([OxfordRegion.us.rawValue])],
+            withRegisterFilters: [OxfordAPIEndpoint.OxfordAPIFilter.registers([OxfordLanguageRegister.dialect.rawValue])],
+            withTranslationsFilters: [],
+            withLexicalCategoryFilters: [],
+            withQueryLanguage: .English)
+        
+        wordListRequestWithInvalidFilterParameters = OxfordAPIRequest(withEndpoint: OxfordAPIEndpoint.wordlist, withQueryWord: String(), withFilters: [
+            OxfordAPIEndpoint.OxfordAPIFilter.definitions(["a way of doing stuff"])
+            ])
+        
+        dictEntryRequestWithFilters3 = OxfordAPIRequest()
+        dictEntryRequestWithFilters4 = OxfordAPIRequest()
+
+
+
+    }
+    
+    <span class="keyword">override func</span> tearDown() {
+        // Put teardown code here. This method is called after the invocation of each test method in the class.
+        oxfordAPIRequest1 = nil
+        
+        antonymAPIRequest = nil
+        
+        synonymAPIRequest = nil
+        
+        antonymAndSynonymAPIRequest = nil
+        
+        exampleSentencesAPIRequest = nil
+        
+        super.tearDown()
+    }
+    
+    <span class="keyword"> func</span> testURLNotNil(){
+        
+        let urlRequest = oxfordAPIRequest1.generateURLRequest()
+        
+        let url = urlRequest.url
+        
+        XCTAssertNotNil(url)
+    }
+    
+    
+    <span class="keyword"> func</span> testWordListRequestWithInvalidFilterParameters(){
+        
+        
+        
+        XCTAssertThrowsError(
+           
+           try wordListRequestWithInvalidFilterParameters.generateValidatedURLRequest()
+ 
+        , "Test failed: the filter validation method did not throw an error upon receiving invalid filter values", {
+            
+            error in
+            
+            print("The invalid filter parameter threw an error: \(error.localizedDescription)")
+        })
+    }
+    
+    <span class="keyword"> func</span> testWordListRequestWithRegisterAndRegionFilters(){
+        
+        let urlRequest = wordListRequestWithRegisterAndRegionFilters.generateURLRequest()
+        
+        let urlString = urlRequest.url!.absoluteString
+        
+        XCTAssertEqual(urlString, "https://od-api.oxforddictionaries.com/api/v1/wordlist/en/regions=us;registers=dialect", "Test failed: th url associated with the url request is incorrect")
+        
+    }
+    
+    <span class="keyword"> func</span> testWordListRequestWithRegisterFilters(){
+        
+        let urlRequest = wordListRequestWithRegisterFilters.generateURLRequest()
+        
+        let urlString = urlRequest.url!.absoluteString
+        
+        XCTAssertEqual(urlString, "https://od-api.oxforddictionaries.com/api/v1/wordlist/en/registers=dialects", "Test failed: th url associated with the url request is incorrect")
+        
+    }
+    
+    <span class="keyword"> func</span> testWordListRequestWithDomainFilters(){
+        
+        
+        let urlRequest = wordListRequestWithDomainFilters.generateURLRequest()
+        
+        let urlString = urlRequest.url!.absoluteString
+        
+        XCTAssertEqual(urlString, "https://od-api.oxforddictionaries.com/api/v1/wordlist/en/domains=anatomy", "Test failed: th url associated with the url request is incorrect")
+        
+    }
+    
+    <span class="keyword"> func</span> testDictionaryEntryRequestWithRegionFilters(){
+        
+        
+        let urlRequest = dictEntryRequestWithRegionFilters.generateURLRequest()
+        
+        let urlString = urlRequest.url!.absoluteString
+        
+        XCTAssertEqual(urlString, "https://od-api.oxforddictionaries.com/api/v1/entries/en/love/regions=us", "Test failed: th url associated with the url request is incorrect")
+        
+    }
+    
+    <span class="keyword"> func</span> testAPIRequestHeaderFields() {
+        // This is an example of a functional test case.
+        // Use XCTAssert and related functions to verify your tests produce the correct results.
+    
+        let urlRequest = oxfordAPIRequest1.generateURLRequest()
+        
+        let contentType_headerFieldValue = urlRequest.value(forHTTPHeaderField: "Accept")
+        let appID_headerFieldValue = urlRequest.value(forHTTPHeaderField: "app_id")
+        let appKey_headerFieldValue = urlRequest.value(forHTTPHeaderField: "app_key")
+
+        XCTAssertEqual(contentType_headerFieldValue, "application/json", "Test failed: Header field 'Accept' has incorrect value")
+        
+         XCTAssertEqual(appID_headerFieldValue,"acb61904", "Test failed: Header field for app_id has incorrect value")
+        
+         XCTAssertEqual(appKey_headerFieldValue,"383d6f9739d4974fb81168976b6e991b", "Test failed: Header field for app_key has incorrect field")
+        
+   
+        
+    }
+    
+    
+    <span class="keyword"> func</span> testAntonymAPIRequestURLString(){
+        
+        let urlRequest = antonymAPIRequest.generateURLRequest()
+        
+        let urlString = urlRequest.url!.absoluteString
+        
+        XCTAssertEqual(urlString, "https://od-api.oxforddictionaries.com/api/v1/entries/en/love/antonyms", "Test failed: th url associated with the url request is incorrect")
+    }
+    
+    <span class="keyword"> func</span> testSynonymAPIRequestURLString(){
+        
+        let urlRequest = synonymAPIRequest.generateURLRequest()
+        
+        let urlString = urlRequest.url!.absoluteString
+        
+        XCTAssertEqual(urlString, "https://od-api.oxforddictionaries.com/api/v1/entries/en/love/synonyms", "Test failed: th url associated with the url request is incorrect")
+
+    }
+    
+    <span class="keyword"> func</span> testSynonymAndAntonymAPIRequestURLString(){
+        
+        let urlRequest = antonymAndSynonymAPIRequest.generateURLRequest()
+        
+        let urlString = urlRequest.url!.absoluteString
+        
+        XCTAssertEqual(urlString, "https://od-api.oxforddictionaries.com/api/v1/entries/en/love/synonyms;antonyms", "Test failed: th url associated with the url request is incorrect")
+
+    }
+    
+    <span class="keyword"> func</span> testExampleSentencesAPIRequestURLString(){
+        
+        let urlRequest = exampleSentencesAPIRequest.generateURLRequest()
+        
+        let urlString = urlRequest.url!.absoluteString
+        
+        XCTAssertEqual(urlString, "https://od-api.oxforddictionaries.com/api/v1/entries/en/love/sentences", "Test failed: th url associated with the url request is incorrect")
+
+    }
+    
+    <span class="keyword"> func</span> testAPIRequestURLString(){
+        
+        let urlRequest = oxfordAPIRequest1.generateURLRequest()
+        
+        let urlString = urlRequest.url!.absoluteString
+        
+        XCTAssertEqual(urlString, "https://od-api.oxforddictionaries.com/api/v1/entries/en/love", "Test failed: th url associated with the url request is incorrect")
+    }
+    
+    <span class="keyword"> func</span> testPerformanceExample() {
+        // This is an example of a performance test case.
+        self.measure {
+            // Put the code you want to measure the time of here.
+        }
+    }
+    
+}
+ 
+
+	</pre>
+</div>
+
+  <p>Good job! If you've made it this far, you are amazing! Hopefully, in the process you've gained some valuable insight into how to use delegation, how to connect to REST APIs via the URLSession class, and unit testing.  A logical next step would be to develop classes to help you parse the JSON results for the dictionary/thesaurus data.</p>
+
+    <p>If you feel confused or are having trouble following, you can go back to the <a href="./index.html">previous page</a> or back to the table of contents <a href="./index.html">table of contents</a>.</p>
+
+	
+    </div>
+    
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+</body>
+</html>

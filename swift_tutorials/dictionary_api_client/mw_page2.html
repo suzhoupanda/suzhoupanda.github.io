@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title></title>
+	<link rel="stylesheet" href="">
+
+
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Crimson+Text|Dosis|Nunito" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Coiny|Keania+One|Khand|Shrikhand" rel="stylesheet">
+
+		<link rel="stylesheet" href="./css/index.css">
+
+
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+      (adsbygoogle = window.adsbygoogle || []).push({
+       google_ad_client: "ca-pub-3595969991114166",
+       enable_page_level_ads: true
+     });
+  </script>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+</head>
+
+<body>
+
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+      (adsbygoogle = window.adsbygoogle || []).push({
+       google_ad_client: "ca-pub-3595969991114166",
+       enable_page_level_ads: true
+     });
+  </script>
+
+
+    
+  <!-- BEGIN  NAVIGATION BAR -->
+ <nav class="navbar navbar-toggleable-md navbar-light fixed-top " style="background-color: #7fffd4;">
+    
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <a class="navbar-brand text-warning" href="#"><img src="../../img/panda.png" alt="" id="app-icon-navbar"/ width="40px" height="30px"> <span class="brand-text" id="appicon-caption">iOS Panda Developers</span></a>
+
+  
+
+  <div class="collapse navbar-collapse" id="navbarNavDropdown">
+    <ul class="navbar-nav">
+      
+       <li class="nav-item">
+        <a class="nav-link" href="#"> <span class="sr-only">(current)</span></a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" href="../../index.html">Homepage</a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" href="../../swift_tutorials/index.html">Swift Tutorials</a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" href="../index.html">iOS Tutorials</a>
+      </li>
+  
+
+    
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Additional Information
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" href="#footer">Other Information</a>
+          <a class="dropdown-item" href="#footer">Developer Contact Info</a>
+        </div>
+        </li>
+      </ul>
+      </div>
+  </nav>
+
+
+   
+
+  <!-- END  NAVIGATION BAR -->
+
+<div class="container adcontainer">
+  
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-3595969991114166"
+     data-ad-slot="6717344725"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</div>
+
+ 
+
+<div class="container">
+
+<p> </p>
+
+
+<p> </p>
+
+<div class="code-wrapper">
+
+	<pre>
+
+
+protocol MWAPIDelegate{
+    
+    typealias XMLResponse = XMLParser
+    
+    func didFailToConnectToEndpoint(withError error: Error)
+    
+    func didFailToGetXMLData(withHTTPResponse httpResponse: HTTPURLResponse)
+    
+    func didFailToSerializeXMLData(withHTTPResponse httpResponse: HTTPURLResponse)
+    
+    func didFailToSerializeXMLData(withError error: Error?)
+
+    func didFinishReceivingHTTPResponse(withHTTPResponse httpResponse: HTTPURLResponse)
+    
+    func didFinishReceivingXMLData(withXMLResponse xmlResponse: XMLResponse, withHTTPResponse httpResponse: HTTPURLResponse)
+    
+    func didFinishReceivingXMLDocument(withXMLDocument xmlDocument: XMLDocument, withHTTPResponse httpResponse: HTTPURLResponse)
+    
+    func didFinishReceivingDictionaryEntry(withDictionaryEntry dictionaryEntry: MWDictionaryEntry, withHTTPResponse httpResponse: HTTPURLResponse)
+
+
+    
+}
+
+	
+	</pre>
+
+</div>
+
+<p></p>
+
+<div class="code-wrapper">
+
+<pre>
+  
+class MWDictionaryEntry{
+    
+    static let kHeadWord = "headWord"
+    static let kPronunciation = "pronunciation"
+    static let kEtymology = "etymology"
+    static let kAudioFilePath = "audioFilePath"
+    static let kDefinitions = "definitions"
+    static let kFunctionalLabel = "functionalLabel"
+    
+    /** Similar to an NSObject, where properties can be accessed through key-value coding **/
+    
+    var debugDescription: String{
+        
+        let headwordString = "The headword is: \(self.headWord)"
+        let functionalLabelString = "The functional label is: \(self.functionalLabel)"
+        let pronunciationString = "Pronunciation is: \(self.pronunciation)"
+        let etymology = "Etymology is: \(self.etymology)"
+        let definitions = (self.entryDict[MWDictionaryEntry.kDefinitions] as! [String]).reduce("Definitions include: ", { return "\($0)\n\($1)"})
+        
+        
+        let audioFilePath = "Audio FilePath is: \(self.audioFilePath)"
+        
+        return "\n\(headwordString),\n\(functionalLabelString),\n\(etymology),\n\(pronunciationString),\n\(audioFilePath),\n\(definitions)"
+    }
+    
+    var headWord: String{
+        
+        get{
+            return self.entryDict[MWDictionaryEntry.kHeadWord] as! String
+        }
+        
+        set{
+            self.entryDict[MWDictionaryEntry.kHeadWord] = newValue
+        }
+        
+    }
+    
+    var pronunciation: String{
+        
+        get{
+            return self.entryDict[MWDictionaryEntry.kPronunciation] as! String
+        }
+        
+        set{
+            self.entryDict[MWDictionaryEntry.kPronunciation] = newValue
+        }
+        
+    }
+    
+    var etymology: String{
+        
+        get{
+            return self.entryDict[MWDictionaryEntry.kEtymology] as! String
+        }
+        
+        set{
+            self.entryDict[MWDictionaryEntry.kEtymology] = newValue
+        }
+        
+    }
+    
+    
+    var audioFilePath: String{
+        
+        get{
+            return self.entryDict[MWDictionaryEntry.kAudioFilePath] as! String
+        }
+        
+        set{
+            self.entryDict[MWDictionaryEntry.kAudioFilePath] = newValue
+        }
+        
+    }
+    
+    var functionalLabel: String{
+        
+        get{
+            return self.entryDict[MWDictionaryEntry.kFunctionalLabel] as! String
+        }
+        
+        set{
+            self.entryDict[MWDictionaryEntry.kFunctionalLabel] = newValue
+        }
+        
+    }
+    
+    var definitions: [String]{
+        
+        get{
+            return self.entryDict[MWDictionaryEntry.kDefinitions] as! [String]
+        }
+        
+        set{
+            self.entryDict[MWDictionaryEntry.kDefinitions] = newValue
+        }
+        
+    }
+    
+    func addDefinition(def: String){
+        
+        if var defArray = entryDict[MWDictionaryEntry.kDefinitions] as? [String]{
+            defArray.append(def)
+
+        }
+    }
+    
+    var entryDict: [String: Any]!
+    
+    init(){
+        
+        entryDict = [
+            MWDictionaryEntry.kHeadWord: String(),
+            MWDictionaryEntry.kPronunciation: String(),
+            MWDictionaryEntry.kEtymology: String(),
+            MWDictionaryEntry.kAudioFilePath: String(),
+            MWDictionaryEntry.kDefinitions: [String](),
+            MWDictionaryEntry.kFunctionalLabel: String()
+            
+        ]
+    }
+    
+  
+    
+}
+
+</pre>
+</div>
+
+    <p> </p>
+<div class="code-wrapper">
+<pre>
+  class MWAPIClient{
+
+
+}
+</pre>
+</div>
+     <p></p>
+
+     <div class="code-wrapper">
+       <pre>
+class MWAPIClient{
+    static let sharedClient = MWAPIClient()
+    
+    /** Instance variables **/
+    
+    private var urlSession: URLSession!
+    private var delegate: MWAPIDelegate?
+    
+    private var dictionaryEntry: MWDictionaryEntry?
+    
+    private  init(){
+
+        urlSession = URLSession.shared
+        delegate = self
+        
+        
+    }
+    
+    func setOxfordDictionaryAPIClientDelegate(with mwapiDelegate: MWAPIDelegate){
+        
+        self.delegate = mwapiDelegate
+        
+    }
+    
+    func resetDefaultDelegate(){
+        self.delegate = self
+    }
+}
+
+       </pre>
+     </div>
+
+     <p> </p>
+
+
+<div class="code-wrapper">
+    
+     <pre>
+
+
+extension MWAPIClient{
+
+    
+    func didFinishReceivingXMLDocument(withXMLDocument xmlDocument: XMLDocument, withHTTPResponse httpResponse: HTTPURLResponse){
+        
+        print("XML document received: \(xmlDocument.description)")
+        
+    }
+    
+    func didFinishReceivingDictionaryEntry(withDictionaryEntry dictionaryEntry: MWDictionaryEntry, withHTTPResponse httpResponse: HTTPURLResponse){
+        
+        print("Dictionary entry received: \(dictionaryEntry.debugDescription)")
+        
+    }
+    
+    
+    func didFailToSerializeXMLData(withHTTPResponse httpResponse: HTTPURLResponse) {
+        
+    }
+    
+    func didFailToSerializeXMLData(withError error: Error?) {
+        
+    }
+    
+    func didFinishReceivingXMLData(withXMLResponse xmlResponse: MWAPIDelegate.XMLResponse, withHTTPResponse httpResponse: HTTPURLResponse) {
+        
+    }
+    func didFailToGetXMLData(withHTTPResponse httpResponse: HTTPURLResponse) {
+        
+    }
+    func didFailToConnectToEndpoint(withError error: Error) {
+        
+    }
+    func didFinishReceivingHTTPResponse(withHTTPResponse httpResponse: HTTPURLResponse) {
+        
+    }
+}
+
+    </pre>
+</div> 
+
+
+<p> </p>
+
+<div class="code-wrapper">
+<pre>
+   
+    private func getDictionaryObject(fromXMLNode entryNode: XMLNode) throws -> MWDictionaryEntry{
+        
+        let dictionaryEntry = MWDictionaryEntry()
+
+        do{
+            
+            if let pronunication = try entryNode.nodes(forXPath: "//pr").first,let stringValue = pronunication.stringValue{
+                
+                dictionaryEntry.pronunciation = stringValue
+            }
+            
+            if let functionalLabel = try entryNode.nodes(forXPath: "//fl").first,let stringValue = functionalLabel.stringValue{
+                
+                dictionaryEntry.functionalLabel = stringValue
+            }
+            
+            if let soundFilePath = try entryNode.nodes(forXPath: "//wav").first,let stringValue = soundFilePath.stringValue{
+                
+                dictionaryEntry.audioFilePath = stringValue
+            }
+            
+            if let headWord = try entryNode.nodes(forXPath: "//hw").first,let stringValue = headWord.stringValue{
+                
+                dictionaryEntry.headWord = stringValue
+            }
+            
+            if let etymology = try entryNode.nodes(forXPath: "//et").first,let stringValue = etymology.stringValue{
+                
+                dictionaryEntry.etymology = stringValue
+            }
+            
+            
+            
+            if let definitionNode = try entryNode.nodes(forXPath: "//def").first{
+                
+                let definitions: [String] = try definitionNode.nodes(forXPath: "//dt").map({
+                    
+                    (definitionNode: DDXMLNode) in
+                    
+                    return definitionNode.stringValue
+
+                }).filter({ return $0 != nil}) as! [String]
+                
+                
+                let processedDefinitions: [String] = definitions.map({
+                    
+                    var mutableDef = $0
+                    
+                    if(mutableDef.first! == ":"){
+                        mutableDef.removeFirst()
+                    }
+                    
+                    return mutableDef
+                })
+                
+                dictionaryEntry.definitions = processedDefinitions
+                    
+    
+            }
+            
+     
+            return dictionaryEntry
+
+        } catch _ as NSError{
+            throw NSError(domain: "XMLParsingError: failed to convert the XML dictionary entry into a valid dictionary object", code: 0, userInfo: nil)
+        }
+        
+      
+    }
+
+</pre>
+
+</div>
+
+<p></p>
+
+<div class="code-wrapper">
+  <pre>
+
+
+    /** Wrapper function for executing aynchronous download of JSON data from Oxford Dictionary API **/
+    
+    private func startDataTask(withURLRequest request: URLRequest){
+        
+        guard let delegate = self.delegate else {
+            fatalError("Error: no delegate specified for Oxford API download task")
+        }
+        
+        _ = self.urlSession.dataTask(with: request, completionHandler: { data, response, error in
+            
+            switch (data,response,error){
+            case (.some,.some,.none),(.some,.some,.some): //Able to connect to the server, data received
+                
+                let httpResponse = (response! as! HTTPURLResponse)
+                print("Connected to server with HTTP status code of: \(httpResponse.statusCode)")
+                
+                
+                do{
+                    
+                   
+
+                    let xmlDocument = try XMLDocument(data: data!, options: 0)
+                    
+                    delegate.didFinishReceivingXMLDocument(withXMLDocument: xmlDocument, withHTTPResponse: httpResponse)
+                    
+                    let nodes = try xmlDocument.nodes(forXPath: "//entry")
+                
+                    if let entryNode = nodes.first{
+                        
+                        let entry = try self.getDictionaryObject(fromXMLNode: entryNode)
+                        
+                        delegate.didFinishReceivingDictionaryEntry(withDictionaryEntry: entry, withHTTPResponse: httpResponse)
+
+                    }
+                 
+                    
+                    
+    
+                } catch let error as NSError{
+                    print("Error occurred while attempting to serialize JSON data: \(error.localizedDescription)")
+                    delegate.didFailToSerializeXMLData(withHTTPResponse: httpResponse)
+
+                }
+            
+                break
+            case (.none,.some,.none),(.none,.some,.some): //Able to connect to the server but failed to get data or received a bad HTTP Response
+                if let httpResponse = (response as? HTTPURLResponse){
+                    delegate.didFailToGetXMLData(withHTTPResponse: httpResponse)
+                }
+                break
+            case (.none,.none,.some): //Unable to connect to the server, with an error received
+                delegate.didFailToConnectToEndpoint(withError: error!)
+                break
+            case (.none,.none,.none): //Unable to connect to the server, no error received
+                let error = NSError(domain: "Failed to get a response: Error occurred while attempting to connect to the server", code: 0, userInfo: nil)
+                delegate.didFailToConnectToEndpoint(withError: error)
+                break
+            default:
+                break
+            }
+            
+        }).resume()
+    }
+    
+    
+  </pre>
+</div>
+
+
+<p></p>
+
+<div class="code-wrapper">
+  <pre>
+    
+
+
+  </pre>
+</div>
+
+
+<p></p>
+
+<div class="code-wrapper">
+  <pre>
+    
+  </pre>
+</div>
+
+<p></p>
+<div class="code-wrapper">
+  
+  <pre>
+
+  func downloadXMLData(forHeadWord headWord: String, hasRequestThesaurusAPI: Bool){
+        
+        let mwapiRequest = MWAPIRequest(withHeadWord: headWord, isThesaurusRequest: false)
+        
+        let apiRequest = mwapiRequest.generateURLRequest()
+        
+        self.startDataTask(withURLRequest: apiRequest)
+    }
+    
+    
+  
+  </pre>
+</div>
+
+<p></p>
+
+<div>
+  <img class="output-img" src="./xml_response.png" alt="">
+</div>
+
+<div class="code-wrapper">
+<pre>
+  Dictionary entry received: 
+The headword is: love,
+The functional label is: noun,
+Etymology is: Middle English, from Old English lufu; akin to Old High German luba love, Old English lēof dear, Latin lubēre, libēre to please,
+Pronunciation is: ˈləv,
+Audio FilePath is: love0001.wav,
+Definitions include: 
+strong affection for another arising out of kinship or personal ties maternal love for a child
+attraction based on sexual desire :affection and tenderness felt by lovers
+affection based on admiration, benevolence, or common interests love for his old schoolmates
+an assurance of affection give her my love
+warm attachment, enthusiasm, or devotion love of the sea
+the object of attachment, devotion, or admiration baseball was his first love
+a beloved person :darling often used as a term of endearment
+used as an informal term of address
+ :unselfish loyal and benevolent concern for the good of another: as
+the fatherly concern of God for humankind
+brotherly concern for others 
+a person's adoration of God
+a god or personification of love
+an amorous episode :love affair
+the sexual embrace :copulation
+a score of zero (as in tennis)
+god
+holding one's opponent scoreless in tennis
+inspired by affection
+to hold dear :cherish
+to feel a lover's passion, devotion, or tenderness for
+caress
+to fondle amorously
+to copulate with
+to like or desire actively :take pleasure in loved to play the violin
+to thrive in the rose loves sunlight
+to feel affection or experience desire
+a romantic attachment or episode between lovers
+a lively enthusiasm America's love affair with baseball
+tomato
+beads worn as a symbol of love and peace
+an illegitimate child
+a meal eaten in common by a Christian congregation in token of brotherly love
+a gathering held to promote reconciliation and good feeling or show someone affectionate honor
+any of a genus (Eragrostis) of grasses that resemble the bluegrasses but have flattened spikelets and deciduous lemmas
+fatty bulges along the sides of the body at the waist
+a gathering of people especially for the expression of their mutual love
+</pre>
+</div>
+
+<div class="adcontainer">
+  
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-3595969991114166"
+     data-ad-slot="6717344725"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</div>
+
+
+<div class="code-wrapper">
+    <pre>
+
+
+    </pre> 
+</div> 
+
+
+<p> </p>
+
+
+<div class="code-wrapper">
+    <pre>
+    </pre> 
+</div>
+
+
+
+<p></p>
+
+
+
+<div class="adcontainer">
+  
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-3595969991114166"
+     data-ad-slot="6717344725"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</div>
+
+
+<div class="code-wrapper">
+    <pre>
+
+
+
+
+
+     </pre>
+
+</div>
+
+     <p></p>
+
+<div class="adcontainer">
+  
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-3595969991114166"
+     data-ad-slot="6717344725"></ins>
+      <script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
+</div>
+
+
+
+    <p>To continue, please <a href="./mw_page3.html">click here</a></p>
+    <p>If you feel confused or are having trouble following, you can go back to the <a href="./mw_page2.html">previous page</a> or back to the table of contents <a href="./index.html">table of contents</a>.</p>
+
+</div>
+	
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+</body>
+</html>

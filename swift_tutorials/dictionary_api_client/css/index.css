@@ -1,0 +1,162 @@
+
+
+body{
+	background-color: #30a294;
+	padding-top: 5em;
+	padding-left: 2em;
+	padding-right: 2em;
+	padding-bottom: 1em;
+	color: #fbead1;
+	font-family: 'Dosis';
+	font-size: 1.5em;
+}
+
+nav{
+	font-family: 'Coiny', cursive;
+}
+
+	.sidebar{
+		display: none;
+		visibility: hidden;
+	}
+
+.card{
+	margin-top: 1em;
+	background-color: #7fffd4;
+	color: orange;
+}
+
+.card-header{
+	color: orange;
+	background-color: #199967;
+	font-weight: bold;
+}
+
+
+
+.data-type{
+	color: purple;
+}
+
+.output-img{
+	width: auto;
+	height: 40em;
+	margin: 0 auto;
+}
+
+.card{
+	width: 90%;
+	margin: 0 auto;
+	background-color: ;
+	padding: 1em;
+}
+
+
+.keyword{
+	color:violet;
+}
+
+.number{
+	color:blue;
+}
+
+.comment{
+	color: green;
+}
+
+.code-wrapper{
+	width: 95%;
+	margin: 0 auto;
+	background-color: #DAF7A6;
+	border-radius: 3%;
+	padding: 0.5em;
+	margin-top: 1em;
+	margin-bottom: 1em;
+
+}
+
+
+
+/** MEDIA QUERIES (BASED ON BOOTSTRAP BREAKPOINTS) **/ 
+
+
+@media (min-width: 300px){
+	
+}
+
+/** Small devices (landscape phones, 576px and up) **/
+@media (min-width: 576px) { 
+
+	
+
+	.adcontainer{
+		padding-bottom: 1em;
+		margin: 0 auto;
+		margin-bottom: 2em;
+		width: 90%;
+	}
+
+ }
+
+
+@media(min-width: 700px){
+
+	.brand-text{
+		display: inline;
+		font-size: 16px;
+	}
+
+	.sidebar{
+		display: visible;
+		float: right;
+		width:20%;
+	}
+
+	.container{
+		float: left;
+		width: 80%;
+	}
+
+	.code-wrapper{
+	width: 80%;
+	margin: 0 auto;
+	background-color: #DAF7A6;
+	border-radius: 3%;
+	padding: 1em;
+	margin-top: 1em;
+	margin-bottom: 1em;
+
+	}
+
+}
+
+/** Medium devices (tablets, 768px and up) **/
+@media (min-width: 768px) { 
+
+
+
+	.brand-text{
+		font-size: 20px;
+	}
+
+	
+
+
+ }
+
+/** Large devices (desktops, 992px and up) **/
+@media (min-width: 992px) { 
+
+	.brand-text{
+		font-size: 25px;
+	}
+
+
+ }
+
+/** Extra large devices (large desktops, 1200px and up) **/
+@media (min-width: 1200px) { 
+
+
+
+ }

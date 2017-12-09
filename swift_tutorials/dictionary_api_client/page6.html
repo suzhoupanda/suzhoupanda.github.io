@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title></title>
+	<link rel="stylesheet" href="">
+
+	
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Crimson+Text|Dosis|Nunito" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Coiny|Keania+One|Khand|Shrikhand" rel="stylesheet">
+		<link rel="stylesheet" href="./css/index.css">
+
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+      (adsbygoogle = window.adsbygoogle || []).push({
+       google_ad_client: "ca-pub-3595969991114166",
+       enable_page_level_ads: true
+     });
+  </script>
+
+</head>
+
+<body>
+
+
+  <!-- BEGIN  NAVIGATION BAR -->
+
+   <nav class="navbar navbar-toggleable-md navbar-light fixed-top " style="background-color: #7fffd4;">
+    
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <a class="navbar-brand text-warning" href="#"><img src="../../img/panda.png" alt="" id="app-icon-navbar"/ width="40px" height="30px"> <span class="brand-text" id="appicon-caption">iOS Panda Developers</span></a>
+
+  
+
+  <div class="collapse navbar-collapse" id="navbarNavDropdown">
+    <ul class="navbar-nav">
+      
+       <li class="nav-item">
+        <a class="nav-link" href="#"> <span class="sr-only">(current)</span></a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" href="../../index.html">Homepage</a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" href="../../swift_tutorials/index.html">Swift Tutorials</a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" href="../index.html">iOS Tutorials</a>
+      </li>
+  
+
+    
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Additional Information
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" href="#footer">Other Information</a>
+          <a class="dropdown-item" href="#footer">Developer Contact Info</a>
+        </div>
+        </li>
+      </ul>
+      </div>
+  </nav>
+
+
+  <!-- END  NAVIGATION BAR -->
+
+
+<div class="container">
+
+<p>Now that our API Client is all set up and good to go, we can start testing.  To this end, we define a new test class "OxfordAPIClientAsynchonrousTests" to test our API client methods.  Our test class will conform to the OxfordAPIDictionaryAPIDelegate protocol, whose methods are implemented below.  In addition, we define a promise variable for the class, as well as a computed property for the API client singleton so that it can be accessed more quickly in code.  In addition, we implement the setUp() method such that the singleton's delegate is set to the test class rather than being set to the singleton itself. The tearDown() method will reverse these actions, setting the promise to null and resetting the API client singleton's  delegate so that the singleton itself acts as the delegate.  </p>
+
+
+<div class="code-wrapper">
+<pre>
+    <span class="keyword">import</span> XCTest
+
+<span class="keyword">@testable import</span> Scrambled_Messenger
+
+/** Each test should be run individually **/
+
+<span class="keyword">class</span> OxfordAPIClientAsynchronousTests: XCTestCase, OxfordDictionaryAPIDelegate {
+    
+    <span class="keyword">typealias</span> JSONResponse = [String: Any]
+
+    <span class="keyword">var</span> promise: XCTestExpectation!
+
+    <span class="keyword">var</span> sharedClient: OxfordAPIClient{
+        <span class="keyword">return</span> OxfordAPIClient.sharedClient
+    }
+    
+    <span class="keyword">override func</span> setUp() {
+        
+        sharedClient.setOxfordDictionaryAPIClientDelegate(with: self)
+        
+        super.setUp()
+        
+        // Put setup code here. This method is called before the invocation of each test method in the class.
+        
+    }
+    
+    <span class="keyword">override func</span> tearDown() {
+        // Put teardown code here. This method is called after the invocation of each test method in the class.
+        
+        sharedClient.resetDefaultDelegate()
+        
+        promise = nil
+        
+        super.tearDown()
+    }
+}
+
+</pre>
+</div>
+
+<p> For our testing to be carried out more smoothly, our we'll make our test class conform to the OxfordAPIClientDelegate protocol and implement all of the delegate methods, as show below: </p>
+
+<div class="code-wrapper">
+<pre>
+
+
+    <span class="keyword">func</span> didFailToConnectToEndpoint(withError error: Error) {
+        XCTFail("Error occurred while attempting to connect to the server: \(error.localizedDescription)")
+
+    }
+    
+    /** Proper credentials are provided, the API request can be authenticated; an HTTP Response is received but no data is provided **/
+    
+    
+    <span class="keyword">func</span> didFailToGetJSONData(withHTTPResponse httpResponse: HTTPURLResponse) {
+        XCTFail("Unable to get JSON data with http status code: \(httpResponse.statusCode)")
+
+    }
+    
+    /** Proper credentials are provided, and the API request is fully authenticated; an HTTP Response is received and the data is provided by the raw data could not be parsed into a JSON object **/
+    
+    <span class="keyword">func</span> didFailToSerializeJSONData(withHTTPResponse httpResponse: HTTPURLResponse) {
+        XCTFail("Unable to serialize the data into a json response, http status code: \(httpResponse.statusCode)")
+
+    }
+    
+    
+    
+    /** If erroneous credentials are provided, the API request can't be authenticated; an HTTP Response is received but no data is provided **/
+    
+
+    <span class="keyword">func</span> didFinishReceivingHTTPResponse(withHTTPResponse httpResponse: HTTPURLResponse) {
+        XCTFail("HTTP response received with status code: \(httpResponse.statusCode)")
+
+    }
+    
+    /** Proper credentials are provided, and the API request is fully authenticated; an HTTP Response is received and serialized JSON data is provided **/
+    
+    <span class="keyword">func</span> didFinishReceivingJSONData(withJSONResponse jsonResponse: OxfordDictionaryAPIDelegate.JSONResponse, withHTTPResponse httpResponse: HTTPURLResponse) {
+        
+        promise.fulfill()
+        print("JSON response is as follows: \(jsonResponse)")
+    }
+    
+   
+    
+</pre>
+</div>
+
+<p>Note that for each of the delegate methods above, with the exception of didFinishReceivingJSONData(withJSONResponse:withHTTPResponse), XCTFail() is called to indicate that the test failed.  By contrast, for the didFinishReceivingJSONData(withJSONResponse:withHTTPResponse) method, we call fulfill on the promise object defined for the class.  Tests can be designed for all kinds of purposes.  In this case, we define tests whose success is determined based on whether or not parsed JSON data has been received as result of calling our publicly-acessible API client methods. </p>
+
+
+<p>Finally comes the tests themselves.  For each of the publicly available methods provided by the API client we run a corresponding test.  Success occurs when the promise is fulfilled, which in this case occurs when the delegate method didFinishReceivingJSONData(withJSONResponse:withHTTPResponse) is called, while failure indicated anytime any of the other delegate methods are called. </p>
+
+<div class="code-wrapper">
+<pre>
+	
+
+    
+    <span class="keyword">func</span> testWordListAPIRequesWithValidationt(){
+        
+        promise = expectation(description: "Promise fulfilled: JSON data for example sentences API request received and serialized successfully, http status code: 200")
+        
+        sharedClient.setOxfordDictionaryAPIClientDelegate(with: self)
+        
+        
+        
+        sharedClient.downloadWordlistJSONDataWithValidation(forFilters: [
+            OxfordAPIEndpoint.OxfordAPIFilter.registers([
+                OxfordLanguageRegister.archaic.rawValue
+                ])
+            ])
+        
+        waitForExpectations(timeout: 20.00, handler: nil)
+        
+    }
+    
+    <span class="keyword">func</span> testWordListWithRegisterAndRegionFiltersAPIRequest(){
+        
+        
+        promise = expectation(description: "Promise fulfilled: JSON data for example sentences API request received and serialized successfully, http status code: 200")
+        
+        sharedClient.setOxfordDictionaryAPIClientDelegate(with: self)
+        
+        
+        
+        sharedClient.downloadWordListJSONData(
+            forDomainFilters: [],
+            forRegionFilters: [OxfordAPIEndpoint.OxfordAPIFilter.regions([OxfordRegion.us.rawValue])],
+            forRegisterFilters: [OxfordAPIEndpoint.OxfordAPIFilter.registers([OxfordLanguageRegister.dialect.rawValue])],
+            forTranslationFilters: [],
+            forLexicalCategoryFilters: [])
+        
+        waitForExpectations(timeout: 20.00, handler: nil)
+        
+    }
+    
+    
+    
+    <span class="keyword">func</span> testWordListWithRegisterFiltersAPIRequest(){
+        
+        
+        promise = expectation(description: "Promise fulfilled: JSON data for example sentences API request received and serialized successfully, http status code: 200")
+        
+        sharedClient.setOxfordDictionaryAPIClientDelegate(with: self)
+        
+        
+        
+        sharedClient.downloadWordListJSONData(
+            forDomainFilters: [],
+            forRegionFilters: [],
+            forRegisterFilters: [OxfordAPIEndpoint.OxfordAPIFilter.registers([OxfordLanguageRegister.army_slang.rawValue])],
+            forTranslationFilters: [],
+            forLexicalCategoryFilters: [])
+        
+        waitForExpectations(timeout: 20.00, handler: nil)
+        
+    }
+    
+    <span class="keyword">func</span> testWordListWithDomainFiltersAPIRequest(){
+        
+        
+        promise = expectation(description: "Promise fulfilled: JSON data for example sentences API request received and serialized successfully, http status code: 200")
+        
+        sharedClient.setOxfordDictionaryAPIClientDelegate(with: self)
+        
+    
+        
+        sharedClient.downloadWordListJSONData(
+            forDomainFilters: [OxfordAPIEndpoint.OxfordAPIFilter.domains([OxfordDomain.anatomy.rawValue])],   forRegionFilters: [],
+            forRegisterFilters: [],
+          forTranslationFilters: [],
+          forLexicalCategoryFilters: [])
+        
+        waitForExpectations(timeout: 20.00, handler: nil)
+
+    }
+    
+    <span class="keyword">func</span> testDictionaryEntryWithRegionFiltersAPIRequest() {
+        // This is an example of a functional test case.
+        // Use XCTAssert and related functions to verify your tests produce the correct results.
+        
+        
+        promise = expectation(description: "Promise fulfilled: JSON data for example sentences API request received and serialized successfully, http status code: 200")
+        
+        sharedClient.setOxfordDictionaryAPIClientDelegate(with: self)
+       
+        sharedClient.downloadDictionaryEntryJSONData(forWord: "love", withFilters: [OxfordAPIEndpoint.OxfordAPIFilter.regions([OxfordRegion.us.rawValue])])
+        
+        waitForExpectations(timeout: 20.00, handler: nil)
+        
+        
+    }
+    
+    
+    <span class="keyword">func</span> testExampleSentencesAPIRequest() {
+        // This is an example of a functional test case.
+        // Use XCTAssert and related functions to verify your tests produce the correct results.
+        
+
+        promise = expectation(description: "Promise fulfilled: JSON data for example sentences API request received and serialized successfully, http status code: 200")
+
+        sharedClient.setOxfordDictionaryAPIClientDelegate(with: self)
+
+        sharedClient.downloadExampleSentencesJSONData(forWord: "love")
+        
+        waitForExpectations(timeout: 20.00, handler: nil)
+
+        
+
+        
+    }
+    
+    <span class="keyword">func</span> testAntonymsAndSynonymsAPIRequest() {
+        // This is an example of a functional test case.
+        // Use XCTAssert and related functions to verify your tests produce the correct results.
+        
+        promise = expectation(description: "Promise fulfilled: JSON data for antonym and synonym API request received and serialized successfully, http status code: 200")
+
+        sharedClient.setOxfordDictionaryAPIClientDelegate(with: self)
+
+
+        sharedClient.downloadThesaurusJSONData(forWord: "love", withAntonyms: true, withSynonyms: true)
+        
+        waitForExpectations(timeout: 20.00, handler: nil)
+
+    }
+    
+    
+    <span class="keyword">func</span> testSynonymsAPIRequest() {
+        // This is an example of a functional test case.
+        // Use XCTAssert and related functions to verify your tests produce the correct results.
+        
+        promise = expectation(description: "Promise fulfilled: JSON data for synonym API request received and serialized successfully, http status code: 200")
+
+        sharedClient.setOxfordDictionaryAPIClientDelegate(with: self)
+
+        sharedClient.downloadThesaurusJSONData(forWord: "love", withAntonyms: false, withSynonyms: true)
+        
+        waitForExpectations(timeout: 20.00, handler: nil)
+    }
+    
+    <span class="keyword">func</span> testAntonymsAPIRequest() {
+        // This is an example of a functional test case.
+        // Use XCTAssert and related functions to verify your tests produce the correct results.
+        
+        promise = expectation(description: "Promise fulfilled: JSON data for antonym API request received and serialized successfully, http status code: 200")
+
+        sharedClient.setOxfordDictionaryAPIClientDelegate(with: self)
+
+        sharedClient.downloadThesaurusJSONData(forWord: "love", withAntonyms: true, withSynonyms: false)
+        
+        waitForExpectations(timeout: 20.00, handler: nil)
+    }
+    
+    
+
+</pre>
+</div> 
+
+<p>Please note that this test class is designed such that each test must be run independently of one another.  Do not attempt to run all the tests at once simultaneously, since these are asynchronous methods and such testing can result bugs. </p>
+
+<p>Having tested our API client class, we should also test our OxfordAPIRequest struct to make sure that it is functioning properly, as its functionality is integral for the success of our API client class. </p>
+  
+  <p>To continue, please <a href="./page7.html">click here</a></p>
+    <p>If you feel confused or are having trouble following, you can go back to the <a href="./page5.html">previous page</a> or back to the table of contents <a href="./index.html">table of contents</a>.</p>
+
+	
+    </div> 
+    
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+</body>
+</html>

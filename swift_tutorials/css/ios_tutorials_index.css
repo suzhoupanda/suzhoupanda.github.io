@@ -1,0 +1,180 @@
+
+body{
+	background-color: #30a294;
+	padding-top: 5em;
+	padding-left: 2em;
+	padding-bottom: 1em;
+	color: #fbead1;
+}
+
+nav{
+	font-family: 'Coiny', cursive;
+}
+
+.row{
+	margin-bottom: 3em;
+}
+
+.thumbnail p{
+		font-size: 12px;
+	}
+
+.website-thumbnail-image{
+	
+	width: 90%;
+}
+
+.img-container img{
+	width: 5em;
+	height: auto;
+}
+
+.attribution-box{
+	font-size: 1em;
+	padding-right: 1em;
+}
+
+.intro-text{
+	display: inline;
+	float: right;
+	margin-bottom: 2em;
+	font-family: 'Dosis';
+	font-size: 1.1em;
+}	
+
+.intro-text a{
+
+	font-size: 1.2em;
+	font-style: italic;
+	color: white;
+}
+
+.img-container{
+	float: left;
+	margin-right: 1.5em;
+}
+
+.sidebar{
+		display: visible;
+		float: right;
+		width:20%;
+	}
+
+.container{
+	float: left;
+	width: 80%;
+}
+
+
+.adcontainer{
+	padding-bottom: 1em;
+	margin-bottom: 2em;
+}
+
+.container h1{
+	text-align: center;
+	font-family: 'Coiny', cursive;
+
+}
+
+.container-heading{
+	margin-top: 1em;
+	margin-bottom: 2em;
+}
+
+.footer-heading{
+	margin-bottom: 0.5em;
+}
+
+.thumbnail-container{
+	margin-bottom: 2em;
+}
+
+
+
+.attribution-box{
+	font-family: 'Dosis';
+}
+
+.brand-text{
+	display: none;
+	}
+
+/** MEDIA QUERIES (BASED ON BOOTSTRAP BREAKPOINTS) **/ 
+
+.list-group{
+	margin-bottom: 1em;
+	margin-right: 0.5em;
+	font-family: 'Nunito';
+}
+
+#list-tab{
+ 	margin-bottom: 1em;
+ 	margin-right: 0.5em;
+ 	font-family: 'Nunito';
+
+
+
+}
+
+
+
+@media (min-width: 300px){
+	
+
+}
+
+/** Small devices (landscape phones, 576px and up) **/
+@media (min-width: 576px) { 
+
+	
+	.adcontainer{
+		padding-bottom: 1em;
+		margin-bottom: 2em;
+	}
+
+ }
+
+
+@media(min-width: 700px){
+
+	.brand-text{
+		display: inline;
+		font-size: 16px;
+	}
+}
+
+/** Medium devices (tablets, 768px and up) **/
+@media (min-width: 768px) { 
+
+
+
+.brand-text{
+		font-size: 20px;
+	}
+
+	.website-thumbnail-image{
+	
+	width: 80%;
+
+}
+
+
+ }
+
+/** Large devices (desktops, 992px and up) **/
+@media (min-width: 992px) { 
+
+.brand-text{
+		font-size: 25px;
+	}
+
+
+ }
+
+/** Extra large devices (large desktops, 1200px and up) **/
+@media (min-width: 1200px) { 
+
+
+
+ }
