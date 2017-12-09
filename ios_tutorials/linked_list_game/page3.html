@@ -109,77 +109,77 @@
 
 <div class="code-wrapper">
   <pre>
-  extension EncounterSeries{
+<span class="keyword">extension</span> EncounterSeries{
 
-  static func GenerateEncounterSeries(forPlaneViewController planeViewController: PlaneViewController,withMaxLetter maxLetters: Int, withNumberOfEncounters numberOfEncounters: Int, withMaxFireballs maxFireballs: Int, withMaxSpikeBalls maxSpikeBalls: Int, withMaxSpaceCraft maxSpaceCraft: Int, withMaxAlienHeads maxAlienHeads: Int, withMaxWaitTime maxWaitTime: Int) -> EncounterSeries{
+  <span class="keyword">static func</span> GenerateEncounterSeries(forPlaneViewController planeViewController: PlaneViewController,withMaxLetter maxLetters: <span class="data-type">Int</span>, withNumberOfEncounters numberOfEncounters: <span class="data-type">Int</span>, withMaxFireballs maxFireballs: <span class="data-type">Int</span>, withMaxSpikeBalls maxSpikeBalls: <span class="data-type">Int</span>, withMaxSpaceCraft maxSpaceCraft: Int, withMaxAlienHeads maxAlienHeads: <span class="data-type">Int</span>, withMaxWaitTime maxWaitTime: <span class="data-type">Int</span>) -> <span class="data-type">EncounterSeries</span>{
         
-        if(numberOfEncounters < 2){
-            fatalError("Error: there must be at least two encounters minimum in order for an encounter series to be generated")
+        <span class="keyword">if</span>(numberOfEncounters < 2){
+            <span class="keyword">fatalError</span>("Error: there must be at least two encounters minimum in order for an encounter series to be generated")
         }
         
-        let getMaxWaitTime = {
+        <span class="keyword">let</span> getMaxWaitTime = {
             
-            return Double(4.00 + Double(arc4random_uniform(UInt32(maxWaitTime))))
+            <span class="keyword">return</span> Double(4.00 + Double(arc4random_uniform(UInt32(maxWaitTime))))
 
         }
         
         
-        let getRandomNumberOfSpikeBalls: ()->Int = {
+        <span class="keyword">let</span> getRandomNumberOfSpikeBalls: ()-><span class="data-type">Int</span> = {
             
-            let maximumNum = maxSpikeBalls <= 0 ? 0: maxSpikeBalls
+            <span class="keyword">let</span> maximumNum = maxSpikeBalls <= 0 ? 0: maxSpikeBalls
             
-            return Int(arc4random_uniform(UInt32(maximumNum)))
+            <span class="keyword">return</span> Int(arc4random_uniform(UInt32(maximumNum)))
         }
         
-        let getRandomNumberOfFireballs: ()->Int = {
+        <span class="keyword">let</span> getRandomNumberOfFireballs: ()-><span class="data-type">Int</span> = {
             
             let maximumNum = maxFireballs <= 0 ? 0: maxFireballs
             
-            return Int(arc4random_uniform(UInt32(maximumNum)))
+            <span class="keyword">return</span>  <span class="data-type">Int</span>(arc4random_uniform(UInt32(maximumNum)))
         }
         
-        let getRandomNumberOfSpaceCraft: ()->Int = {
+        <span class="keyword">let</span> getRandomNumberOfSpaceCraft: ()-><span class="data-type">Int</span> = {
             
-            let maximumNum = maxSpaceCraft <= 0 ? 0: maxSpaceCraft
+            <span class="keyword">let</span> maximumNum = maxSpaceCraft <= 0 ? 0: maxSpaceCraft
             
-            return Int(arc4random_uniform(UInt32(maximumNum)))
+            <span class="keyword">return</span> <span class="data-type">Int</span>(arc4random_uniform(UInt32(maximumNum)))
         }
         
-        let getRandomNumberOfAlienHeads: ()->Int = {
-            let maximumNum = maxAlienHeads <= 0 ? 0: maxAlienHeads
+        <span class="keyword">let</span> getRandomNumberOfAlienHeads: ()-><span class="data-type">Int</span> = {
+            <span class="keyword">let</span> maximumNum = maxAlienHeads <= 0 ? 0: maxAlienHeads
             
-            return Int(arc4random_uniform(UInt32(maximumNum)))
+            <span class="keyword">return</span> <span class="data-type">Int</span>(arc4random_uniform(UInt32(maximumNum)))
         }
         
-        let getRandomNumberOfLetters: ()->Int = {
-            let maximumNum = maxLetters <= 0 ? 0: maxLetters
+        <span class="keyword">let</span> getRandomNumberOfLetters: ()->Int = {
+            <span class="keyword">let</span> maximumNum = maxLetters <= 0 ? 0: maxLetters
             
-            return Int(arc4random_uniform(UInt32(maximumNum)))
+            <span class="keyword">return</span> Int(arc4random_uniform(UInt32(maximumNum)))
             
         }
        
         
-        let (firstWaitTime,fireballNum1,spikeBallNum1,spaceCraftNum1,letterNum1,alienHeadsNum1) = (getMaxWaitTime(),getRandomNumberOfFireballs(),getRandomNumberOfSpikeBalls(),getRandomNumberOfSpaceCraft(),getRandomNumberOfLetters(),getRandomNumberOfAlienHeads())
+        <span class="keyword">let</span> (firstWaitTime,fireballNum1,spikeBallNum1,spaceCraftNum1,letterNum1,alienHeadsNum1) = (getMaxWaitTime(),getRandomNumberOfFireballs(),getRandomNumberOfSpikeBalls(),getRandomNumberOfSpaceCraft(),getRandomNumberOfLetters(),getRandomNumberOfAlienHeads())
        
      
         
-        let firstEncounter = Encounter(waitTime: firstWaitTime, numberOfSpikeBalls: spikeBallNum1, numberOfSpaceCraft: spaceCraftNum1, numberOfLetters: letterNum1, numberOfAlienHeads: alienHeadsNum1, numberOfFireballs: fireballNum1)
+        <span class="keyword">let</span> firstEncounter = Encounter(waitTime: firstWaitTime, numberOfSpikeBalls: spikeBallNum1, numberOfSpaceCraft: spaceCraftNum1, numberOfLetters: letterNum1, numberOfAlienHeads: alienHeadsNum1, numberOfFireballs: fireballNum1)
         
-        let (secondWaitTime,fireballNum2,spikeBallNum2,spaceCraftNum2,letterNum2,alienHeadsNum2) = (getMaxWaitTime(),getRandomNumberOfFireballs(),getRandomNumberOfSpikeBalls(),getRandomNumberOfSpaceCraft(),getRandomNumberOfLetters(),getRandomNumberOfAlienHeads())
+        <span class="keyword">let</span> (secondWaitTime,fireballNum2,spikeBallNum2,spaceCraftNum2,letterNum2,alienHeadsNum2) = (getMaxWaitTime(),getRandomNumberOfFireballs(),getRandomNumberOfSpikeBalls(),getRandomNumberOfSpaceCraft(),getRandomNumberOfLetters(),getRandomNumberOfAlienHeads())
         
         
         
-        var nextEncounter = firstEncounter.setNextEncounter(waitTime: secondWaitTime, numberOfSpikeBalls: spikeBallNum2, numberOfSpaceCraft: spaceCraftNum2, numberOfLetters: letterNum2, numberOfFireballs: fireballNum2, numberOfAlienHeads: alienHeadsNum2)
+        <span class="keyword">var</span> nextEncounter = firstEncounter.setNextEncounter(waitTime: secondWaitTime, numberOfSpikeBalls: spikeBallNum2, numberOfSpaceCraft: spaceCraftNum2, numberOfLetters: letterNum2, numberOfFireballs: fireballNum2, numberOfAlienHeads: alienHeadsNum2)
         
-        for _ in 1..< numberOfEncounters-2{
+        <span class="keyword">for</span> _ in 1..< numberOfEncounters-2{
             
-            let (nextWaitTime,nextFireballNum,nextSpikeBallNum,nextSpaceCraftNum,nextNumberOfLetters,nextNumberOfAlienHeads) = (getMaxWaitTime(),getRandomNumberOfFireballs(),getRandomNumberOfSpikeBalls(),getRandomNumberOfSpaceCraft(),getRandomNumberOfLetters(),getRandomNumberOfAlienHeads())
+            <span class="keyword">let</span> (nextWaitTime,nextFireballNum,nextSpikeBallNum,nextSpaceCraftNum,nextNumberOfLetters,nextNumberOfAlienHeads) = (getMaxWaitTime(),getRandomNumberOfFireballs(),getRandomNumberOfSpikeBalls(),getRandomNumberOfSpaceCraft(),getRandomNumberOfLetters(),getRandomNumberOfAlienHeads())
             
             nextEncounter = nextEncounter.setNextEncounter(waitTime: nextWaitTime, numberOfSpikeBalls: nextSpikeBallNum, numberOfSpaceCraft: nextSpaceCraftNum, numberOfLetters: nextNumberOfLetters, numberOfFireballs: nextFireballNum, numberOfAlienHeads: nextNumberOfAlienHeads)
             
         }
         
-        return EncounterSeries(planeViewController: planeViewController, firstEncounter: firstEncounter)
+        <span class="keyword">return</span> EncounterSeries(planeViewController: planeViewController, firstEncounter: firstEncounter)
     }
     
     static func generateRandomNumberFunction(withDefaultValue defaultNum: Int, andWithMaxNumber max: Int) -> ()->Int{
@@ -191,7 +191,7 @@
         }
     }
     
-    static func showNumberOf(spikeballs: Int, spaceCraft: Int, alienHeads: Int, fireballs: Int, letters: Int, andWaitTime waitTime: Double){
+    <span class="keyword">static func</span> showNumberOf(spikeballs: Int, spaceCraft: Int, alienHeads: Int, fireballs: Int, letters: Int, andWaitTime waitTime: Double){
         
         print("The generated wait time is: \(waitTime), generated spikeballs are: \(spikeballs), generated space craft are: \(spaceCraft), generated alien heads are: \(alienHeads), generated fireballs: \(fireballs), letters: \(letters)")
     }
@@ -207,76 +207,76 @@
   <pre>
      
    
-extension EncounterSeries{
+<span class="keyword">extension</span> EncounterSeries{
     
     
-    static func GenerateEncounterSeries(forPlaneViewController planeViewController: PlaneViewController, forLevelTrack levelTrack: GameHelper.LevelTrack, andforLevel level: Int) -> EncounterSeries{
+    <span class="keyword">static func</span> GenerateEncounterSeries(forPlaneViewController planeViewController: PlaneViewController, forLevelTrack levelTrack: GameHelper.LevelTrack, andforLevel level: Int) -> EncounterSeries{
         
-        switch level {
+        <span class="keyword">switch</span> level {
             
             /** Get encounter series for fireball track  **/
-        case 0...3 where levelTrack == .FireBalls:
-            return EncounterSeries.GenerateEncounterSeries(forPlaneViewController: planeViewController, withMaxLetter: 6, withNumberOfEncounters: 200, withMaxFireballs: level+10, withMaxSpikeBalls: 0, withMaxSpaceCraft: 0,withMaxAlienHeads: 0, withMaxWaitTime: 5)
-        case 4...7 where levelTrack == .FireBalls:
-            return EncounterSeries.GenerateEncounterSeries(forPlaneViewController: planeViewController, withMaxLetter: 4, withNumberOfEncounters: 50, withMaxFireballs: level+5, withMaxSpikeBalls: 0, withMaxSpaceCraft: 0, withMaxAlienHeads: 0, withMaxWaitTime: 4)
-        case 8...11 where levelTrack == .FireBalls:
+        <span class="keyword">case</span> 0...3 <span class="keyword">where</span> levelTrack == .FireBalls:
+            <span class="keyword">return</span> EncounterSeries.GenerateEncounterSeries(forPlaneViewController: planeViewController, withMaxLetter: 6, withNumberOfEncounters: 200, withMaxFireballs: level+10, withMaxSpikeBalls: 0, withMaxSpaceCraft: 0,withMaxAlienHeads: 0, withMaxWaitTime: 5)
+        <span class="keyword">case</span> 4...7 <span class="keyword">where</span> levelTrack == .FireBalls:
+            <span class="keyword">return</span> EncounterSeries.GenerateEncounterSeries(forPlaneViewController: planeViewController, withMaxLetter: 4, withNumberOfEncounters: 50, withMaxFireballs: level+5, withMaxSpikeBalls: 0, withMaxSpaceCraft: 0, withMaxAlienHeads: 0, withMaxWaitTime: 4)
+        <span class="keyword">case</span> 8...11 <span class="keyword">where</span> levelTrack == .FireBalls:
             return EncounterSeries.GenerateEncounterSeries(forPlaneViewController: planeViewController, withMaxLetter: 3, withNumberOfEncounters: 25, withMaxFireballs: level, withMaxSpikeBalls: 0, withMaxSpaceCraft: 0,withMaxAlienHeads: 0, withMaxWaitTime: 4)
-        case 12...15 where levelTrack == .FireBalls:
-            return EncounterSeries.GenerateEncounterSeries(forPlaneViewController: planeViewController, withMaxLetter: 2, withNumberOfEncounters: 25, withMaxFireballs: level-2, withMaxSpikeBalls: 0, withMaxSpaceCraft: 0,withMaxAlienHeads: 0, withMaxWaitTime: 3)
-        case 16...30 where levelTrack == .FireBalls:
-            return EncounterSeries.GenerateEncounterSeries(forPlaneViewController: planeViewController, withMaxLetter: 2, withNumberOfEncounters: 25, withMaxFireballs: level-5, withMaxSpikeBalls: 0, withMaxSpaceCraft: 0,withMaxAlienHeads: 0, withMaxWaitTime: 3)
-        case 31...10000 where levelTrack == .FireBalls:
-            return EncounterSeries.GenerateEncounterSeries(forPlaneViewController: planeViewController, withMaxLetter: 2, withNumberOfEncounters: 20, withMaxFireballs: level-5, withMaxSpikeBalls: 0, withMaxSpaceCraft: 0,withMaxAlienHeads: 0, withMaxWaitTime: 3)
+        <span class="keyword">case</span> 12...15 <span class="keyword">where</span> levelTrack == .FireBalls:
+            <span class="keyword">return</span> EncounterSeries.GenerateEncounterSeries(forPlaneViewController: planeViewController, withMaxLetter: 2, withNumberOfEncounters: 25, withMaxFireballs: level-2, withMaxSpikeBalls: 0, withMaxSpaceCraft: 0,withMaxAlienHeads: 0, withMaxWaitTime: 3)
+        <span class="keyword">case</span> 16...30 <span class="keyword">where</span> levelTrack == .FireBalls:
+            <span class="keyword">return</span> EncounterSeries.GenerateEncounterSeries(forPlaneViewController: planeViewController, withMaxLetter: 2, withNumberOfEncounters: 25, withMaxFireballs: level-5, withMaxSpikeBalls: 0, withMaxSpaceCraft: 0,withMaxAlienHeads: 0, withMaxWaitTime: 3)
+        <span class="keyword">case</span> 31...10000 <span class="keyword">where</span> levelTrack == .FireBalls:
+            <span class="keyword">return</span> EncounterSeries.GenerateEncounterSeries(forPlaneViewController: planeViewController, withMaxLetter: 2, withNumberOfEncounters: 20, withMaxFireballs: level-5, withMaxSpikeBalls: 0, withMaxSpaceCraft: 0,withMaxAlienHeads: 0, withMaxWaitTime: 3)
 
             
             /** Get encounter series for spaceship track  **/
 
-        case 0...3 where levelTrack == .SpaceShips:
-            return EncounterSeries.GenerateEncounterSeries(forPlaneViewController: planeViewController, withMaxLetter: 5, withNumberOfEncounters: 150, withMaxFireballs: 0, withMaxSpikeBalls: 0, withMaxSpaceCraft: level+9,withMaxAlienHeads: 0, withMaxWaitTime: 3)
-        case 4...7 where levelTrack == .SpaceShips:
-            return EncounterSeries.GenerateEncounterSeries(forPlaneViewController: planeViewController, withMaxLetter: 6, withNumberOfEncounters: 50, withMaxFireballs: 0, withMaxSpikeBalls: 0, withMaxSpaceCraft: level+10,withMaxAlienHeads: 0, withMaxWaitTime: 4)
-        case 8...11 where levelTrack == .SpaceShips:
-            return EncounterSeries.GenerateEncounterSeries(forPlaneViewController: planeViewController, withMaxLetter: 6, withNumberOfEncounters: 25, withMaxFireballs: 0, withMaxSpikeBalls: 0, withMaxSpaceCraft: level+5,withMaxAlienHeads: 0, withMaxWaitTime: 3)
-        case 12...15 where levelTrack == .SpaceShips:
-            return EncounterSeries.GenerateEncounterSeries(forPlaneViewController: planeViewController, withMaxLetter: 2, withNumberOfEncounters: 25, withMaxFireballs: 0, withMaxSpikeBalls: 0, withMaxSpaceCraft: level,withMaxAlienHeads: 0, withMaxWaitTime: 2)
-        case 16...30 where levelTrack == .SpaceShips:
-            return EncounterSeries.GenerateEncounterSeries(forPlaneViewController: planeViewController, withMaxLetter: 2, withNumberOfEncounters: 25, withMaxFireballs: 0, withMaxSpikeBalls: 0, withMaxSpaceCraft: level,withMaxAlienHeads: 0, withMaxWaitTime: 2)
-        case 31...10000 where levelTrack == .SpaceShips:
-            return EncounterSeries.GenerateEncounterSeries(forPlaneViewController: planeViewController, withMaxLetter: 2, withNumberOfEncounters: 20, withMaxFireballs: 0, withMaxSpikeBalls: 0, withMaxSpaceCraft: level,withMaxAlienHeads: 0, withMaxWaitTime: 2)
+        <span class="keyword">case</span> 0...3 <span class="keyword">where</span> levelTrack == .SpaceShips:
+            <span class="keyword">return</span> EncounterSeries.GenerateEncounterSeries(forPlaneViewController: planeViewController, withMaxLetter: 5, withNumberOfEncounters: 150, withMaxFireballs: 0, withMaxSpikeBalls: 0, withMaxSpaceCraft: level+9,withMaxAlienHeads: 0, withMaxWaitTime: 3)
+        <span class="keyword">case</span> 4...7 <span class="keyword">where</span> levelTrack == .SpaceShips:
+            <span class="keyword">return</span> EncounterSeries.GenerateEncounterSeries(forPlaneViewController: planeViewController, withMaxLetter: 6, withNumberOfEncounters: 50, withMaxFireballs: 0, withMaxSpikeBalls: 0, withMaxSpaceCraft: level+10,withMaxAlienHeads: 0, withMaxWaitTime: 4)
+        <span class="keyword">case</span> 8...11 where levelTrack == .SpaceShips:
+            <span class="keyword">return</span> EncounterSeries.GenerateEncounterSeries(forPlaneViewController: planeViewController, withMaxLetter: 6, withNumberOfEncounters: 25, withMaxFireballs: 0, withMaxSpikeBalls: 0, withMaxSpaceCraft: level+5,withMaxAlienHeads: 0, withMaxWaitTime: 3)
+        <span class="keyword">case</span> 12...15 <span class="keyword">where</span> levelTrack == .SpaceShips:
+            <span class="keyword">return</span> EncounterSeries.GenerateEncounterSeries(forPlaneViewController: planeViewController, withMaxLetter: 2, withNumberOfEncounters: 25, withMaxFireballs: 0, withMaxSpikeBalls: 0, withMaxSpaceCraft: level,withMaxAlienHeads: 0, withMaxWaitTime: 2)
+        <span class="keyword">case</span> 16...30 <span class="keyword">where</span> levelTrack == .SpaceShips:
+            <span class="keyword">return</span> EncounterSeries.GenerateEncounterSeries(forPlaneViewController: planeViewController, withMaxLetter: 2, withNumberOfEncounters: 25, withMaxFireballs: 0, withMaxSpikeBalls: 0, withMaxSpaceCraft: level,withMaxAlienHeads: 0, withMaxWaitTime: 2)
+        <span class="keyword">case</span> 31...10000 <span class="keyword">where</span> levelTrack == .SpaceShips:
+            <span class="keyword">return</span> EncounterSeries.GenerateEncounterSeries(forPlaneViewController: planeViewController, withMaxLetter: 2, withNumberOfEncounters: 20, withMaxFireballs: 0, withMaxSpikeBalls: 0, withMaxSpaceCraft: level,withMaxAlienHeads: 0, withMaxWaitTime: 2)
 
             
             /** Get encounter series for spikeball track  **/
 
-        case 0...3 where levelTrack == .SpikeBalls:
-            return EncounterSeries.GenerateEncounterSeries(forPlaneViewController: planeViewController, withMaxLetter: 6, withNumberOfEncounters: 100, withMaxFireballs: 0, withMaxSpikeBalls: level+9, withMaxSpaceCraft: 0,withMaxAlienHeads: 0, withMaxWaitTime: 5)
-        case 4...7 where levelTrack == .SpikeBalls:
-            return EncounterSeries.GenerateEncounterSeries(forPlaneViewController: planeViewController, withMaxLetter: 6, withNumberOfEncounters: 50, withMaxFireballs: 0, withMaxSpikeBalls: level+5, withMaxSpaceCraft: 0,withMaxAlienHeads: 0, withMaxWaitTime: 5)
-        case 8...11 where levelTrack == .SpikeBalls:
-            return EncounterSeries.GenerateEncounterSeries(forPlaneViewController: planeViewController, withMaxLetter: 4, withNumberOfEncounters: 25, withMaxFireballs: 0, withMaxSpikeBalls: level, withMaxSpaceCraft: 0,withMaxAlienHeads: 0, withMaxWaitTime: 5)
-        case 12...15 where levelTrack == .SpikeBalls:
-            return EncounterSeries.GenerateEncounterSeries(forPlaneViewController: planeViewController, withMaxLetter: 4, withNumberOfEncounters: 25, withMaxFireballs: 0, withMaxSpikeBalls: level, withMaxSpaceCraft: 0,withMaxAlienHeads: 0, withMaxWaitTime: 5)
-        case 16...30 where levelTrack == .SpikeBalls:
-            return EncounterSeries.GenerateEncounterSeries(forPlaneViewController: planeViewController, withMaxLetter: 4, withNumberOfEncounters: 25, withMaxFireballs: 0, withMaxSpikeBalls: level, withMaxSpaceCraft: 0,withMaxAlienHeads: 0, withMaxWaitTime: 5)
-        case 31...10000 where levelTrack == .SpikeBalls:
-            return EncounterSeries.GenerateEncounterSeries(forPlaneViewController: planeViewController, withMaxLetter: 4, withNumberOfEncounters: 20, withMaxFireballs: 0, withMaxSpikeBalls: level, withMaxSpaceCraft: 0,withMaxAlienHeads: 0, withMaxWaitTime: 5)
+        <span class="keyword">case</span> 0...3 <span class="keyword">where</span> levelTrack == .SpikeBalls:
+            <span class="keyword">return</span> EncounterSeries.GenerateEncounterSeries(forPlaneViewController: planeViewController, withMaxLetter: 6, withNumberOfEncounters: 100, withMaxFireballs: 0, withMaxSpikeBalls: level+9, withMaxSpaceCraft: 0,withMaxAlienHeads: 0, withMaxWaitTime: 5)
+        <span class="keyword">case</span> 4...7 <span class="keyword">where</span> levelTrack == .SpikeBalls:
+            <span class="keyword">return</span> EncounterSeries.GenerateEncounterSeries(forPlaneViewController: planeViewController, withMaxLetter: 6, withNumberOfEncounters: 50, withMaxFireballs: 0, withMaxSpikeBalls: level+5, withMaxSpaceCraft: 0,withMaxAlienHeads: 0, withMaxWaitTime: 5)
+        <span class="keyword">case</span> 8...11 <span class="keyword">where</span> levelTrack == .SpikeBalls:
+            <span class="keyword">return</span> EncounterSeries.GenerateEncounterSeries(forPlaneViewController: planeViewController, withMaxLetter: 4, withNumberOfEncounters: 25, withMaxFireballs: 0, withMaxSpikeBalls: level, withMaxSpaceCraft: 0,withMaxAlienHeads: 0, withMaxWaitTime: 5)
+        <span class="keyword">case</span> 12...15 <span class="keyword">where</span> levelTrack == .SpikeBalls:
+            <span class="keyword">return</span> EncounterSeries.GenerateEncounterSeries(forPlaneViewController: planeViewController, withMaxLetter: 4, withNumberOfEncounters: 25, withMaxFireballs: 0, withMaxSpikeBalls: level, withMaxSpaceCraft: 0,withMaxAlienHeads: 0, withMaxWaitTime: 5)
+        <span class="keyword">case</span> 16...30 <span class="keyword">where</span> levelTrack == .SpikeBalls:
+            <span class="keyword">return</span> EncounterSeries.GenerateEncounterSeries(forPlaneViewController: planeViewController, withMaxLetter: 4, withNumberOfEncounters: 25, withMaxFireballs: 0, withMaxSpikeBalls: level, withMaxSpaceCraft: 0,withMaxAlienHeads: 0, withMaxWaitTime: 5)
+        <span class="keyword">case</span> 31...10000 <span class="keyword">where</span> levelTrack == .SpikeBalls:
+            <span class="keyword">return</span> EncounterSeries.GenerateEncounterSeries(forPlaneViewController: planeViewController, withMaxLetter: 4, withNumberOfEncounters: 20, withMaxFireballs: 0, withMaxSpikeBalls: level, withMaxSpaceCraft: 0,withMaxAlienHeads: 0, withMaxWaitTime: 5)
 
         
             /** Get encounter series for turret track  **/
 
-        case 0...3 where levelTrack == .AlienHeads:
-            return EncounterSeries.GenerateEncounterSeries(forPlaneViewController: planeViewController, withMaxLetter: 6, withNumberOfEncounters: 100, withMaxFireballs: 0, withMaxSpikeBalls: 0, withMaxSpaceCraft: 0,withMaxAlienHeads: level+6, withMaxWaitTime: 5)
-        case 4...7 where levelTrack == .AlienHeads:
-            return EncounterSeries.GenerateEncounterSeries(forPlaneViewController: planeViewController, withMaxLetter: 6, withNumberOfEncounters: 50, withMaxFireballs: 0, withMaxSpikeBalls: 0, withMaxSpaceCraft: 0,withMaxAlienHeads: level+5, withMaxWaitTime: 5)
-        case 8...11 where levelTrack == .AlienHeads:
-            return EncounterSeries.GenerateEncounterSeries(forPlaneViewController: planeViewController, withMaxLetter: 4, withNumberOfEncounters: 25, withMaxFireballs: 0, withMaxSpikeBalls: 0, withMaxSpaceCraft: 0,withMaxAlienHeads: level, withMaxWaitTime: 5)
-        case 12...15 where levelTrack == .AlienHeads:
-            return EncounterSeries.GenerateEncounterSeries(forPlaneViewController: planeViewController, withMaxLetter: 4, withNumberOfEncounters: 25, withMaxFireballs: 0, withMaxSpikeBalls: 0, withMaxSpaceCraft: 0,withMaxAlienHeads: level, withMaxWaitTime: 5)
-        case 16...30 where levelTrack == .AlienHeads:
-            return EncounterSeries.GenerateEncounterSeries(forPlaneViewController: planeViewController, withMaxLetter: 4, withNumberOfEncounters: 25, withMaxFireballs: 0, withMaxSpikeBalls: 0, withMaxSpaceCraft: 0,withMaxAlienHeads: level, withMaxWaitTime: 5)
-        case 31...10000 where levelTrack == .AlienHeads:
-            return EncounterSeries.GenerateEncounterSeries(forPlaneViewController: planeViewController, withMaxLetter: 4, withNumberOfEncounters: 25, withMaxFireballs: 0, withMaxSpikeBalls: 0, withMaxSpaceCraft: 0,withMaxAlienHeads: level, withMaxWaitTime: 5)
-        default:
-            return EncounterSeries.GenerateEncounterSeries(forPlaneViewController: planeViewController, withMaxLetter: 3, withNumberOfEncounters: 25, withMaxFireballs: 2, withMaxSpikeBalls: 2, withMaxSpaceCraft: 2,withMaxAlienHeads: level, withMaxWaitTime: 5)
+        <span class="keyword">case</span> 0...3 <span class="keyword">where</span> levelTrack == .AlienHeads:
+            <span class="keyword">return</span> EncounterSeries.GenerateEncounterSeries(forPlaneViewController: planeViewController, withMaxLetter: 6, withNumberOfEncounters: 100, withMaxFireballs: 0, withMaxSpikeBalls: 0, withMaxSpaceCraft: 0,withMaxAlienHeads: level+6, withMaxWaitTime: 5)
+        <span class="keyword">case</span> 4...7 <span class="keyword">where</span> levelTrack == .AlienHeads:
+            <span class="keyword">return</span> EncounterSeries.GenerateEncounterSeries(forPlaneViewController: planeViewController, withMaxLetter: 6, withNumberOfEncounters: 50, withMaxFireballs: 0, withMaxSpikeBalls: 0, withMaxSpaceCraft: 0,withMaxAlienHeads: level+5, withMaxWaitTime: 5)
+        <span class="keyword">case</span> 8...11 <span class="keyword">where</span> levelTrack == .AlienHeads:
+            <span class="keyword">return</span> EncounterSeries.GenerateEncounterSeries(forPlaneViewController: planeViewController, withMaxLetter: 4, withNumberOfEncounters: 25, withMaxFireballs: 0, withMaxSpikeBalls: 0, withMaxSpaceCraft: 0,withMaxAlienHeads: level, withMaxWaitTime: 5)
+        <span class="keyword">case</span> 12...15 <span class="keyword">where</span> levelTrack == .AlienHeads:
+            <span class="keyword">return</span> EncounterSeries.GenerateEncounterSeries(forPlaneViewController: planeViewController, withMaxLetter: 4, withNumberOfEncounters: 25, withMaxFireballs: 0, withMaxSpikeBalls: 0, withMaxSpaceCraft: 0,withMaxAlienHeads: level, withMaxWaitTime: 5)
+        <span class="keyword">case</span> 16...30 <span class="keyword">where</span> levelTrack == .AlienHeads:
+            <span class="keyword">return</span> EncounterSeries.GenerateEncounterSeries(forPlaneViewController: planeViewController, withMaxLetter: 4, withNumberOfEncounters: 25, withMaxFireballs: 0, withMaxSpikeBalls: 0, withMaxSpaceCraft: 0,withMaxAlienHeads: level, withMaxWaitTime: 5)
+        <span class="keyword">case</span> 31...10000 <span class="keyword">where</span> levelTrack == .AlienHeads:
+            <span class="keyword">return</span> EncounterSeries.GenerateEncounterSeries(forPlaneViewController: planeViewController, withMaxLetter: 4, withNumberOfEncounters: 25, withMaxFireballs: 0, withMaxSpikeBalls: 0, withMaxSpaceCraft: 0,withMaxAlienHeads: level, withMaxWaitTime: 5)
+        <span class="keyword">default</span>:
+            <span class="keyword">return</span> EncounterSeries.GenerateEncounterSeries(forPlaneViewController: planeViewController, withMaxLetter: 3, withNumberOfEncounters: 25, withMaxFireballs: 2, withMaxSpikeBalls: 2, withMaxSpaceCraft: 2,withMaxAlienHeads: level, withMaxWaitTime: 5)
 
         }
         
