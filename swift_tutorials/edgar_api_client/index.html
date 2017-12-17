@@ -61,7 +61,7 @@
 
 	
 
-	<p>In this tutorial, we explore the utility of delegates in helping to build a small API client that will connect to the Oxford Dictionary's REST API for getting dictionary and thesaurus data.  The code for this tutorial uses an arbitrary API key, so be sure to obtain your own API key if you plan to make use of the Oxford Dictionary API.  For more information about connecting to the different API endpoints, as well as how to read the returned JSON response, please consult the official documentation available at <a href="https://developer.oxforddictionaries.com/">Oxford Dictionary API's website</a> here.  </p>
+	<p>In this tutorial, we explore the utility of linked lists for making a series of API requests who data can then be persisted via CoreData models.  We start by building a wrapper struct for all the data required to build the API request, then we develop an API client class built on top of the NSURLSession class for connecting to the API.  In addition, we define classes for nodes and linked list that will allow us to make multiple API requests in succession. For documentation about the REST API endpoints, please visit the <a href="https://dev.last10k.com/docs/">Last10k.com website</a> here.  </p>
 
 	
 	<p> </p>
@@ -69,10 +69,10 @@
 <br>
 
 <div class="card">
-  <h3 class="card-header">Oxford Dictionary Client API</h3>
+  <h3 class="card-header">Last10k Client API</h3>
   <div class="card-block">
     <h4 class="card-title">JSON Data Response</h4>
-    <p class="card-text">Learn how to build an API client that connects to the Oxford Dictionary REST API.</p>
+    <p class="card-text">Learn how to use linked lists to download JSON data from a REST API and  populate a CoreData persistent store.</p>
     <a href="./page1.html" class="btn btn-primary">Start Tutorial</a>
   </div>
 </div>
@@ -81,11 +81,15 @@
 <br>
 
 
+<p>In this tutorial, we explore the utility of using cached download tasks in tandem with session-level and task-level delegate methods defined for the NSURLSession and its related classes.  The implementation demonstrated here provides an alternative to the linked list approach shown above.  </p>
+
+<br>
+
 <div class="card">
-  <h3 class="card-header">Merriam-Webster Dictionary API</h3>
+  <h3 class="card-header">Quandl API Client</h3>
   <div class="card-block">
     <h4 class="card-title">XML Data Response</h4>
-    <p class="card-text">Learn how to build an API client that connects to the Merriam-Webster Dictionary REST API.</p>
+    <p class="card-text">Learn how to use an array-based approach to make a series of API requests based on cached NSURL download tasks.</p>
     <a href="./mw_page1.html" class="btn btn-primary">Start Tutorial</a>
   </div>
 </div>

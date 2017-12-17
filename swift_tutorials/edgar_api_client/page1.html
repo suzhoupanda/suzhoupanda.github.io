@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title></title>
+	<link rel="stylesheet" href="">
+
+
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Crimson+Text|Dosis|Nunito" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Coiny|Keania+One|Khand|Shrikhand" rel="stylesheet">
+
+		<link rel="stylesheet" href="./css/index.css">
+
+
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+      (adsbygoogle = window.adsbygoogle || []).push({
+       google_ad_client: "ca-pub-3595969991114166",
+       enable_page_level_ads: true
+     });
+  </script>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+</head>
+
+<body>
+
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+      (adsbygoogle = window.adsbygoogle || []).push({
+       google_ad_client: "ca-pub-3595969991114166",
+       enable_page_level_ads: true
+     });
+  </script>
+
+
+    
+  <!-- BEGIN  NAVIGATION BAR -->
+ <nav class="navbar navbar-toggleable-md navbar-light fixed-top " style="background-color: #7fffd4;">
+    
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <a class="navbar-brand text-warning" href="#"><img src="../../img/panda.png" alt="" id="app-icon-navbar"/ width="40px" height="30px"> <span class="brand-text" id="appicon-caption">iOS Panda Developers</span></a>
+
+  
+
+  <div class="collapse navbar-collapse" id="navbarNavDropdown">
+    <ul class="navbar-nav">
+      
+       <li class="nav-item">
+        <a class="nav-link" href="#"> <span class="sr-only">(current)</span></a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" href="../../index.html">Homepage</a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" href="../../swift_tutorials/index.html">Swift Tutorials</a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" href="../index.html">iOS Tutorials</a>
+      </li>
+  
+
+    
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Additional Information
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" href="#footer">Other Information</a>
+          <a class="dropdown-item" href="#footer">Developer Contact Info</a>
+        </div>
+        </li>
+      </ul>
+      </div>
+  </nav>
+
+
+   
+
+  <!-- END  NAVIGATION BAR -->
+
+<div class="container adcontainer">
+  
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-3595969991114166"
+     data-ad-slot="6717344725"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</div>
+
+ 
+
+<div class="container">
+
+<p>First, we will define a wrapper struct that will encapsulate all the data required to construct an API request object for the <a href="https://dev.last10k.com/docs/">Last10k.com developers</a> website.  This struct will define a nested enum type whose cases will represent the differnet REST API endpoints and whose rawValue type will be a string.  </p>
+
+
+<div class="code-wrapper">
+    <pre>
+struct EdgarAPIRequest{
+    
+    enum APIEndpoint: String{
+        case BalanceSheet = "balancesheet"
+        case IncomeStatement = "income"
+        case CashFlows = "cashflows"
+        case FinancialRatios = "ratios"
+    }
+}
+    </pre>
+</div>
+
+<p>In the EdgarAPIRequest class, we will also define some string constants that will be needed to construct the url for the API request, as well as to configure the header fields for the API request.  The <i>baseURL</i> will be used to construct the API request url.  The <i>headerFieldKey</i> is a key that is defined for API request header fields, with corresponding values provided by the constants <i>primaryKey</i> and <i>secondaryKey</i>.  Please note that the keys provided here are for demonstration purposes only and will not work in an actual production environment. To practice the code below for yourself, you can register for an account with Last10k.com and get your own free API keys. </p>
+
+<div class="code-wrapper">
+    <pre>
+
+    let baseURL = "https://services.last10k.com/v1/company"
+    let primaryKey = "1afa19akdf800f43b096fc9cbd36adfd99888"
+    let secondaryKey = "bafd99gfdadf58b300f4a8fdll0w2aea9541cfakfdiie99"
+    let headerFieldKey = "Ocp-Apim-Subscription-Key"
+    
+    </pre>
+</div>
+
+
+<p>
+    In addition to the constants defined above, we will also define other properties that will be used to build the API request url. The <i>formType</i> and <i>filingOrder</i> variables are optional strings which correspond to optional query parameters in the url string.  the <i>ticker</i> string variable is provided during initialization of the EdgarAPIRequest, as is the value of the <i>endpoint</i> variable, whose data type is the <i>APIEndpoint</i> we defined above and whose string rawValue can be used to construct the url for the API request.
+</p>
+
+<div class="code-wrapper">
+    <pre>
+    var ticker: String
+    var endpoint: APIEndpoint
+    var formType: String?
+    var filingOrder: String?
+    </pre>
+</div>
+
+
+<p>
+    With all the variables defined, as shown above, we proceed to define an initializer for the EdgarAPIRequest struct: 
+
+</p>
+
+<div class="code-wrapper">
+    <pre>
+        
+    init(withTicker companyTicker: String, andWithEndpoint apiEndpoint: APIEndpoint, withFormType formType: String?, withFilingOrder filingOrder: String?){
+        
+        self.ticker = companyTicker
+        self.endpoint = apiEndpoint
+        self.formType = formType
+        self.filingOrder = filingOrder
+        
+    }
+    </pre>
+</div>
+
+<p>Finally, with all of our data members initialized, we go on to define a private helper method <i>getURL</i> for constructing the URL for the API request, and a publicly available method for generating the actual API request object.  This public method will also use the API key to set the value for the required authentication header field in the API request: </p>
+
+<div class="code-wrapper">
+
+	<pre>
+
+
+
+    func getURLRequest() -> URLRequest{
+        
+        let urlString = getURL()
+        let url = URL(string: urlString)!
+        
+        var urlRequest = URLRequest(url: url)
+        
+        urlRequest.setValue(self.primaryKey, forHTTPHeaderField: self.headerFieldKey)
+        
+        return urlRequest
+    }
+    
+    private func getURL() -> String{
+        
+        var url = "\(self.baseURL)/\(self.ticker)/\(self.endpoint.rawValue)"
+        
+        switch (self.formType,self.filingOrder) {
+        case (.some,.some):
+            url = url.appending("/?\(formType!)&\(filingOrder!)")
+            break
+        case (.some,.none):
+            url = url.appending("/?\(formType!)")
+            break
+        case (.none,.some):
+            url = url.appending("/?\(filingOrder!)")
+            break
+        default:
+            break
+        }
+        
+        return url
+        
+        
+    }
+
+    
+		
+	</pre>
+
+</div>
+
+
+<div class="adcontainer">
+  
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-3595969991114166"
+     data-ad-slot="6717344725"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+</div>
+
+    <p>Now that we have defined our EdgarAPIRequest struct, we can proceed to define a reference-type class <i>APIRequestNode</i> node, whose variable <i>nextNode</i> will be a self-referencing variable that can be used to link to the next node in a linked list.  In addition, we define a variable <i>apiRequest</i>, which will provide the actual data content for the node.  We define two initializers for the node: one that will take an EdgarAPIRequest as a parameter, and another that takes the parameters required to initialize an EdgarAPIRequest within the body of the initializer itself. </p>
+
+
+<div class="code-wrapper">
+    <pre>
+class APIRequestNode{
+    
+    var apiRequest: EdgarAPIRequest
+    
+    var nextNode: APIRequestNode?
+    
+    init(withAPIRequest anAPIRequest: EdgarAPIRequest){
+        self.apiRequest = anAPIRequest
+    }
+    
+    init(withTicker ticker: String, withEnpoint endpoint: EdgarAPIRequest.APIEndpoint, withFormType formType: String?,withFilingOrder filingOrder: String?){
+        
+        self.apiRequest = EdgarAPIRequest(withTicker: ticker, andWithEndpoint: endpoint, withFormType: formType, withFilingOrder: filingOrder)
+        
+    }
+    
+  
+}
+
+    </pre>
+</div> 
+
+<p>
+    Finally, we define a getter method <i>getAPIRequest</i> for retrieving the API request from a node, and a separate getter method <i>getNextAPIRequestNode</i>, which can be used to retrieve the next node in a linked list.  In addition, we provide two setter methods, <i>setNextAPIRequest(withTicker:withEndpoint:withFormType:withFilingOrder)</i> and <i>setNextAPIRequest(withAPIRequest:)</i>, which can be used to set the next node in the linked list.  Note that these setter functions also have a return value, allowing us to more conveniently chain a series of setter functions together so as to generate a linked list.
+</p>
+
+
+<div class="code-wrapper">
+    <pre>
+    func getAPIRequest() -> EdgarAPIRequest{
+        return self.apiRequest
+    }
+    
+    func setNextAPIRequest(withTicker ticker: String, withEndpoint endpoint: EdgarAPIRequest.APIEndpoint,withFormType formType: String?, withFilingOrder filingOrder: String?) -> APIRequestNode{
+        
+        self.nextNode = APIRequestNode(withTicker: ticker, withEnpoint: endpoint, withFormType: formType, withFilingOrder: filingOrder)
+        
+        return self.nextNode!
+    }
+    
+    func setNextAPIRequest(withAPIRequest anAPIRequest: EdgarAPIRequest) -> APIRequestNode{
+        self.nextNode = APIRequestNode(withAPIRequest: anAPIRequest)
+        
+        return self.nextNode!
+    }
+    
+    func getNextAPIRequestNode() -> APIRequestNode?{
+        return self.nextNode
+    }
+    </pre>
+</div>
+
+<div class="adcontainer">
+  
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-3595969991114166"
+     data-ad-slot="6717344725"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</div>
+
+
+
+<p>As of now, the structs and classes provide enough functionality to build our API class.  However, we will also continue to define a class that can be used to generate a linked list using  APIRequestNode objects that we've just defined.  For our purposes here, the linked list class will be used primarily for debugging the content of the linked lists that we create for generating a series of API requests.  The linked list class <i>APIRequestNodeList</i> is show below in its entirety: </p>
+
+<div class="code-wrapper">
+    <pre>
+        
+class APIRequestNodeList{
+    
+    var rootNode: APIRequestNode
+    
+    
+    func getFirstNode() -> APIRequestNode{
+        return self.rootNode
+    }
+
+
+    init?(withAPIRequests someAPIRequests: [EdgarAPIRequest]){
+        
+        if(someAPIRequests.isEmpty || someAPIRequests.count == 0){
+            return nil
+        } else if (someAPIRequests.count == 1){
+            self.rootNode = APIRequestNode(withAPIRequest: someAPIRequests.first!)
+        } else {
+            
+            self.rootNode = APIRequestNode(withAPIRequest: someAPIRequests.first!)
+
+            var tempNode = self.rootNode
+            
+            let remainingRequests = someAPIRequests[1..&lt;someAPIRequests.count]
+            
+            remainingRequests.forEach({
+                
+                tempNode = tempNode.setNextAPIRequest(withAPIRequest: $0)
+                
+            })
+            
+        }
+        
+        
+        
+    }
+
+
+func traverseAPIRequests(withHandler handler: (EdgarAPIRequest) -> (Void)){
+        
+        let firstAPIRequest = self.rootNode.getAPIRequest()
+        handler(firstAPIRequest)
+        
+        var currentNode = self.rootNode.getNextAPIRequestNode()
+        
+        repeat{
+            
+            if(currentNode != nil){
+                handler(currentNode!.getAPIRequest())
+            }
+            
+            currentNode = currentNode?.getNextAPIRequestNode()
+            
+        } while(currentNode != nil)
+        
+    }
+    
+
+    
+   
+}
+
+
+    </pre>
+</div>
+
+
+
+<p>We are now ready to go ahead and build the class that will be responsible for making the API requests for the Last10k.com REST API endpoint.  We've created our wrapper struct EdgarAPIRequest, which will encapsulate the data for making the API request object, along with classes for creating node objects to encapsulate EdgarAPIRequest data and also link together so as to create a linked list whose nodes can be traversed in such a way as to make it possible for us to make a series of API requests to the Last10k.com REST API endpoint.  </p>
+
+
+<div class="adcontainer">
+  
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-3595969991114166"
+     data-ad-slot="6717344725"></ins>
+      <script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
+</div>
+
+
+
+    <p>To continue, please <a href="./page2.html">click here</a></p>
+    <p>If you feel confused or are having trouble following, you can go back to the <a href="./index.html">previous page</a> or back to the table of contents <a href="./index.html">table of contents</a>.</p>
+
+</div>
+	
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+</body>
+</html>

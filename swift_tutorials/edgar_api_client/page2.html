@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title></title>
+	<link rel="stylesheet" href="">
+
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Crimson+Text|Dosis|Nunito" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Coiny|Keania+One|Khand|Shrikhand" rel="stylesheet">
+
+		<link rel="stylesheet" href="./css/index.css">
+
+
+
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+      (adsbygoogle = window.adsbygoogle || []).push({
+       google_ad_client: "ca-pub-3595969991114166",
+       enable_page_level_ads: true
+     });
+  </script>
+  
+</head>
+
+<body>
+
+    
+  <!-- BEGIN  NAVIGATION BAR -->
+
+    <nav class="navbar navbar-toggleable-md navbar-light fixed-top " style="background-color: #7fffd4;">
+    
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <a class="navbar-brand text-warning" href="#"><img src="../../img/panda.png" alt="" id="app-icon-navbar"/ width="40px" height="30px"> <span class="brand-text" id="appicon-caption">iOS Panda Developers</span></a>
+
+  
+
+  <div class="collapse navbar-collapse" id="navbarNavDropdown">
+    <ul class="navbar-nav">
+      
+       <li class="nav-item">
+        <a class="nav-link" href="#"> <span class="sr-only">(current)</span></a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" href="../../index.html">Homepage</a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" href="../../swift_tutorials/index.html">Swift Tutorials</a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" href="../index.html">iOS Tutorials</a>
+      </li>
+  
+
+    
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Additional Information
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" href="#footer">Other Information</a>
+          <a class="dropdown-item" href="#footer">Developer Contact Info</a>
+        </div>
+        </li>
+      </ul>
+      </div>
+  </nav>
+
+
+
+  <!-- END  NAVIGATION BAR -->
+
+
+
+
+
+<div class="container">
+    <p>Now that we have defined our EdgarAPIRequest wrapper struct as well helper classes for creating linked lists and nodes to contain individual EdgarAPIRequest objects, we proceed to define our EdgarAPIClient class, which will be responsible for connecting to the REST API and downloading the JSON-formatted SEC filing data. </p>
+
+
+    <div class="code-wrapper">
+        <pre>
+
+class EdgarAPIClient{
+    
+    typealias JSONData = [String: Any]
+    typealias JSONTaskCompletionHandler = (JSONData?,NSError?) -> (Void)
+    
+    static let sharedClient = EdgarAPIClient()
+    
+    let kReasonForFailure = "ReasonForFailure"
+    let kHttpStatusCode = "httpStatusCode"
+    
+   
+    var session = URLSession.shared
+    
+    private init(){
+        
+    }
+}
+            
+
+    </pre>
+</div>
+
+<p>As can be seen above, the EdgarAPIClient class has private initializer and a <i>sharedClient</i> singleton variable that will be used for calling the class instance methods.  We also define two string constants <i>kReasonForFailure</i> and <i>kHttpStatusCode</i>, which will be used for creating userInfo dicts for error handling later one.  In addition, we define typealias <i>JSONData</i>, which will be a short hand for [<span class="keyword">String</span>:<span class="keyword">Any</span>]</span> types, and a <i>JSONTaskCompletionHandler</i>, which will be a short hand for a closure type  (<span class="keyword">JSONData?</span>,<span class="keyword">NSError?</span>) -> (<span class="keyword">Void</span>) that we will use for handling the received JSON data.  In addition, also note that we store a reference to the URLSession.sharedSession singleton, whose methods are used to connect to the REST API.  The singleton we define here is essentially a wrapper for the URLSession.sharedSession singleton, and the functionality defined here is built upon the functionalit provided the URLSession class. </p> 
+
+
+<p>Next, we define two completion handlers that will be used for handling the received JSON data, one (i.e. <i>persistDataCompletionHandler</i>) for printing out the contentes of the JSON respones for debug purposes, and the other (i.e.<i>debugCompletionHandler</i>)  for converting the received JSON data to NSManagedObjects that can be saved in the persistent store of a CoreData stack that we will use for this client.  </p>
+
+
+<div class="code-wrapper">
+
+    <pre>
+
+var persistDataCompletionHandler: JSONTaskCompletionHandler = {
+        
+        jsonData, error in
+        
+        if(jsonData != nil){
+            
+            print("About to save JSON data to persistent store....")
+            
+            
+            //Use jsonReader to save data
+            
+            let jsonReader = JSONReader()
+            
+            jsonReader.saveData(forJSONResponseDict: jsonData!)
+            
+            print("Data successfully saved!")
+            
+        } else {
+            
+            print("An error occurred while attempting to get the JSON data: \(error!)")
+        }
+        
+    }
+    
+var debugCompletionHandler: JSONTaskCompletionHandler = {
+        
+        jsonData, error in
+        
+        if(jsonData != nil){
+            
+            print("The following JSON data was obtained....")
+            print(jsonData!)
+            
+        } else {
+            
+            print("An error occurred while attempting to get the JSON data: \(error!)")
+        }
+    }
+
+    </pre>
+
+</div>
+
+<p>The JSONReader object used in the <i>persistDataCompletionHandler</i> hasn't been defined yet but is basically responsible for converting the JSON data to NSManagedObjects that are stored in an NSManagedObjectContext in CoreData.  It's okay to ignore this for now, as it will make sense later. </p>
+
+
+<p>Next, we define a private helper function <i>performURLRequest(urlRequest:withCompletionHandler:)</i> which will take a URLRequest object and use that object to connect to the REST API endpoint, after which it executes a completion handler whose type we defined above with the alias <i>JSONTaskCompletionHandler</i>: </p>
+
+<div class="code-wrapper">
+    <pre>
+ private func performURLRequest(urlRequest: URLRequest, withCompletionHandler completion: @escaping JSONTaskCompletionHandler){
+        
+    let _ = session.dataTask(with: urlRequest, completionHandler: {
+            
+            data, response, error in
+            
+    guard let httpResponse = response as? HTTPURLResponse else {
+                
+                var userInfoDict = [String: Any]()
+                
+                userInfoDict[self.kReasonForFailure] = "Failed to connect to the server, no HTTP status code obtained"
+                
+                let error = NSError(domain: "APIRequestError", code: 0, userInfo: userInfoDict)
+                
+                completion(nil, error)
+                
+                return
+            }
+            
+            
+    guard httpResponse.statusCode == 200 else {
+                
+                
+                var userInfoDict = [String: Any]()
+                
+                userInfoDict[self.kReasonForFailure] = "Connect to the server with a status code other than 200"
+                
+                let error = NSError(domain: "APIRequestError", code: 0, userInfo: userInfoDict)
+                
+                completion(nil, error)
+                
+                return
+            }
+            
+            
+            if(data != nil){
+                
+                do{
+                    let jsonData = try JSONSerialization.jsonObject(with: data!, options: .allowFragments) as! JSONData
+                    
+                    completion(jsonData, nil)
+                    
+                } catch let error as NSError{
+                    
+                    completion(nil, error)
+                    
+                }
+                
+            } else {
+                var userInfoDict = [String: Any]()
+                
+                userInfoDict[self.kReasonForFailure] = "Nil values obtained for JSON data"
+                
+                let error = NSError(domain: "APIRequestError", code: 0, userInfo: userInfoDict)
+                
+                
+                completion(nil, error)
+            }
+            
+        }).resume()
+    }    
+    </pre>
+</div>
+
+<p>As you can see below, we use guard statements to perform error handling for cases where no HTTPURLResponse is obtained or when the obtained HTTPURLResponse has a status code other than 200.  We provide further levels of error handling to deal with the cases where no JSON data is obtained as well as when the obtained JSON data cannot be parsed.  This is by no means the authoritative way to do error handling for server responses but it will be sufficient for our purposes here.  </p>
+
+<p> The private helper method above will in turn be used to define a recursive method <i>performURLRequest(withAPIRequestNode:withCompletionHandler:)</i> whose arguments include an APIRequestNode and a completion handler of type <i>JSONTaskCompletionHandler</i>.  As you will notice from the body of the method, the url request corresponding to the EdgarAPIRequest contained in a given API request node is used to call the API REST endpoint, after which the next node linked to the passed-in APIRequestNode is tested for a nil value.  If the current APIRequestNode node has non-nil value for the nextAPIRequestNode, then the method <i>performURLRequest(withAPIRequestNode:withCompletionHandler)</i> is called again recursively, taking the next APIRequestNode object as a value.  If the next APIRequestNode node were nil, the the function would stop calling itself recursively.  This represents the base case for this linked list. </p>
+
+<div class="code-wrapper">
+    <pre>
+func performURLRequest(withAPIRequestNode apiRequestNode: APIRequestNode, withCompletionHandler completion: @escaping JSONTaskCompletionHandler){
+        
+        let urlRequest = apiRequestNode.getAPIRequest().getURLRequest()
+        
+        self.performURLRequest(urlRequest: urlRequest, withCompletionHandler: {
+            
+            jsonData, error in
+            
+            if(jsonData != nil){
+                
+                completion(jsonData!,nil)
+          
+            } else {
+                completion(nil,error)
+            }
+            
+            if let nextAPIRequestNode = apiRequestNode.getNextAPIRequestNode(){
+                self.performURLRequest(withAPIRequestNode: nextAPIRequestNode, withCompletionHandler: completion)
+            }
+            
+        })
+    }
+    </pre>
+</div>
+
+
+<p>
+    Finally, we define two convenience methods that will call the recursive method just defined.  One of these methods <i>performLinkedListPersistDataTraverse(forAPIRequestNode:)</i>, will use the stored completion handler <span class="keyword">self</span>.persistDataCompletionHandler to handle the JSON data obtained for each API request made for each node in the linked list being traversed via the recursive function.  The other method <i>performLinkedListDebugTraverse(forAPIRequestNode:)</i> will use the stored completion handler <span class="keyword">self.</span> debugCompletionHandler to print out the contents of the JSON data obtained for each API request made for each node in the linked list.
+</p> 
+
+<div class="code-wrapper">
+    <pre>
+<span class="comment">/** Recursive function that process the URL request for each node in a linked list **/</span>
+
+func performLinkedListPersistDataTraverse(forAPIRequestNode apiRequestNode: APIRequestNode){
+        
+        self.performURLRequest(withAPIRequestNode: apiRequestNode, withCompletionHandler: self.persistDataCompletionHandler)
+    }
+    
+func performLinkedListDebugTraverse(forAPIRequestNode apiRequestNode: APIRequestNode){
+        
+        self.performURLRequest(withAPIRequestNode: apiRequestNode, withCompletionHandler: self.debugCompletionHandler)
+    }
+    </pre>
+</div>
+
+  <p>To continue, please <a href="./page3.html">click here</a></p>
+    <p>If you feel confused or are having trouble following, you can go back to the <a href="./page1.html">previous page</a> or back to the table of contents <a href="./index.html">table of contents</a>.</p>
+
+</div>
+	
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+</body>
+</html>
