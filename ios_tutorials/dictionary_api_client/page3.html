@@ -127,7 +127,7 @@
 
 <div class="code-wrapper">
 <pre>
-     init(withWord queryWord: <span class="data-type">String</span> , hasRequestedExampleSentencesQuery: <span class="data-type">Bool</span> ,forLanguage queryLanguage: <span class="data-type">OxfordAPILanguage</span>  = .English){
+     <span class="keyword">init</span>(withWord queryWord: <span class="data-type">String</span> , hasRequestedExampleSentencesQuery: <span class="data-type">Bool</span> ,forLanguage queryLanguage: <span class="data-type">OxfordAPILanguage</span>  = .English){
         
         <span class="keyword">self</span>.endpoint = OxfordAPIEndpoint.entries
         <span class="keyword">self</span>.word = queryWord
@@ -145,7 +145,7 @@
 
 <div class="code-wrapper">
 <pre>
-    init(withWord queryWord: String, hasRequestedAntonymsQuery: Bool, hasRequestedSynonymsQuery: Bool, forLanguage queryLanguage: OxfordAPILanguage = .English){
+    <span class="keyword">init</span>(withWord queryWord: String, hasRequestedAntonymsQuery: Bool, hasRequestedSynonymsQuery: Bool, forLanguage queryLanguage: OxfordAPILanguage = .English){
         
         <span class="keyword">self</span>.endpoint = OxfordAPIEndpoint.entries
         <span class="keyword">self</span>.word = queryWord
@@ -299,36 +299,36 @@
             
             <span class="keyword">var</span>  wordURLString = languageURLString.appending(wordStr)
             
-            if(self.endpoint == .entries){
+            <span class="keyword">if</span>(self.endpoint == .entries){
                 
-                if(hasRequestAntonyms || hasRequestedSynonyms){
+                <span class="keyword">if</span>(hasRequestAntonyms || hasRequestedSynonyms){
                     
-                    if(hasRequestedSynonyms && hasRequestAntonyms){
+                    <span class="keyword">if</span>(hasRequestedSynonyms && hasRequestAntonyms){
                         
                         <span class="keyword">let</span>  finalURLString = wordURLString.appending("synonyms;antonyms")
                         
                         <span class="keyword">return</span>  finalURLString
                         
-                    } else if(hasRequestedSynonyms){
+                    } <span class="keyword">else if</span>(hasRequestedSynonyms){
                         
                         <span class="keyword">let</span>  finalURLString = wordURLString.appending("synonyms")
                         
                         <span class="keyword">return</span>  finalURLString
                         
-                    } else if(hasRequestAntonyms){
+                    } <span class="keyword">else if</span>(hasRequestAntonyms){
                         
                         <span class="keyword">let</span>  finalURLString = wordURLString.appending("antonyms")
                         
                         <span class="keyword">return</span>  finalURLString
                     }
                     
-                } else if(hasRequestedExampleSentences) {
+                } <span class="keyword">else if</span>(hasRequestedExampleSentences) {
                     
                     <span class="keyword">let</span>  finalURLString = wordURLString.appending("sentences")
                     
                     <span class="keyword">return</span>  finalURLString
                     
-                } else if(self.filters != nil) {
+                } <span class="keyword">else if</span>(self.filters != nil) {
                     //Add filters for dictionary entries request for the given word
                     
                     <span class="keyword">let</span>  allFilters = self.filters!
@@ -349,7 +349,7 @@
                 
             } <span class="keyword">else</span>  {
                 
-                if(self.filters != nil){
+                <span class="keyword">if</span>(self.filters != nil){
                     
                     <span class="keyword">let</span>  allFilters = self.filters!
                     
@@ -377,22 +377,22 @@
 
 
 <pre>
-     p<span class="keyword">private func</span>  addFilters(filters: [OxfordAPIEndpoint.OxfordAPIFilter], toURLString urlString: inout String){
+     <span class="keyword">private func</span>  addFilters(filters: [OxfordAPIEndpoint.OxfordAPIFilter], toURLString urlString: <span class="keyword">inout</span> String){
 
         
-        if(filters.isEmpty){
-            return
+        <span class="keyword">if</span>(filters.isEmpty){
+            <span class="keyword">return</span>
         }
         
-        filters.forEach({
-            var filterString = $0.getQueryParameterString(isLastQueryParameter: false)
+        filters.<span class="keyword">forEach</span>({
+            <span class="keyword">var</span> filterString = $0.getQueryParameterString(isLastQueryParameter: false)
             urlString = urlString.appending(filterString)
         })
         
         
         <span class="keyword">repeat</span> {
             
-            if(urlString.last! == ";"){
+            <span class="keyword">if</span>(urlString.last! == ";"){
                 urlString.removeLast()
             }
             
@@ -437,27 +437,27 @@
 <div class="code-wrapper">
 
 <pre>
-      private func hasValidFilters(filters: [OxfordAPIEndpoint.OxfordAPIFilter]?,forEndpoint endpoint: OxfordAPIEndpoint) -> Bool {
+      <span class="keyword">private func</span> hasValidFilters(filters: [OxfordAPIEndpoint.OxfordAPIFilter]?,forEndpoint endpoint: OxfordAPIEndpoint) -> Bool {
         
-        if(filters == nil || (filters != nil && filters!.isEmpty)){
-            return true
+        <span class="keyword">if</span>(filters == nil || (filters != nil && filters!.isEmpty)){
+            <span class="keyword">return</span> true
         }
         
-        let toCheckFilters = filters!
+        <span class="keyword">let</span> toCheckFilters = filters!
         
-        let allowableFilterSet = endpoint.getAvailableFilters()
+        <span class="keyword">let</span> allowableFilterSet = endpoint.getAvailableFilters()
 
         print("Checking if the filters passed in are allowable")
         
-        for filter in toCheckFilters{
+        <span class="keyword">for</span> filter <span class="keyword">in</span> toCheckFilters{
             print("Testing the filter: \(filter.getDebugName())")
-            if !allowableFilterSet.contains(filter){
+            <span class="keyword">if</span> !allowableFilterSet.contains(filter){
                 print("The allowable filters don't contain: \(filter.getDebugName())")
-                return false
+                <span class="keyword">return false</span> 
             }
         }
         
-        return true
+        <span class="keyword">return</span> true
         
         
     }
@@ -472,15 +472,15 @@
 <div class="code-wrapper">
 
 <pre>
-      private func getURLRequest(forURL url: URL) -> URLRequest{
+      <span class="keyword">private func</span> getURLRequest(forURL url: URL) -> <span class="keyword">URLRequest</span>{
         
-        var request = URLRequest(url: url)
+        <span class="keyword">var</span> request = URLRequest(url: url)
         
         request.addValue("application/json", forHTTPHeaderField: "Accept")
         request.addValue(OxfordAPIRequest.appID, forHTTPHeaderField: "app_id")
         request.addValue(OxfordAPIRequest.appKey, forHTTPHeaderField: "app_key")
         
-        return request
+        <span class="keyword">return</span> request
     }
 </pre>
 
@@ -492,29 +492,29 @@
 <div class="code-wrapper">
 
 <pre>
-    func generateValidatedURLRequest() throws -> URLRequest{
+    <span class="keyword">func</span> generateValidatedURLRequest() <span class="keyword">throws</span> -> URLRequest{
         
        
-        guard hasValidFilters(filters: self.filters, forEndpoint: self.endpoint) else {
+        <span class="keyword">guard</span> hasValidFilters(filters: self.filters, forEndpoint: self.endpoint) <span class="keyword">else</span> {
             
-            throw NSError(domain: "OxfordAPIClientErrorDomain", code: 0, userInfo: nil)
+            <span class="keyword">throw</span> NSError(domain: "OxfordAPIClientErrorDomain", code: 0, userInfo: nil)
             
         }
         
-        let urlString = getURLString()
+        <span class="keyword">let</span> urlString = getURLString()
         
-        let url = URL(string: urlString)!
+        <span class="keyword">let</span> url = URL(string: urlString)!
         
-        return getURLRequest(forURL: url)
+        <span class="keyword">return</span> getURLRequest(forURL: url)
     }
     
-    func generateURLRequest() -> URLRequest{
+    <span class="keyword">func</span> generateURLRequest() -> URLRequest{
         
-        let urlString = getURLString()
+        <span class="keyword">let</span> urlString = getURLString()
         
-        let url = URL(string: urlString)!
+        <span class="keyword">let</span> url = URL(string: urlString)!
         
-        return getURLRequest(forURL: url)
+        <span class="keyword">return</span> getURLRequest(forURL: url)
     }
 
 </pre>
