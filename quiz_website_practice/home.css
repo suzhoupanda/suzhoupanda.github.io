@@ -1,0 +1,57 @@
+/*font-family: 'Modern Antiqua', cursive;
+font-family: 'Quando', serif;
+*/
+
+
+body{
+	background-color: #99ffcc;
+	background-image: url("img/background_1.png");
+	background-repeat: repeat;
+}
+
+.main-title{
+	text-align: center;
+	margin: auto 0;
+	margin-top: 1em;
+	margin-bottom: 1em;
+	font-size: 5em;
+	font-family: 'Quando', serif;
+		color:  #ff471a;
+	text-shadow: 5px 5px black;
+
+}
+
+.question-title{
+	font-family: 'Modern Antiqua', cursive;
+	color:  #3377ff;
+	text-shadow: 3px 2px black;
+
+}
+
+
+
+.btn{
+	font-family: 'Quando', serif;
+
+}
+
+.jumbotron{
+	border-style: solid;
+	border-color:  black;
+	border-width: 6px;
+	background-color: #ffccb3;
+	margin-bottom: 4em;
+
+}
+
+.jumbotron p{
+	font-family: 'Modern Antiqua', cursive;
+}
+
+.jumbotron img{
+	width: 100%;
+	border-style: solid;
+	border-color:  black;
+	border-width: 5px;
+}
+
