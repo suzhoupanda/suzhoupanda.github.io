@@ -396,153 +396,233 @@
                      Small but commercially important quantities are also found in pentlandite extracted from Sudbury, \
                 Ontario and in pyroxenite deposits in South Africa.[6] (Source: Wikipedia)");
             case 45:
-              return new Element("Li","3","6.94","Lithium");
+              return new Element(
+                "Rh",
+                "45",
+                "186.207",
+                "It is a silvery-gray, heavy, third-row transition metal in group 7 of the periodic table. \
+                With an estimated average concentration of 1 part per billion (ppb), rhenium is one of the rarest elements in the Earth's crust. \
+                Rhenium has the third-highest melting point and second-highest boiling point of any element at 5903 K. Rhenium resembles manganese \
+                and technetium chemically and is mainly obtained as a by-product of the extraction and refinement of molybdenum and copper ores. \
+                Rhenium shows in its compounds a wide variety of oxidation states ranging from −1 to +7.(Source: Wikipedia)");
             case 46:
-              return new Element("Li","3","6.94","Lithium");
+              return new Element(
+                "Pd",
+                "46",
+                "106.42",
+                " It is a rare and lustrous silvery-white metal discovered in 1803 by William Hyde Wollaston.\
+               He named it after the asteroid Pallas, which was itself named after the epithet of the Greek goddess Athena, acquired by her when she slew Pallas.\
+                Palladium, platinum, rhodium, ruthenium, iridium and osmium form a group of elements referred to as the platinum group metals (PGMs).\
+                 These have similar chemical properties,\
+               but palladium has the lowest melting point and is the least dense of them. (Source: Wikipedia)");
             case 47:
-              return new Element("H","1","1.007","Hydrogen");
+              return new Element(
+                "Ag",
+                "47",
+                "107.868",
+                "A soft, white, lustrous transition metal, it exhibits the highest electrical conductivity,\
+                 thermal conductivity, and reflectivity of any metal. The metal is found in the Earth's crust in the pure,\
+                  free elemental form (\"native silver\"), as an alloy with gold and other metals, and in minerals such as argentite and chlorargyrite. \
+                Most silver is produced as a byproduct of copper, gold, lead, and zinc refining.");
             case 48:
-              return new Element("He","2","4.007","Helium");
+              return new Element(
+                "Cd",
+                "48",
+                "112.414",
+                "This soft, bluish-white metal is chemically similar to the two other stable metals in group 12, namely zinc and mercury. \
+                Like zinc, it demonstrates oxidation state +2 in most of its compounds, and like mercury, it has a lower melting point than the\
+                 transition metals in groups 3 through 11. Cadmium and its congeners in group 12 are often not considered transition metals,\
+                  in that they do not have partly filled d or f electron shells in the elemental or common oxidation states.\
+                   The average concentration of cadmium in Earth's crust is between 0.1 and 0.5 parts per million (ppm).\
+                    It was discovered in 1817 simultaneously by Stromeyer and Hermann,\
+               both in Germany, as an impurity in zinc carbonate. (Source: Wikipedia)");
             case 49:
-              return new Element("Li","3","6.94","Lithium");
+              return new Element("In","49","114.818","Indium is a post-transition metal that makes up 0.21 parts per million of the Earth's crust. \
+                Very soft and malleable, indium has a melting point higher than sodium and gallium, but lower than lithium and tin. Chemically, \
+                indium is similar to gallium and thallium, and it is largely intermediate between the two in terms of its properties.[6] \
+                Indium was discovered in 1863 by Ferdinand Reich and Hieronymous Theodor Richter by spectroscopic methods. \
+                They named it for the indigo blue line in its spectrum. Indium was isolated the next year. (Source: Wikipedia)");
             case 50:
-              return new Element("Li","3","6.94","Lithium");
+              return new Element("Sn","50","118.710","It is a post-transition metal in group 14 of the periodic table. \
+                It is obtained chiefly from the mineral cassiterite, which contains stannic oxide, SnO2. \
+                Tin shows a chemical similarity to both of its neighbors in group 14, germanium and lead, and has two main oxidation states, \
+                +2 and the slightly more stable +4. Tin is the 49th most abundant element and has, with 10 stable isotopes, the largest number\
+                 of stable isotopes in the periodic table, thanks to its magic number of protons. It has two main allotropes: at room temperature,\
+                  the stable allotrope is β-tin, a silvery-white, malleable metal, but at low temperatures it transforms into the less dense grey α-tin,\
+                which has the diamond cubic structure. Metallic tin does not easily oxidize in air.");
             case 51:
-              return new Element("Li","3","6.94","Lithium");
+              return new Element("Sn","51","121.760","A lustrous gray metalloid, it is found in nature mainly as the sulfide mineral stibnite (Sb2S3).\
+               Antimony compounds have been known since ancient times and were powdered for use as medicine and cosmetics, often known by the Arabic name,\
+                kohl.[4] Metallic antimony was also known, but it was erroneously identified as lead upon its discovery. \
+                The earliest known description of the metal in the West was written in 1540 by Vannoccio Biringuccio. (Source: Wikipedia)");
             case 52:
-              return new Element("Li","3","6.94","Lithium");
+              return new Element(
+                "Te",
+                "52",
+                "127.603",
+                "It is a brittle, mildly toxic, rare, silver-white metalloid.\
+               Tellurium is chemically related to selenium and sulfur. It is occasionally found in native form as elemental crystals.\
+                Tellurium is far more common in the universe as a whole than on Earth. Its extreme rarity in the Earth's crust, comparable to that of platinum,\
+                 is due partly to its high atomic number, but also to its formation of a volatile \
+                hydride which caused it to be lost to space as a gas during the hot nebular formation of the planet.");
             case 53:
-              return new Element("Li","3","6.94","Lithium");
+              return new Element(
+                "I",
+                "53",
+                "126.904",
+                "The heaviest of the stable halogens, it exists as a lustrous, \
+                purple-black metallic solid at standard conditions that sublimes readily to form a violet gas. \
+                The elemental form was discovered by the French chemist Bernard Courtois in 1811. \
+                It was named two years later by Joseph-Louis Gay-Lussac from this property, after the Greek ἰώδης \"violet-coloured\".");
             case 54:
-              return new Element("Li","3","6.94","Lithium");
+              return new Element(
+                "Xe",
+                "54",
+                "131.293",
+                "It is a colorless, dense, odorless noble gas found in the Earth's atmosphere in trace amounts.[10] Although generally unreactive, xenon can undergo a few chemical reactions such as the formation of xenon hexafluoroplatinate, the first noble gas \
+                compound to be synthesized.[11][12][13]\ 
+                Xenon is used in flash lamps[14] and arc lamps,\
+                [15] and as a general anesthetic.[16] The first excimer laser design used a xenon dimer molecule (Xe2)\
+                 as the lasing medium,[17] and the earliest laser designs used xenon flash lamps as pumps.[18] Xenon is used to search\
+                  for hypothetical weakly interacting massive particles[19] and as the propellant for ion thrusters in spacecraft.[20] (Source: Wikipedia)");
             case 55:
-              return new Element("Li","3","6.94","Lithium");
+              return new Element("Cs","55","132.905","It is a soft, silvery-gold alkali metal with a melting point of 28.5 °C (83.3 °F),\
+               which makes it one of only five elemental metals that are liquid at or near room temperature.[note 2] Caesium has physical\
+                and chemical properties similar to those of rubidium and potassium. The most reactive of all metals, \
+                it is pyrophoric and reacts with water even at −116 °C (−177 °F). It is the least electronegative element,\
+                 with a value of 0.79 on the Pauling scale. It has only one stable isotope, caesium-133. Caesium is mined mostly from pollucite,\
+                  while the radioisotopes, especially caesium-137,\
+               a fission product, are extracted from waste produced by nuclear reactors.(Source: Wikipedia)");
             case 56:
-              return new Element("Li","3","6.94","Lithium");
+              return new Element("Ba","56","137.327","Because of its high chemical reactivity, barium is never found in nature as a free element. Its hydroxide, known in pre-modern times as baryta, does not occur as a mineral, but can be prepared by heating barium carbonate.  \
+                    The most common naturally occurring minerals of barium are barite (barium sulfate, BaSO4) and witherite (barium carbonate, BaCO3), \
+                    both insoluble in water. The name barium originates from the alchemical derivative \"baryta\", from Greek βαρύς (barys), meaning \"heavy.\" \
+                    Baric is the adjectival form of barium. Barium was identified as a new element in 1774, but not reduced to a metal until 1808 with the \
+                    advent of electrolysis.");
             case 57:
-              return new Element("H","1","1.007","Hydrogen");
+              return new Element("No Data Available","57","No Data Available","Hafnium");
             case 58:
-              return new Element("He","2","4.007","Helium");
+              return new Element("No Data Available","58","No Data Available","No Data Available");
             case 59:
-              return new Element("Li","3","6.94","Lithium");
+              return new Element("No Data Available","59","No Data Available","No Data Available");
             case 60:
-              return new Element("Li","3","6.94","Lithium");
+              return new Element("No Data Available","60","No Data Available","No Data Available");
             case 61:
-              return new Element("Li","3","6.94","Lithium");
+              return new Element("No Data Available","61","No Data Available","No Data Available");
             case 62:
-              return new Element("Li","3","6.94","Lithium");
+              return new Element("No Data Available","62","No Data Available","No Data Available");
             case 63:
-              return new Element("Li","3","6.94","Lithium");
+              return new Element("No Data Available","63","No Data Available","No Data Available");
             case 64:
-              return new Element("Li","3","6.94","Lithium");
+              return new Element("No Data Available","64","No Data Available","No Data Available");
             case 65:
-              return new Element("Li","3","6.94","Lithium");
+              return new Element("No Data Available","65","No Data Available","No Data Available");
             case 66:
-              return new Element("Li","3","6.94","Lithium");
+              return new Element("No Data Available","66","No Data Available","No Data Available");
             case 67:
-              return new Element("H","1","1.007","Hydrogen");
+              return new Element("No Data Available","67","No Data Available","No Data Available");
             case 68:
-              return new Element("He","2","4.007","Helium");
+              return new Element("No Data Available","68","No Data Available","No Data Available");
             case 69:
-              return new Element("Li","3","6.94","Lithium");
+              return new Element("No Data Available","69","No Data Available","No Data Available");
             case 70:
-              return new Element("Li","3","6.94","Lithium");
+              return new Element("No Data Available","70","No Data Available","No Data Available");
             case 71:
-              return new Element("Li","3","6.94","Lithium");
+              return new Element("No Data Available","71","No Data Available","No Data Available");
             case 72:
-              return new Element("Li","3","6.94","Lithium");
+              return new Element("No Data Available","72","No Data Available","No Data Available");
             case 73:
-              return new Element("Li","3","6.94","Lithium");
+              return new Element("No Data Available","73","No Data Available","No Data Available");
             case 74:
-              return new Element("Li","3","6.94","Lithium");
+              return new Element("No Data Available","74","No Data Available","No Data Available");
             case 75:
-              return new Element("Li","3","6.94","Lithium");
+              return new Element("No Data Available","75","No Data Available","No Data Available");
             case 76:
-              return new Element("Li","3","6.94","Lithium");
+              return new Element("No Data Available","76","No Data Available","No Data Available");
             case 77:
-              return new Element("H","1","1.007","Hydrogen");
+              return new Element("No Data Available","77","No Data Available","No Data Available");
             case 78:
-              return new Element("He","2","4.007","Helium");
+              return new Element("No Data Available","78","No Data Available","No Data Available");
             case 79:
-              return new Element("Li","3","6.94","Lithium");
+              return new Element("No Data Available","79","No Data Available","No Data Available");
             case 80:
-              return new Element("Li","3","6.94","Lithium");
+              return new Element("No Data Available","80","No Data Available","No Data Available");
             case 81:
-              return new Element("Li","3","6.94","Lithium");
+              return new Element("No Data Available","81","No Data Available","No Data Available");
             case 82:
-              return new Element("Li","3","6.94","Lithium");
+              return new Element("No Data Available","82","No Data Available","No Data Available");
             case 83:
-              return new Element("Li","3","6.94","Lithium");
+              return new Element("No Data Available","83","No Data Available","No Data Available");
             case 84:
-              return new Element("Li","3","6.94","Lithium");
+              return new Element("No Data Available","84","No Data Available","No Data Available");
             case 85:
-              return new Element("Li","3","6.94","Lithium");
+              return new Element("No Data Available","85","No Data Available","No Data Available");
             case 86:
-              return new Element("Li","3","6.94","Lithium");
+              return new Element("No Data Available","86","No Data Available","No Data Available");
             case 87:
-              return new Element("H","1","1.007","Hydrogen");
+              return new Element("No Data Available","87","No Data Available","No Data Available");
             case 88:
-              return new Element("He","2","4.007","Helium");
+              return new Element("No Data Available","88","No Data Available","No Data Available");
             case 89:
-              return new Element("Li","3","6.94","Lithium");
+              return new Element("No Data Available","89","No Data Available","No Data Available");
             case 90:
-              return new Element("Li","3","6.94","Lithium");
+              return new Element("No Data Available","90","No Data Available","No Data Available");
             case 91:
-              return new Element("Li","3","6.94","Lithium");
+              return new Element("No Data Available","91","No Data Available","No Data Available");
             case 92:
-              return new Element("Li","3","6.94","Lithium");
+              return new Element("No Data Available","92","No Data Available","No Data Available");
             case 93:
-              return new Element("Li","3","6.94","Lithium");
+              return new Element("No Data Available","93","No Data Available","No Data Available");
             case 94:
-              return new Element("Li","3","6.94","Lithium");
+              return new Element("No Data Available","94","No Data Available","No Data Available");
             case 95:
-              return new Element("Li","3","6.94","Lithium");
+              return new Element("No Data Available","95","No Data Available","No Data Available");
             case 96:
-              return new Element("Li","3","6.94","Lithium");
+              return new Element("No Data Available","96","No Data Available","No Data Available");
             case 97:
-              return new Element("H","1","1.007","Hydrogen");
+              return new Element("No Data Available","97","No Data Available","No Data Available");
             case 98:
-              return new Element("He","2","4.007","Helium");
+              return new Element("No Data Available","98","No Data Available","No Data Available");
             case 99:
-              return new Element("Li","3","6.94","Lithium");
+              return new Element("No Data Available","99","No Data Available","No Data Available");
             case 100:
-              return new Element("Li","3","6.94","Lithium");
+              return new Element("No Data Available","100","No Data Available","No Data Available");
             case 101:
-              return new Element("Li","3","6.94","Lithium");
+              return new Element("No Data Available","101","No Data Available","No Data Available");
             case 102:
-              return new Element("Li","3","6.94","Lithium");
+              return new Element("No Data Available","102","No Data Available","No Data Available");
             case 103:
-              return new Element("Li","3","6.94","Lithium");
+              return new Element("No Data Available","103","No Data Available","No Data Available");
             case 104:
-              return new Element("Li","3","6.94","Lithium");
+              return new Element("No Data Available","104","No Data Available","No Data Available");
             case 105:
-              return new Element("Li","3","6.94","Lithium");
+              return new Element("No Data Available","105","No Data Available","No Data Available");
             case 106:
-              return new Element("Li","3","6.94","Lithium");
+              return new Element("No Data Available","106","No Data Available","No Data Available");
             case 107:
-              return new Element("H","1","1.007","Hydrogen");
+              return new Element("No Data Available","107","No Data Available","No Data Available");
             case 108:
-              return new Element("He","2","4.007","Helium");
+              return new Element("No Data Available","108","No Data Available","No Data Available");
             case 109:
-              return new Element("Li","3","6.94","Lithium");
+              return new Element("No Data Available","109","No Data Available","No Data Available");
             case 110:
-              return new Element("Li","3","6.94","Lithium");
+              return new Element("No Data Available","110","No Data Available","No Data Available");
             case 111:
-              return new Element("Li","3","6.94","Lithium");
+              return new Element("No Data Available","111","No Data Available","No Data Available");
             case 112:
-              return new Element("Li","3","6.94","Lithium");
+              return new Element("No Data Available","112","No Data Available","No Data Available");
             case 113:
-              return new Element("Li","3","6.94","Lithium");
+              return new Element("No Data Available","113","No Data Available","No Data Available");
             case 114:
-              return new Element("Li","3","6.94","Lithium");
+              return new Element("No Data Available","114","No Data Available","No Data Available");
             case 115:
-              return new Element("Li","3","6.94","Lithium");
+              return new Element("No Data Available","115","No Data Available","No Data Available");
             case 116:
-              return new Element("Li","3","6.94","Lithium");
+              return new Element("No Data Available","116","No Data Available","No Data Available");
             case 117:
-              return new Element("H","1","1.007","Hydrogen");
+              return new Element("No Data Available","117","No Data Available","No Data Available");
             case 118:
-              return new Element("He","2","4.007","Helium");
+              return new Element("No Data Available","118","No Data Available","No Data Available");
         
           }
 
