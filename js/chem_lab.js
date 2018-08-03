@@ -56,7 +56,7 @@
                 that have collided with cosmic rays. Within the cores of stars beryllium is depleted as it is fused and creates larger elements. \
                 It is a divalent element which occurs naturally only in combination with other elements in minerals. Notable gemstones \
                 which contain beryllium include beryl (aquamarine, emerald) and chrysoberyl. \
-                As a free element it is a steel-gray, strong, lightweight and brittle alkaline earth metal.");
+                As a free element it is a steel-gray, strong, lightweight and brittle alkaline earth metal. (Source: Wikipedia)");
             case 5:
               return new Element(
                 "B",
@@ -73,7 +73,7 @@
                 "12.011",
                 "It is nonmetallic and tetravalent—making four electrons available to form covalent chemical bonds. \
                 It belongs to group 14 of the periodic table.[13] Three isotopes occur naturally, 12C and 13C being stable, while 14C is a radionuclide, \
-                decaying with a half-life of about 5,730 years.[14] Carbon is one of the few elements known since antiquity.[15] (Source: Wikipeida)");
+                decaying with a half-life of about 5,730 years.[14] Carbon is one of the few elements known since antiquity.[15] (Source: Wikipedia)");
             case 7:
               return new Element(
                 "N",
@@ -98,7 +98,7 @@
             case 9:
               return new Element("F","9","18.998","It is the lightest halogen and exists as a highly toxic pale yellow diatomic gas at standard conditions.\
                As the most electronegative element, \
-                it is extremely reactive: almost all other elements, including some noble gases, form compounds with fluorine.");
+                it is extremely reactive: almost all other elements, including some noble gases, form compounds with fluorine. (Source: Wikipedia)");
             case 10:
               return new Element("Ne",
                 "10",
@@ -252,45 +252,149 @@
                 (now known to be manganese dioxide) contained a new element, but they were unable to isolate it. Johan Gottlieb Gahn was the first to \
                 isolate an impure sample of manganese metal in 1774, which he did by reducing the dioxide with carbon.(Source: Wikipedia)");
             case 26:
-              return new Element("H","1","1.007","Hydrogen");
+              return new Element(
+                "Fe",
+                "26"
+                "55.845",
+                "It is a metal in the first transition series. It is by mass the most common element on Earth, \
+                forming much of Earth's outer and inner core. It is the fourth most common element in the Earth's crust. \
+                Its abundance in rocky planets like Earth is due to its abundant production by fusion in high-mass stars, where it is the last element to be \
+                produced with release of energy before the violent collapse of a supernova, which scatters the iron into space. (Source: Wikipedia)");
             case 27:
-              return new Element("He","2","4.007","Helium");
+              return new Element(
+                "Co",
+                "27",
+                "58.933",
+                " Like nickel, cobalt is found in the Earth's crust only in chemically combined form, \
+                save for small deposits found in alloys of natural meteoric iron. \
+                The free element, produced by reductive smelting, is a hard, lustrous, silver-gray metal. (Source: Wikipedia)");
             case 28:
-              return new Element("Li","3","6.94","Lithium");
+              return new Element(
+                "Ni",
+                "28",
+                "58.6934",
+                "Nickel is a silvery-white lustrous metal with a slight golden tinge.\
+               Nickel belongs to the transition metals and is hard and ductile. Pure nickel, powdered to maximize the reactive surface area, \
+               shows a significant chemical activity, but larger pieces are slow to react with air under standard conditions because an oxide layer forms\
+                on the surface and prevents further corrosion (passivation). Even so, pure native nickel is found in Earth's crust only in tiny amounts,\
+                 usually in ultramafic rocks,[4][5] and in the interiors of\
+               larger nickel–iron meteorites that were not exposed to oxygen when outside Earth's atmosphere.(Source: Wikipedia)");
             case 29:
-              return new Element("Li","3","6.94","Lithium");
+              return new Element("Cu","29","63.546","Copper is a soft, malleable, and ductile metal with very high thermal and electrical conductivity.\
+               A freshly exposed surface of pure copper has a reddish-orange color. Copper is used as a conductor of heat and electricity, as a building material,\
+                and as a constituent of various metal alloys, such as sterling silver used in jewelry, cupronickel used to make marine hardware and coins, \
+                and constantan used in strain gauges and thermocouples for temperature measurement.");
             case 30:
-              return new Element("Li","3","6.94","Lithium");
+              return new Element("Zn","30","65.382","It is the first element in group 12 of the periodic table.\
+               In some respects zinc is chemically similar to magnesium: both elements exhibit only one normal oxidation state (+2),\
+                and the Zn2+ and Mg2+ ions are of similar size. Zinc is the 24th most abundant element in Earth's crust and has five stable isotopes.\
+                 The most common zinc ore is sphalerite (zinc blende), a zinc sulfide mineral. The largest workable lodes are in Australia, Asia,\
+                  and the United States.\
+               Zinc is refined by froth flotation of the ore, roasting, and final extraction using electricity (electrowinning). (Source: Wikipedia)");
             case 31:
-              return new Element("Li","3","6.94","Lithium");
-            case 31:
-              return new Element("Li","3","6.94","Lithium");
+              return new Element("Ga","31","69.7231","It is in group 13 of the periodic table, and thus has similarities to the other metals of the group,\
+               aluminium, indium, and thallium. Gallium does not occur as a free element in nature, but as gallium(III) compounds in trace amounts in zinc ores \
+               and in bauxite.[5] Elemental gallium is a soft, silvery blue metal at standard temperature and pressure, a brittle solid at low temperatures,\
+                and a liquid at temperatures greater than 29.76 °C (85.57 °F)\
+               (above room temperature, but below the normal human body temperature). (Source: Wikipedia)");
             case 32:
-              return new Element("Li","3","6.94","Lithium");
+              return new Element(
+                "Ge",
+                "32",
+                "72.630",
+                "It is a lustrous, hard, grayish-white metalloid in the carbon group,\
+               chemically similar to its group neighbors tin and silicon. Pure germanium is a semiconductor with an appearance similar to elemental silicon.\
+               Like silicon, germanium naturally reacts and forms complexes with oxygen in nature. (Source: Wikipedia)");
             case 33:
-              return new Element("Li","3","6.94","Lithium");
+              return new Element(
+                "As",
+                "33",
+                "74.921595",
+                "Arsenic occurs in many minerals,\
+               usually in combination with sulfur and metals, but also as a pure elemental crystal. Arsenic is a metalloid. It has various allotropes,\
+               but only the gray form, which has a metallic appearance, is important to industry. (Source: Wikipedia)");
             case 34:
-              return new Element("Li","3","6.94","Lithium");
+              return new Element(
+                "Se",
+                "34",
+                "78.971",
+                "Selenium is a nonmetal with properties that are intermediate between\
+               the elements above and below in the periodic table, sulfur and tellurium, and also has similarities to arsenic.\
+                It rarely occurs in its elemental state or as pure ore compounds in the Earth's crust. Selenium (from Ancient Greek σελήνη (selḗnē) \"Moon\")\
+                 was discovered in 1817 by Jöns Jacob Berzelius, \
+                who noted the similarity of the new element to the previously discovered tellurium (named for the Earth) (Source: Wikipedia).");
             case 35:
-              return new Element("Li","3","6.94","Lithium");
+              return new Element(
+                "Br",
+                "35",
+                "79.904",
+                "Bromine is the third-lightest halogen, and is a fuming red-brown liquid at room temperature that evaporates readily to form a similarly coloured gas. Its properties are thus intermediate between those of chlorine and iodine. Isolated independently by two chemists, Carl Jacob Löwig (in 1825) and Antoine Jérôme Balard (in 1826), \
+                its name was derived from the Ancient Greek βρῶμος (\"stench\"), referencing its sharp and disagreeable smell.(Source: Wikipedia)");
             case 36:
-              return new Element("Li","3","6.94","Lithium");
+              return new Element(
+                "Kr",
+                "36","83.798"," It is a member of group 18 (noble gases) elements. A colorless, odorless, tasteless noble gas, krypton occurs in trace amounts in the atmosphere and is often used with other rare gases in fluorescent lamps. With rare exceptions, krypton is chemically inert.  \
+                Krypton, like the other noble gases, is used in lighting and photography. Krypton light has many spectral lines, \
+                and krypton plasma is useful in bright, high-powered gas lasers (krypton ion and excimer lasers), \
+                each of which resonates and amplifies a single spectral line.");
             case 37:
-              return new Element("H","1","1.007","Hydrogen");
+              return new Element("Rb","37","85.4678","Rubidium is a soft, silvery-white metallic element of the alkali metal group, \
+                with a standard atomic weight of 85.4678. Elemental rubidium is highly reactive, with properties similar to those of other alkali metals,\
+                 including rapid oxidation in air. On Earth, natural rubidium comprises two isotopes: 72% is the stable isotope, 85Rb; 28% is the slightly\
+                  radioactive 87Rb, with a half-life of 49 billion years—more than three times longer than the estimated age of the universe.  \
+                German chemists Robert Bunsen and Gustav Kirchhoff discovered rubidium in 1861 by the newly developed technique, flame spectroscopy. (Source: Wikipedia)");
             case 38:
-              return new Element("He","2","4.007","Helium");
+              return new Element("Sr","38","87.621","An alkaline earth metal, strontium is a soft silver-white yellowish metallic element\
+               that is highly reactive chemically. The metal forms a dark oxide layer when it is exposed to air.\
+                Strontium has physical and chemical properties similar to those of its two vertical neighbors in the periodic table,\
+                 calcium and barium. It occurs naturally mainly in the minerals celestine and strontianite, and is mostly mined from these.\
+                  While natural strontium is stable, the synthetic 90Sr isotope is radioactive and is one of the most dangerous components of nuclear fallout,\
+                   as strontium is absorbed by the body in a similar manner to calcium. \
+                Natural stable strontium, on the other hand, is not hazardous to health. (Source: Wikipedia)");
             case 39:
-              return new Element("Li","3","6.94","Lithium");
+              return new Element("Y","39","88.905","It is a silvery-metallic transition metal chemically similar to the\
+                lanthanides and has often been classified as a \"rare-earth element\".[4] Yttrium is almost always found in combination \
+                with lanthanide elements in rare-earth minerals, and is never found in nature as a free element. \
+                89Y is the only stable isotope, and the only isotope found in the Earth's crust.");
             case 40:
-              return new Element("Li","3","6.94","Lithium");
+              return new Element("Zr","40","91.224"," The name zirconium is taken from the name of the mineral zircon,\
+               the most important source of zirconium. The word zircon comes from the Persian word zargun زرگون, meaning \"gold-colored\".[5] \
+               It is a lustrous, grey-white, strong transition metal that closely resembles hafnium and, to a lesser extent, titanium. \
+               Zirconium is mainly used as a refractory and opacifier, although small amounts are used as an alloying agent for its strong\
+                resistance to corrosion. Zirconium forms a variety of inorganic and organometallic compounds such as zirconium dioxide and zirconocene dichloride,\
+                 respectively. Five isotopes occur naturally,\
+               three of which are stable. Zirconium compounds have no known biological role. (Source: Wikipedia)");
             case 41:
-              return new Element("Li","3","6.94","Lithium");
+              return new Element("Nb","41","92.906","It is a soft, grey, crystalline, ductile transition metal,\
+               often found in the minerals pyrochlore and columbite, hence the former name \"columbium\".\
+                Its name comes from Greek mythology, specifically Niobe, who was the daughter of Tantalus, the namesake of tantalum.\
+                 The name reflects the great similarity between the two elements in their physical and chemical properties,\
+               making them difficult to distinguish.[2] (Source: Wikipedia)");
             case 42:
-              return new Element("Li","3","6.94","Lithium");
+              return new Element("Mo","42","95.95","The name is from Neo-Latin molybdaenum, from Ancient Greek Μόλυβδος molybdos,\
+               meaning lead, since its ores were confused with lead ores.[6] Molybdenum minerals have been known throughout history,\
+                but the element was discovered (in the sense of differentiating it as a new entity from the mineral salts of other metals)\
+                 in 1778 by Carl Wilhelm Scheele.\
+               The metal was first isolated in 1781 by Peter Jacob Hjelm. [7]");
             case 43:
-              return new Element("Li","3","6.94","Lithium");
+              return new Element("Tc","43","98"," It is the lightest element whose isotopes are all radioactive; none are stable,\
+               excluding the fully ionized state of 97Tc.[4] Nearly all technetium is produced synthetically,\
+                and only about 18000 tons can be found at any given time in the Earth's crust. Naturally occurring technetium is a spontaneous fission product\
+                 in uranium ore and thorium ore, the most common source, or the product of neutron capture in molybdenum ores.\
+                  The chemical properties of this silvery gray, crystalline transition metal are intermediate between rhenium and manganese,\
+                   which it lies between in group 7 of the periodic table.\
+               The most common naturally occurring isotope is 99Tc. (Source: Wikipedia)");
             case 44:
-              return new Element("Li","3","6.94","Lithium");
+              return new Element("Ru","44","101.07","It is a rare transition metal belonging to the platinum group of the periodic table. \
+                Like the other metals of the platinum group, ruthenium is inert to most other chemicals. The Russian-born scientist of Baltic-German ancestry\
+                 and a member of the Russian Academy of Science Karl Ernst Claus discovered the element in 1844 at Kazan State University in Russia and\
+                  named it after the Latin name of his homeland, Ruthenia. Ruthenium is usually found as a minor component of platinum ores; the annual\
+                   production is about 20 tonnes.[5] Most ruthenium produced is used in wear-resistant electrical contacts and thick-film resistors. \
+                   A minor application for ruthenium is in platinum alloys and as a chemistry catalyst. \
+                   A new application of ruthenium is as the capping layer for extreme ultraviolet photomasks.\
+                    Ruthenium is generally found in ores with the other platinum group metals in the Ural Mountains and in North and South America.\
+                     Small but commercially important quantities are also found in pentlandite extracted from Sudbury, \
+                Ontario and in pyroxenite deposits in South Africa.[6] (Source: Wikipedia)");
             case 45:
               return new Element("Li","3","6.94","Lithium");
             case 46:
