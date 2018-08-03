@@ -1,0 +1,222 @@
+
+
+.modal-content h2{
+	font-weight: bold;
+}
+
+.modal-content h3{
+	font-weight: bold;
+}
+
+.modal-content h4{
+	font-weight: bold;
+}
+
+.element-symbol-modal{
+	font-weight: normal;
+}
+
+.atomic-number-modal{
+	font-weight: normal;
+
+}
+
+.atomic-weight-modal{
+	font-weight: normal;
+
+}
+
+.element-description-modal{
+	font-weight: normal;
+
+}
+
+.modal-dialog{
+	background-color: green;
+
+	border-style: ridge;
+	border-color: black;
+	border-width: 5px;
+}
+
+.modal-content{
+	width: 100%;
+	height: auto;
+}
+
+.modal h2{
+	margin-top: 1em;
+	margin-left: 0.5em;
+	margin-right: 0.5em;
+
+}
+
+.modal h3,h4{
+	margin-bottom: 1em;
+	margin-left: 0.5em;
+	margin-right: 0.5em;
+
+
+}
+
+#myVideo {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    min-width: 100%; 
+    min-height: 100%;
+    z-index: -1;
+}
+
+
+ .container{
+ 	padding-bottom: 3em;
+ }
+/**
+font-family: 'Cabin Sketch', cursive;
+font-family: 'Unica One', cursive;
+font-family: 'Forum', cursive;
+font-family: 'Titan One', cursive;
+font-family: 'Bevan', cursive;
+font-family: 'Chewy', cursive;
+**/
+
+a{
+	 text-decoration:none; 
+     cursor:pointer; 
+}
+
+.body-wrapper{
+	width: 95%;
+	margin: auto;
+	margin-top:0.3em;
+}
+
+.main-title{
+	font-family: 'Unica One', cursive;
+	text-align: center;
+	font-size: 7em;
+	margin-bottom: 0.2em;
+}
+
+.element-title{
+	font-family: 'Chewy', cursive;
+	text-align: center;
+	font-size: 8em;
+	margin-bottom: 0.2em;
+}
+
+.list-group{
+	margin: auto;
+	width: 70%;
+}
+
+.list-group-item{
+	font-family: 'Chewy', cursive;
+}
+
+.element-symbol{
+	display: block;
+	margin: auto;
+    font-family: 'Forum', cursive;
+	text-align: center;
+	font-size: 10em;
+	border: 0.1em;
+	border-radius: 30%;
+	border-style: solid;
+	border-color: red;
+	color:red;
+	background-color: lightblue;
+	width: 3em;
+	height: 3em;
+
+	padding: 0.2em;
+	margin-bottom: 0.2em;
+}
+
+
+.atomic-weight{
+	display: block;
+	font-size: 0.2em;
+}
+
+
+.table-wrapper{
+	margin: auto;
+	width: 100%;
+}
+
+
+.element-link{
+	transition: text-decoration-color 0.5s;
+
+}
+
+
+
+.element-link:hover{
+	text-decoration-color: rgba(250,101,151,1);
+}
+
+.element{
+	width: 60px;
+	height: 60px;
+	background-color: rgba(150,212,151,1);
+	text-align: center;
+	color: rgba(150,101,151,1);
+	border-color: rgb(159, 125, 163);
+	border-width: 5px;
+	border-style: solid;
+	font-family: 'Cabin Sketch', cursive;
+	transition: border-radius 0.5s;
+	transition: background-color 1.0s;
+	font-size: 2.0em;
+	text-decoration: none;
+}
+
+.element:hover{
+	border-radius: 20%;
+	background-color: rgba(255, 219, 77);
+}
+
+.element a:hover{
+	color: purple;
+	text-decoration: none;
+
+}
+
+.non-visible{
+	opacity: 0;
+	border-width: 0;
+}
+
+
+
+.alkali-metals{
+	background-color: rgba(50,200,250,1);
+}
+
+.alkaline-earth-metals{
+	background-color: rgba(120,220,200,1);
+
+}
+
+
+.noble-gas{
+
+	background-color: rgba(200,200,200,1);
+
+}
+
+/** Use the Bootstrap breakpoints **/
+
+@media screen and (min-width: 600px)  {
+
+}
+
+
+@media screen and (min-width: 1000px){
+
+
+
+}

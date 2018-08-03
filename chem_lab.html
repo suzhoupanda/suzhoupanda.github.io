@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Periodic Table</title>
+
+
+<link async href="http://fonts.googleapis.com/css?family=Warnes" data-generated="http://enjoycss.com" rel="stylesheet" type="text/css"/>
+	<link href="https://fonts.googleapis.com/css?family=Jacques+Francois+Shadow|Kreon|Londrina+Shadow|Ribeye+Marrow|Vidaloka" rel="stylesheet">
+	<link rel="stylesheet" href="css/normalize.css">
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/jquery-ui.min.css">
+	<link rel="stylesheet" href="css/jquery-ui.theme.min.css">
+	<link rel="stylesheet" href="css/jquery-ui.structure.min.css">
+	<link rel="stylesheet" href="css/building.css">
+	<link rel="stylesheet" href="css/chem_lab.css">
+
+</head>
+<body>
+
+	
+
+	<div class="container">
+
+		<h1 class="main-title">Interactive Periodic Table</h1>
+
+		<video autoplay muted loop id="myVideo">
+  			<source src="vids/video_1.mp4" type="video/mp4">
+  		
+		</video>
+
+
+
+
+		<div class="table-wrapper">
+
+		<table id="periodic-table">
+			<tr class="element_row">
+				<td class="element group-1 "><a href="atomic_number/1" class="element-link" id="1"  data-toggle="modal" data-target=".bd-example-modal-lg">H</a><span class="atomic-weight">1.008</span></td>
+				<td class="element group-2 non-visible"></td>
+				<td class="element group-3 non-visible"></td>
+				<td class="element group-4 non-visible"></td>
+				<td class="element group-5 non-visible"></td>
+				<td class="element group-6 non-visible"></td>
+				<td class="element group-7 non-visible"></td>
+				<td class="element group-8 non-visible"></td>
+				<td class="element group-9 non-visible"></td>
+				<td class="element group-10 non-visible"></td>
+				<td class="element group-11 non-visible"></td>
+				<td class="element group-12 non-visible"></td>
+				<td class="element group-13 non-visible"></td>
+				<td class="element group-14 non-visible"></td>
+				<td class="element group-15 non-visible"></td>
+				<td class="element group-16 non-visible"></td>
+				<td class="element group-17 non-visible"></td>
+
+				
+
+				<td class="element group-18 noble-gas"><a href="atomic_number/2" class="element-link" id="2" data-toggle="modal" data-target=".bd-example-modal-lg">He</a><span class="atomic-weight">4.0026</span></td>
+
+
+			</tr>
+
+
+			<tr class="element_row">
+				<td class="element group-1 alkali-metals"><a href="atomic_number/3" class="element-link" id="3" data-toggle="modal" data-target=".bd-example-modal-lg">Li</a><span class="atomic-weight">6.94</span></td>
+				<td class="element group-2 alkaline-earth-metals"><a href="atomic_number/4" class="element-link" id="4" data-toggle="modal" data-target=".bd-example-modal-lg">Be</a><span class="atomic-weight">9.0122</span></td>
+				<td class="element group-3 non-visible"></td>
+				<td class="element group-4 non-visible"></td>
+				<td class="element group-5 non-visible"></td>
+				<td class="element group-6 non-visible"></td>
+				<td class="element group-7 non-visible"></td>
+				<td class="element group-8 non-visible"></td>
+				<td class="element group-9 non-visible"></td>
+				<td class="element group-10 non-visible"></td>
+				<td class="element group-11 non-visible"></td>
+				<td class="element group-12 non-visible"></td>
+				<td class="element group-13"><a href="atomic_number/5" class="element-link" id="5" data-toggle="modal" data-target=".bd-example-modal-lg">B</a><span class="atomic-weight">10.81</span></td>
+				<td class="element group-14"><a href="atomic_number/6" class="element-link" id="6" data-toggle="modal" data-target=".bd-example-modal-lg">C</a><span class="atomic-weight">12.011</span></td>
+				<td class="element group-15"><a href="atomic_number/7" class="element-link" id="7" data-toggle="modal" data-target=".bd-example-modal-lg">N</a><span class="atomic-weight">14.007</span></td>
+				<td class="element group-16"><a href="atomic_number/8" class="element-link" id="8" data-toggle="modal" data-target=".bd-example-modal-lg">O</a><span class="atomic-weight">15.999</span></td>
+				<td class="element group-17"><a href="atomic_number/9" class="element-link" id="9" data-toggle="modal" data-target=".bd-example-modal-lg">F</a><span class="atomic-weight">18.998</span></td>
+				<td class="element group-18 noble-gas"><a href="atomic_number/10" class="element-link" id="10" data-toggle="modal" data-target=".bd-example-modal-lg">Ne</a><span class="atomic-weight">20.180</span></td>
+			</tr>
+
+
+
+	<tr class="element_row">
+				<td class="element group-1 alkali-metals"><a href="atomic_number/11" class="element-link" id="11" data-toggle="modal" data-target=".bd-example-modal-lg">Na</a></td>
+				<td class="element group-2 alkaline-earth-metals"><a href="atomic_number/12" class="element-link" id="12" data-toggle="modal" data-target=".bd-example-modal-lg">Mg</a></td>
+				<td class="element group-3 non-visible"></td>
+				<td class="element group-4 non-visible"></td>
+				<td class="element group-5 non-visible"></td>
+				<td class="element group-6 non-visible"></td>
+				<td class="element group-7 non-visible"></td>
+				<td class="element group-8 non-visible"></td>
+				<td class="element group-9 non-visible"></td>
+				<td class="element group-10 non-visible"></td>
+				<td class="element group-11 non-visible"></td>
+				<td class="element group-12 non-visible"></td>
+				<td class="element group-13"><a href="atomic_number/13" class="element-link" id="13" data-toggle="modal" data-target=".bd-example-modal-lg">Al</a></td>
+				<td class="element group-14"><a href="atomic_number/14" class="element-link" id="14" data-toggle="modal" data-target=".bd-example-modal-lg">Si</a></td>
+				<td class="element group-15"><a href="atomic_number/15" class="element-link" id="15" data-toggle="modal" data-target=".bd-example-modal-lg">P</a></td>
+				<td class="element group-16"><a href="atomic_number/16" class="element-link" id="16" data-toggle="modal" data-target=".bd-example-modal-lg">S</a></td>
+				<td class="element group-17"><a href="atomic_number/17" class="element-link" id="17" data-toggle="modal" data-target=".bd-example-modal-lg">Cl</a></td>
+				<td class="element group-18 noble-gas"><a href="atomic_number/18" class="element-link" id="18" data-toggle="modal" data-target=".bd-example-modal-lg">Ar</a></td>
+			</tr>
+
+
+
+	<tr class="element_row">
+				<td class="element group-1 alkali-metals"><a href="atomic_number/19" class="element-link" id="19" data-toggle="modal" data-target=".bd-example-modal-lg">K</a></td>
+				<td class="element group-2 alkaline-earth-metals"><a href="atomic_number/20" class="element-link" id="20" data-toggle="modal" data-target=".bd-example-modal-lg">Ca</a></td>
+				<td class="element group-3"><a href="atomic_number/21" class="element-link" id="21" data-toggle="modal" data-target=".bd-example-modal-lg">Sc</a></td>
+				<td class="element group-4"><a href="atomic_number/22" class="element-link" id="22" data-toggle="modal" data-target=".bd-example-modal-lg">Ti</a></td>
+				<td class="element group-5"><a href="atomic_number/23" class="element-link" id="23" data-toggle="modal" data-target=".bd-example-modal-lg">V</a></td>
+				<td class="element group-6"><a href="atomic_number/24" class="element-link" id="24" data-toggle="modal" data-target=".bd-example-modal-lg">Cr</a></td>
+				<td class="element group-7"><a href="atomic_number/25" class="element-link" id="25" data-toggle="modal" data-target=".bd-example-modal-lg">Mn</a></td>
+				<td class="element group-8"><a href="atomic_number/26" class="element-link" id="26" data-toggle="modal" data-target=".bd-example-modal-lg">Fe</a></td>
+				<td class="element group-9"><a href="atomic_number/27" class="element-link" id="27" data-toggle="modal" data-target=".bd-example-modal-lg">Co</a></td>
+				<td class="element group-10"><a href="atomic_number/28" class="element-link" id="28" data-toggle="modal" data-target=".bd-example-modal-lg">Ni</a></td>
+				<td class="element group-11"><a href="atomic_number/29" class="element-link" id="29" data-toggle="modal" data-target=".bd-example-modal-lg">Cu</a></td>
+				<td class="element group-12"><a href="atomic_number/30" class="element-link" id="30" data-toggle="modal" data-target=".bd-example-modal-lg">Zn</a></td>
+				<td class="element group-13"><a href="atomic_number/31" class="element-link" id="31" data-toggle="modal" data-target=".bd-example-modal-lg">Ga</a></td>
+				<td class="element group-14"><a href="atomic_number/32" class="element-link" id="32" data-toggle="modal" data-target=".bd-example-modal-lg">Ge</a></td>
+				<td class="element group-15"><a href="atomic_number/33" class="element-link" id="33" data-toggle="modal" data-target=".bd-example-modal-lg">As</a></td>
+				<td class="element group-16"><a href="atomic_number/34" class="element-link" id="34" data-toggle="modal" data-target=".bd-example-modal-lg">Se</a></td>
+				<td class="element group-17"><a href="atomic_number/35" class="element-link" id="35" data-toggle="modal" data-target=".bd-example-modal-lg">Br</a></td>
+				<td class="element group-18 noble-gas"><a href="atomic_number/36" class="element-link" id="36" data-toggle="modal" data-target=".bd-example-modal-lg">Kr</a></td>
+			</tr>
+
+
+
+	<tr class="element_row">
+				<td class="element group-1 alkali-metals"><a href="atomic_number/37" class="element-link" id="37" data-toggle="modal" data-target=".bd-example-modal-lg">Rb</a></td>
+				<td class="element group-2 alkaline-earth-metals"><a href="atomic_number/38" class="element-link" id="38" data-toggle="modal" data-target=".bd-example-modal-lg">Sr</a></td>
+				<td class="element group-3"><a href="atomic_number/39" class="element-link" id="39" data-toggle="modal" data-target=".bd-example-modal-lg">Y</a></td> 
+				<td class="element group-4"><a href="atomic_number/40" class="element-link" id="40" data-toggle="modal" data-target=".bd-example-modal-lg">Zr</a></td>
+				<td class="element group-5"><a href="atomic_number/41" class="element-link" id="41" data-toggle="modal" data-target=".bd-example-modal-lg">Nb</a></td>
+				<td class="element group-6"><a href="atomic_number/42" class="element-link" id="42" data-toggle="modal" data-target=".bd-example-modal-lg">Mo</a></td>
+				<td class="element group-7"><a href="atomic_number/43" class="element-link" id="43">Tc</a></td>
+				<td class="element group-8"><a href="atomic_number/44" class="element-link" id="44" data-toggle="modal" data-target=".bd-example-modal-lg">Ru</a></td>
+				<td class="element group-9"><a href="atomic_number/45" class="element-link" id="45" data-toggle="modal" data-target=".bd-example-modal-lg">Rh</a></td>
+				<td class="element group-10"><a href="atomic_number/46" class="element-link" id="46" data-toggle="modal" data-target=".bd-example-modal-lg">Pd</a></td>
+				<td class="element group-11"><a href="atomic_number/47" class="element-link" id="47" data-toggle="modal" data-target=".bd-example-modal-lg">Ag</a></td>
+				<td class="element group-12"><a href="atomic_number/48" class="element-link" id="48" data-toggle="modal" data-target=".bd-example-modal-lg">Cd</a></td>
+				<td class="element group-13"><a href="atomic_number/49" class="element-link" id="49" data-toggle="modal" data-target=".bd-example-modal-lg">In</a></td>
+				<td class="element group-14"><a href="atomic_number/50" class="element-link" id="50" data-toggle="modal" data-target=".bd-example-modal-lg">Sn</a></td>
+				<td class="element group-15"><a href="atomic_number/51" class="element-link" id="51" data-toggle="modal" data-target=".bd-example-modal-lg">Sb</a></td>
+				<td class="element group-16"><a href="atomic_number/52" class="element-link" id="52" data-toggle="modal" data-target=".bd-example-modal-lg">Te</a></td>
+				<td class="element group-17"><a href="atomic_number/53" class="element-link" id="53" data-toggle="modal" data-target=".bd-example-modal-lg">I</a></td>
+				<td class="element group-18 noble-gas "><a href="atomic_number/54" class="element-link" id="54" data-toggle="modal" data-target=".bd-example-modal-lg">Xe</a></td>
+			</tr>
+
+
+
+	<tr class="element_row">
+				<td class="element group-1 alkali-metals"><a href="atomic_number/55" class="element-link" id="55" data-toggle="modal" data-target=".bd-example-modal-lg">Cs</td>
+				<td class="element group-2 alkaline-earth-metals"><a href="atomic_number/56" class="element-link" id="56" data-toggle="modal" data-target=".bd-example-modal-lg">Ba</td>
+				<td class="element group-3"></td>
+				<td class="element group-4"><a href="atomic_number/72" class="element-link" id="72" data-toggle="modal" data-target=".bd-example-modal-lg">Hf</a></td>
+				<td class="element group-5"><a href="atomic_number/73" class="element-link" id="73" data-toggle="modal" data-target=".bd-example-modal-lg">Ta</a></td>
+				<td class="element group-6"><a href="atomic_number/74" class="element-link" id="74" data-toggle="modal" data-target=".bd-example-modal-lg">W</a></td>
+				<td class="element group-7"><a href="atomic_number/75" class="element-link" id="75" data-toggle="modal" data-target=".bd-example-modal-lg">Re</a></td>
+				<td class="element group-8"><a href="atomic_number/76" class="element-link" id="76" data-toggle="modal" data-target=".bd-example-modal-lg">Os</a></td>
+				<td class="element group-9"><a href="atomic_number/77" class="element-link" id="77" data-toggle="modal" data-target=".bd-example-modal-lg">Ir</a></td>
+				<td class="element group-10"><a href="atomic_number/78" class="element-link" id="78" data-toggle="modal" data-target=".bd-example-modal-lg">Pt</a></td>
+				<td class="element group-11"><a href="atomic_number/79" class="element-link" id="79" data-toggle="modal" data-target=".bd-example-modal-lg">Au</a></td>
+				<td class="element group-12"><a href="atomic_number/80" class="element-link" id="80" data-toggle="modal" data-target=".bd-example-modal-lg">Hg</a></td>
+				<td class="element group-13"><a href="atomic_number/81" class="element-link" id="81" data-toggle="modal" data-target=".bd-example-modal-lg">Tl</a></td>
+				<td class="element group-14"><a href="atomic_number/82" class="element-link" id="82" data-toggle="modal" data-target=".bd-example-modal-lg">Pb</a></td>
+				<td class="element group-15"><a href="atomic_number/83" class="element-link" id="83" data-toggle="modal" data-target=".bd-example-modal-lg">Bi</a></td>
+				<td class="element group-16"><a href="atomic_number/84" class="element-link" id="84" data-toggle="modal" data-target=".bd-example-modal-lg">Po</a></td>
+				<td class="element group-17"><a href="atomic_number/85" class="element-link" id="85" data-toggle="modal" data-target=".bd-example-modal-lg">At</a></td>
+				<td class="element group-18 noble-gas"><a href="atomic_number/86" class="element-link" id="86" data-toggle="modal" data-target=".bd-example-modal-lg">Rn</a></td>
+			</tr>
+
+
+
+	<tr class="element_row">
+				<td class="element group-1 alkali-metals">Fr</td>
+				<td class="element group-2 alkaline-earth-metals">Ra</td>
+				<td class="element group-3"></td>
+				<td class="element group-4">Rf</td>
+				<td class="element group-5">Db</td>
+				<td class="element group-6">Sg</td>
+				<td class="element group-7">Bh</td>
+				<td class="element group-8">Hs</td>
+				<td class="element group-9">Mt</td>
+				<td class="element group-10">Ds</td>
+				<td class="element group-11">Rg</td>
+				<td class="element group-12">Cn</td>
+				<td class="element group-13">Uut</td>
+				<td class="element group-14">Fl</td>
+				<td class="element group-15">Uup</td>
+				<td class="element group-16">Lv</td>
+				<td class="element group-17">Uus</td>
+				<td class="element group-18">Uuo</td>
+			</tr>
+
+
+			<tr class="element_row">
+				<td class="element group-1 non-visible"></td>
+				<td class="element group-2 non-visible"></td>
+				<td class="element group-3 non-visible"></td>
+				<td class="element group-4 non-visible"></td>
+				<td class="element group-5 non-visible"></td>
+				<td class="element group-6 non-visible"></td>
+				<td class="element group-7 non-visible"></td>
+				<td class="element group-8 non-visible"></td>
+				<td class="element group-9 non-visible"></td>
+				<td class="element group-10 non-visible"></td>
+				<td class="element group-11 non-visible"></td>
+				<td class="element group-12 non-visible"></td>
+				<td class="element group-13 non-visible"></td>
+				<td class="element group-14 non-visible"></td>
+				<td class="element group-15 non-visible"></td>
+				<td class="element group-16 non-visible"></td>
+				<td class="element group-17 non-visible"></td>
+				<td class="element group-18 non-visible"></td>
+			</tr>
+
+
+			<tr class="element_row">
+				<td class="element group-1 non-visible"></td>
+				<td class="element group-2 non-visible"></td>
+				<td class="element group-3 non-visible"></td>
+				<td class="element group-4 non-visible"></td>
+				<td class="element group-5 "></td>
+				<td class="element group-6 "></td>
+				<td class="element group-7 "></td>
+				<td class="element group-8 "></td>
+				<td class="element group-9 "></td>
+				<td class="element group-10 "></td>
+				<td class="element group-11 "></td>
+				<td class="element group-12 "></td>
+				<td class="element group-13 "></td>
+				<td class="element group-14 "></td>
+				<td class="element group-15 "></td>
+				<td class="element group-16 "></td>
+				<td class="element group-17"></td>
+				<td class="element group-18"></td>
+			</tr>
+
+				<tr class="element_row">
+				<td class="element group-1 non-visible"></td>
+				<td class="element group-2 non-visible"></td>
+				<td class="element group-3 non-visible"></td>
+				<td class="element group-4 non-visible"></td>
+				<td class="element group-5 "></td>
+				<td class="element group-6 "></td>
+				<td class="element group-7 "></td>
+				<td class="element group-8 "></td>
+				<td class="element group-9 "></td>
+				<td class="element group-10 "></td>
+				<td class="element group-11 "></td>
+				<td class="element group-12 "></td>
+				<td class="element group-13 "></td>
+				<td class="element group-14 "></td>
+				<td class="element group-15 "></td>
+				<td class="element group-16 "></td>
+				<td class="element group-17"></td>
+				<td class="element group-18"></td>
+			</tr>
+
+		</table>
+
+		
+		</div>
+
+
+		
+		
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <h2>Element: <span class="element-symbol-modal">H</span></h2>
+      <h3>Atomic Number: <span class="atomic-number-modal">1</span></h3>
+      <h3>Atomic Weight: <span class="atomic-weight-modal">1.007</span></h3>
+      <h4>Description: <span class="element-description-modal">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eligendi distinctio voluptate omnis cupiditate nisi, numquam, ipsum eos sequi perferendis, consequuntur consectetur dolorum laboriosam esse facere quisquam velit adipisci dicta. Natus.</span></h4>
+    </div>
+  </div>
+</div>
+		
+		
+
+
+	
+	<script src="js/jquery-3.3.1.js"></script>
+	<script src="js/popper.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/jquery-ui.js"></script>
+	<script src="js/chem_lab.js"></script>
+
+
+	</div>
+</div>
+
+</body>
+
+
+</html>
