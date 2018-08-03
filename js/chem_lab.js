@@ -437,13 +437,21 @@
                     It was discovered in 1817 simultaneously by Stromeyer and Hermann,\
                both in Germany, as an impurity in zinc carbonate. (Source: Wikipedia)");
             case 49:
-              return new Element("In","49","114.818","Indium is a post-transition metal that makes up 0.21 parts per million of the Earth's crust. \
+              return new Element(
+                "In",
+                "49",
+                "114.818",
+                "Indium is a post-transition metal that makes up 0.21 parts per million of the Earth's crust. \
                 Very soft and malleable, indium has a melting point higher than sodium and gallium, but lower than lithium and tin. Chemically, \
                 indium is similar to gallium and thallium, and it is largely intermediate between the two in terms of its properties.[6] \
                 Indium was discovered in 1863 by Ferdinand Reich and Hieronymous Theodor Richter by spectroscopic methods. \
                 They named it for the indigo blue line in its spectrum. Indium was isolated the next year. (Source: Wikipedia)");
             case 50:
-              return new Element("Sn","50","118.710","It is a post-transition metal in group 14 of the periodic table. \
+              return new Element(
+                "Sn",
+                "50",
+                "118.710",
+                "It is a post-transition metal in group 14 of the periodic table. \
                 It is obtained chiefly from the mineral cassiterite, which contains stannic oxide, SnO2. \
                 Tin shows a chemical similarity to both of its neighbors in group 14, germanium and lead, and has two main oxidation states, \
                 +2 and the slightly more stable +4. Tin is the 49th most abundant element and has, with 10 stable isotopes, the largest number\
@@ -451,7 +459,10 @@
                   the stable allotrope is β-tin, a silvery-white, malleable metal, but at low temperatures it transforms into the less dense grey α-tin,\
                 which has the diamond cubic structure. Metallic tin does not easily oxidize in air.");
             case 51:
-              return new Element("Sn","51","121.760","A lustrous gray metalloid, it is found in nature mainly as the sulfide mineral stibnite (Sb2S3).\
+              return new Element(
+                "Sb",
+                "51","121.760",
+                "A lustrous gray metalloid, it is found in nature mainly as the sulfide mineral stibnite (Sb2S3).\
                Antimony compounds have been known since ancient times and were powdered for use as medicine and cosmetics, often known by the Arabic name,\
                 kohl.[4] Metallic antimony was also known, but it was erroneously identified as lead upon its discovery. \
                 The earliest known description of the metal in the West was written in 1540 by Vannoccio Biringuccio. (Source: Wikipedia)");
@@ -475,18 +486,16 @@
                 The elemental form was discovered by the French chemist Bernard Courtois in 1811. \
                 It was named two years later by Joseph-Louis Gay-Lussac from this property, after the Greek ἰώδης \"violet-coloured\".");
             case 54:
-              return new Element(
-                "Xe",
-                "54",
-                "131.293",
-                "It is a colorless, dense, odorless noble gas found in the Earth's atmosphere in trace amounts.[10] Although generally unreactive, xenon can undergo a few chemical reactions such as the formation of xenon hexafluoroplatinate, the first noble gas \
-                compound to be synthesized.[11][12][13]\ 
-                Xenon is used in flash lamps[14] and arc lamps,\
-                [15] and as a general anesthetic.[16] The first excimer laser design used a xenon dimer molecule (Xe2)\
-                 as the lasing medium,[17] and the earliest laser designs used xenon flash lamps as pumps.[18] Xenon is used to search\
-                  for hypothetical weakly interacting massive particles[19] and as the propellant for ion thrusters in spacecraft.[20] (Source: Wikipedia)");
+              return new Element("Xe","54","131.293","It is a colorless, dense, odorless noble gas found in the Earth's \
+                atmosphere in trace amounts.[10] Although generally unreactive, xenon can undergo a few chemical reactions \
+                such as the formation of xenon hexafluoroplatinate, the first noble gas compound to be synthesized.(Source: Wikipedia)")
+                
             case 55:
-              return new Element("Cs","55","132.905","It is a soft, silvery-gold alkali metal with a melting point of 28.5 °C (83.3 °F),\
+              return new Element(
+                "Cs",
+                "55",
+                "132.905",
+                "It is a soft, silvery-gold alkali metal with a melting point of 28.5 °C (83.3 °F),\
                which makes it one of only five elemental metals that are liquid at or near room temperature.[note 2] Caesium has physical\
                 and chemical properties similar to those of rubidium and potassium. The most reactive of all metals, \
                 it is pyrophoric and reacts with water even at −116 °C (−177 °F). It is the least electronegative element,\
