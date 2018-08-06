@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>
+		Animations Demonstration
+	</title>
+<link async href="https://fonts.googleapis.com/css?family=Warnes" data-generated="http://enjoycss.com" rel="stylesheet" type="text/css"/>
+	<link href="https://fonts.googleapis.com/css?family=Jacques+Francois+Shadow|Kreon|Londrina+Shadow|Ribeye+Marrow|Vidaloka" rel="stylesheet">
+	<link rel="stylesheet" href="css/normalize.css">
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/jquery-ui.min.css">
+	<link rel="stylesheet" href="css/jquery-ui.theme.min.css">
+	<link rel="stylesheet" href="css/jquery-ui.structure.min.css">
+	<link rel="stylesheet" href="css/animations_demonstration.css">
+</head>
+<body>
+
+	<div class="container-fluid">
+
+		<div id="target-area">
+			
+			<h1 id="game-title">Meteor Escape</h1>
+
+
+		</div>
+
+		<table id="user-controls">
+		<tr>
+			<td></td>
+			<td>
+				<img src="img/on_screen_controls/up1.png" alt="UP" id="up">
+			</td>
+			<td></td>
+		</tr>
+
+		<tr>
+			<td>
+				<img src="img/on_screen_controls/left1.png" alt="LEFT" id="left">
+			</td>
+			<td></td>
+			<td>
+				<img src="img/on_screen_controls/right1.png" alt="RIGHT" id="right">
+			</td>
+		</tr>
+
+		<tr>
+			<td></td>
+			<td>
+				<img src="img/on_screen_controls/down1.png" alt="DOWN" id="down">
+			</td>
+			<td></td>
+		</tr>
+
+	</table>
+
+
+
+
+	
+
+	<div id="hud-display">
+
+			<button id="toggle-hud">Minimize HUD</button>
+
+			<table id="health-table">
+			<tr>
+				<th>Health</th>
+			</tr>
+
+			<tr>
+				<td id="health-count">10</td>
+			</tr>
+			</table>
+
+			<table id="coin-table">
+				<tr>
+					<th>Gold</th>
+					<th>Silver</th>
+					<th>Bronze</th>
+				</tr>
+
+				<tr>
+				<td id="gold-count">0</td>
+				<td id="silver-count">0</td>
+				<td id="bronze-count">0</td>
+			</tr>
+			</table>
+	</div>
+
+
+	</div>
+
+
+	<script src="js/jquery-3.3.1.js"></script>
+	<script src="js/popper.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/jquery-ui.js"></script>
+	<script src="js/animation_demonstration.js"></script>
+
+	
+</body>
+</html>

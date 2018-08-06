@@ -1,0 +1,162 @@
+
+
+body{
+	box-sizing: border-box;
+}
+
+#target-area{
+
+	width: 70em;
+	height: auto;
+	background-color: lightblue;
+}
+
+#user-controls{
+	position: fixed;
+	bottom: 10px;
+	left: 10px;
+	width: 15%;
+}
+
+#up{
+	
+}
+
+#down{
+
+
+}
+
+#left{
+
+}
+
+#right{
+	
+}
+
+#user-controls img{
+	width: 100%;
+	height: auto;
+	z-index: 10;
+}
+
+#user-controls tr{
+	height: 1em;
+	width: 100%;
+}
+
+#user-controls td{
+	margin: auto 0;
+	text-align: center;
+}
+
+#damage-display{
+	position: fixed;
+	left: 0px;
+	bottom: 0px;
+	width: 50%;
+	height: 5em;
+}
+
+#hud-display{
+	position: fixed;
+	bottom: 20px;
+	right: 20px;
+	width: 40%;
+	height: 5em;
+	background-color: green;
+	padding-right: 2em;
+	padding-left: 2em;
+	padding-top: 1em;
+	border-style: ridge;
+	border-color: black;
+	border-width: 4px;
+}
+
+#health-table{
+	float: left;
+}
+
+#healh-table th{
+	text-align: center;
+	width: 100%;
+	height: 50%;
+}
+
+#health-table td{
+	text-align: center;
+	width: 100%;
+	height: 50%;
+}
+
+#coin-table{
+	float: right;
+	width: 70%;
+}
+
+
+#coin-display th{
+	text-align: center;
+	width: 33.33%;
+	height: 50%;
+
+}
+
+
+
+#coin-display td{
+	text-align: center;
+	width: 33.33%;
+	height: 50%;
+
+}
+
+
+#toggle-hud{
+
+	position: absolute;
+	top: -50%;
+	left: 0px;
+
+}
+
+
+@media screen and (max-width: 700px){
+
+}
+
+@media screen and (min-width: 700px){
+	#hud-display{
+	position: fixed;
+	bottom: 20px;
+	right: 20px;
+	width: 60%;
+	height:5em;
+	background-color: green;
+	padding-right: 2em;
+	padding-left: 2em;
+	padding-top: 1em;
+	border-style: ridge;
+	border-color: black;
+	border-width: 4px;
+}
+
+@media screen and (min-width: 800px){
+	#hud-display{
+	position: fixed;
+	bottom: 20px;
+	right: 20px;
+	width: 40%;
+	height: 5em;
+	background-color: green;
+	padding-right: 2em;
+	padding-left: 2em;
+	padding-top: 1em;
+	border-style: ridge;
+	border-color: black;
+	border-width: 4px;
+}
+
+
+}
