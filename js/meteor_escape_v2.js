@@ -1,6 +1,11 @@
 $(document).ready(function(){
 
 
+//TODO: Turn off contact testing on game loss or game win
+//TODO: Allow for user to save game data, maybe create a user profile
+//TOOD: Create a high score
+//TODO: create triggers to update the HUD, triggers for player contact events
+
 
 var storeAnimationIntervalTimerID = function(key,timerID){
 
