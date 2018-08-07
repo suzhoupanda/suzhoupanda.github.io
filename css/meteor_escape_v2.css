@@ -15,8 +15,9 @@ body{
 
 	position: fixed;
 	top: 10em;
-	left: 10em;
+	left: 5em;
 	padding: 3em;
+	width: 60%;
 	text-align: center;
 	background-color: #baeff5;
 	border-color: black;
