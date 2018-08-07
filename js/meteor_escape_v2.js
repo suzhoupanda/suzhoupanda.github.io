@@ -756,8 +756,16 @@ var explodeElement = function(element,isRemoved = false){
 		cloudImage.attr("src",fullPath);
 		cloudImage.addClass("cloud");
 
-		var left = Math.floor(Math.random()*500) + 1;
-		var top = Math.floor(Math.random()*300) + 1;
+
+		var tOffset = targetArea.offset();
+		var tLeft = tOffset.left;
+		var tTop = tOffset.top;
+		var tWidth = targetArea.width();
+		var tHeight = targetArea.height();
+		var buffer = 70;
+
+		var left = Math.floor(Math.random()*tWidth) + tLeft - cloudImage.width() - buffer;
+		var top = Math.floor(Math.random()*tHeight/3.0) + tTop;
 
 		var styles = {
 			"position":"absolute",
