@@ -1289,6 +1289,25 @@ var explodeElement = function(element,isRemoved = false){
 			"text-align":"center"
 		}
 
+
+		var backHomeButton = $("<button>");
+
+		backHomeButton.text("Home");
+
+		var styles2 = {
+			"margin-left":"5px"
+		}
+
+		backHomeButton.css(styles2);
+
+		backHomeButton.attr("id","back-home-button");
+
+		backHomeButton.on("click",function(){
+			window.location.href = "index.html";
+		});
+
+		gameSummary.append(backHomeButton);
+
 		gameSummary.css(styles);
 
 		$("body").append(gameSummary);
@@ -1391,6 +1410,10 @@ var startGame = function(){
 	var targetArea = $("#target-area");
 
 	setupBackgroundWithChildImage(targetArea);
+
+	$("#back-home-button").on("click",function(){
+		window.location.href = "index.html";
+	});
 
 	$("#game-ready-button").on("click",function(){
 
