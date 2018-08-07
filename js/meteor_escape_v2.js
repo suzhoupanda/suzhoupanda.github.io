@@ -1303,7 +1303,7 @@ var explodeElement = function(element,isRemoved = false){
 		backHomeButton.attr("id","back-home-button");
 
 		backHomeButton.on("click",function(){
-			window.location.href = "index.html";
+			window.location.href = "./index.html";
 		});
 
 		gameSummary.append(backHomeButton);
@@ -1412,7 +1412,7 @@ var startGame = function(){
 	setupBackgroundWithChildImage(targetArea);
 
 	$("#back-home-button").on("click",function(){
-		window.location.href = "index.html";
+		window.location.href = "./index.html";
 	});
 
 	$("#game-ready-button").on("click",function(){
