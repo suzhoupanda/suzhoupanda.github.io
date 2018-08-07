@@ -278,6 +278,28 @@ var explodeElement = function(element,isRemoved = false){
 			explodeElement($(this));
 		});
 
+		element.on("player:collected-gold-coin",function(){
+
+			var currentGoldCount = parseInt(element.attr("data-gold-coins"));
+			var updatedGoldCount = currentGoldCount + 1;
+			element.attr("data-gold-coins",updatedGoldCount);
+
+		});
+
+		element.on("player:collected-silver-coin",function(){
+
+			var currentSilverCount = parseInt(element.attr("data-silver-coins"));
+			var updatedSilverCount = currentSilverCount + 1;
+			element.attr("data-silver-coins",updatedSilverCount);
+		});
+
+
+		element.on("player:collected-bronze-coin",function(){
+			var currentBronzeCount = parseInt(element.attr("data-bronze-coins"));
+			var updatedBronzeCount = currentBronzeCount + 1;
+			element.attr("data-bronze-coins",updatedBronzeCount);
+		});
+
 		var styles = {
 			"top": initialTop + "px",
 			"left": initialLeft + "px"
@@ -475,17 +497,6 @@ var explodeElement = function(element,isRemoved = false){
 		rightButton.off("click");
 	}
 
-	var isButtonDisabled = function(controlButton){
-
-		var isDisabled = controlButton.attr('data-isDisabled');
-
-		if(isDisabled != undefined && isDisabled == true){
-			return true;
-		} else {
-			return false;
-		}
-
-	};
 
 	var registerUserClickHandlers = function(targetArea){
 
@@ -644,6 +655,15 @@ var explodeElement = function(element,isRemoved = false){
  			});
 
  		})
+	}
+
+
+	var registerHUDUpdateHandler = function(){
+		var HUD = $("#hud-display");
+
+		HUD.on("hud:updated-hud",function(event,updatedHealth,updatedGoldCount,updatedSilverCount,updatedBronzeCount){
+			updateHUD(updatedHealth,updatedGoldCount,updatedSilverCount,updatedBronzeCount);
+		})
 	}
 
 
@@ -855,13 +875,14 @@ var explodeElement = function(element,isRemoved = false){
 				var updatedHealth = parseInt(originalHealth) + deltaHealth;
 
 				if(updatedHealth > 0){
-					updateHUD(updatedHealth);
 					player.attr("data-health", updatedHealth);
+					updateHUD(updatedHealth,null,null,null);
 				} else {
 					player.attr("data-health", 0);
-					updateHUD(0);
+					updateHUD(0,null,null,null);
 					$("#game-title").trigger("game-title:game-over");
 					player.trigger("player:player-dead");
+					turnOffCollisionTesting();
 					turnOffAllCurrentAnimations();
 					disableControlButtons();
 					showGameSummary(false);
@@ -882,37 +903,35 @@ var explodeElement = function(element,isRemoved = false){
 		switch(coinType){
 			case "gold":
 				if(player.attr("data-gold-coins") != undefined){
-					var originalGoldCount = player.attr("data-gold-coins");
-					var updatedGoldCount = parseInt(originalGoldCount) + deltaCoinAmount;
-					player.attr("data-gold-coins",updatedGoldCount);
+					player.trigger("player:collected-gold-coin");
+					var updatedGoldCount = parseInt(player.attr("data-gold-coins"));
 					updateHUD(null,updatedGoldCount,null,null);
 					if(updatedGoldCount >= 10){
 						$("#game-title").trigger("game-title:game-win");
 						turnOffAllCurrentAnimations();
+						turnOffCollisionTesting();
 						disableControlButtons();
 						showGameSummary(true);
 
 					}
-					console.log("The player's gold coin coun is now: " + updatedGoldCount);
 				} else {
 					console.log("Player has no attribute 'gold-coins' ");
 				}
 				break;
 			case "silver":
 				if(player.attr("data-silver-coins") != undefined){
-					var originalSilverCount = player.attr("data-silver-coins");
-					var updatedSilverCount = parseInt(originalSilverCount) + deltaCoinAmount;
-					player.attr("data-silver-coins",updatedSilverCount);
+
+					player.trigger("player:collected-silver-coin");
+					var updatedSilverCount = parseInt(player.attr("data-silver-coins"));
 					updateHUD(null,null,updatedSilverCount,null);
-					if(updatedGoldCount >= 20){
+					if(updatedSilverCount >= 20){
 						$("#game-title").trigger("game-title:game-win");
 						turnOffAllCurrentAnimations();
+						turnOffCollisionTesting();
 						disableControlButtons();
 						showGameSummary(true);
 
-
 					}
-					console.log("The player's silver coin coun is now: " + updatedSilverCount);
 
 				} else {
 					console.log("Player has no attribute 'silver-coins' ");
@@ -920,19 +939,23 @@ var explodeElement = function(element,isRemoved = false){
 				break; 
 			case "bronze":
 				if(player.attr("data-bronze-coins") != undefined){
-					var originalBronzeCount = player.attr("data-bronze-coins");
-					var updatedBronzeCount = parseInt(originalBronzeCount) + deltaCoinAmount;
-					player.attr("data-bronze-coins",updatedBronzeCount);
+					player.trigger("player:collected-bronze-coin");
+
+					var updatedBronzeCount = parseInt(player.attr("data-bronze-coins"));
+
 					updateHUD(null,null,null,updatedBronzeCount);
-					if(updatedGoldCount >= 30){
+
+					if(updatedBronzeCount >= 30){
+						console.log("Player wins, collected many bronze coins");
+
 						$("#game-title").trigger("game-title:game-win");
 						turnOffAllCurrentAnimations();
+						turnOffCollisionTesting();
 						disableControlButtons();
 						showGameSummary(true);
 
 
 					}
-					console.log("The player's bronze coin coun is now: " + updatedBronzeCount);
 
 				} else {
 					console.log("Player has no attribute 'bronze-coins' ");
@@ -1363,8 +1386,29 @@ var explodeElement = function(element,isRemoved = false){
 		createFlyMan(targetArea, initialSP[1],initialSP[0], 100, 80, 500, "main-flyman");
 	}
 
+
+	var turnOffCollisionTesting = function(){
+
+		var collisionTimerID = localStorage.getItem("collisionTimerID");
+
+		clearInterval(collisionTimerID);
+	}
+
+	var startCollisionTesting = function(){
+		var collisionTimerID = setInterval(testForPlayerCollisions,1000);
+
+		localStorage.setItem("collisionTimerID",collisionTimerID);
+
+	};
+
 	var storeGameData = function(){
 		//use localStorage to store player's data after win
+	};
+
+	var registerHUDEventHandlers = function(targetArea){
+		registerHUDUpdateHandler();
+
+		registerHUDClickHandler(targetArea);
 	};
 
 	var runGame = function(targetArea){
@@ -1393,7 +1437,8 @@ var explodeElement = function(element,isRemoved = false){
 
 		registerGameTitleEventHandlers();
 
-		setInterval(testForPlayerCollisions,1000);
+		startCollisionTesting();
+
 
 		var clearFunctionID = clearExcessObjects(targetArea);
 
