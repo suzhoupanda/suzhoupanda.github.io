@@ -1161,28 +1161,25 @@ var explodeElement = function(element,isRemoved = false){
 
 		var coinShowerID = setInterval(function(){
 
-			var coinTypes = ["gold","silver","bronze"];
+			var coinTypes = ["gold","silver","silver","bronze","bronze","bronze","bronze","bronze"];
 
-			var randomIndex = Math.floor((Math.random()*2));
+			var randomIndex = Math.floor((Math.random()*(coinTypes.length-1)));
 
 			var randomCoinType = coinTypes[randomIndex];
 			var coinID;
 
-			switch(randomIndex){
-				case 0:
+			if(randomIndex == 0){
 					coinDict["numberGold"] += 1;
 					coinID = randomCoinType + coinDict["numberGold"];
-					break;
-				case 1:
+			} else if(randomIndex > 0 && randomIndex < 3){
 					coinDict["numberSilver"] += 1;
 					coinID = randomCoinType + coinDict["numberSilver"];
-					break;
-				case 2:
+			} else {
 					coinDict["numberBronze"] += 1;
 					coinID = randomCoinType + coinDict["numberBronze"];
-					break;
-			}
 
+			}
+			
 
 			var pointAboveTargetArea = getRandomPointAboveTargetArea(container);
 
