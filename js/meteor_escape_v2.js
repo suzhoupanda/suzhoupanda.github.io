@@ -1,6 +1,6 @@
 $(document).ready(function(){
 
-	
+
 
 	var createCoin = function(container,coinType,initialTop, initialLeft, width, height,animationDuration,coinID){
 
@@ -451,14 +451,55 @@ $(document).ready(function(){
 
 	}
 
-	$("#toggle-hud").on("click",function(e){
+
+ 	var registerAudioClickHandler = function(targetArea){
+ 		//toggle-audio-controls 
+
+ 		$("#toggle-audio-controls").on("click",function(){
+
+ 			var audio_controls = $(this);
+
+ 			audio_controls = audio_controls.parent().detach();
+
+ 			var show_audio_button = $("<button>");
+ 			show_audio_button.attr("id","show_audio_button");
+
+ 			$("body").append(show_audio_button);
+
+ 			var styles = {
+ 				"position":"fixed",
+ 				"top":"0px",
+ 				"right":"0px",
+ 				"width":"15em",
+ 				"height":"2em",
+ 				"font-size": "10px"
+ 			}
+
+ 			show_audio_button.css(styles);
+ 			show_audio_button.text("Show Audio Controls");
+
+ 			show_audio_button.on("click",function(){
+ 				$(this).hide();
+
+ 				$("body").append(audio_controls);
+ 				audio_controls.show();
+ 			});
+
+ 		})
+	}
+
+
+	var registerHUDClickHandler = function(){
+
+		$("#toggle-hud").on("click",function(e){
+		
 		var HUD = $("#hud-display");
 
 		HUD.hide();
 
 		var showHUDButton = $("<button>");
 
-		$("#target-area").append(showHUDButton);
+		$("body").append(showHUDButton);
 
 		showHUDButton.text("Show HUD");
 		showHUDButton.attr("id","show-hud-button");
@@ -468,7 +509,8 @@ $(document).ready(function(){
 			"bottom":"0px",
 			"right":"0px",
 			"width":"20%",
-			"height":"3em"
+			"height":"3em",
+			"font-family": "'Concert One', cursive"
 		}
 
 		showHUDButton.css(styles);
@@ -479,6 +521,9 @@ $(document).ready(function(){
 		});
 
 	});
+
+	}
+
 
 	
 	var showMainTitle = function(targetArea, titleText, titleDisplayTime){
@@ -709,14 +754,19 @@ $(document).ready(function(){
 
 				var originalHealth = player.attr("health");
 				var updatedHealth = parseInt(originalHealth) + deltaHealth;
-				updateHUD(updatedHealth);
 
-				if(updatedHealth <= 0){
+				if(updatedHealth > 0){
+					updateHUD(updatedHealth);
+					player.attr("health", updatedHealth);
+				} else {
+					player.attr("health", 0);
 					explodeElement(player);
+					updateHUD(0);
 					setPlayerLoss();
+
 				}
 
-				player.attr("health", updatedHealth);
+		
 				console.log("The new player health is " + player.attr("health"));
 
 		} else {
@@ -776,7 +826,8 @@ $(document).ready(function(){
 	}
 
 
-	var testForPlayerCollisions = function(){
+	var testForPlayerCollisions = function(targetArea){
+
 
 		var targetArea = $("#target-area");
 
@@ -874,6 +925,8 @@ $(document).ready(function(){
 			});
 
 	};
+
+
 
 
 	var getRandomPointAboveTargetArea = function(targetArea){
@@ -1129,6 +1182,56 @@ $(document).ready(function(){
 		}, 500);
 	}
 
+	var registerResizeHandlers = function(){
+
+		$(window).on("resize",function(){
+
+			//check whether resize is significant, use breakpoints for boolean check
+
+			//trigger resize of targetArea
+
+			//trigger resize and resposition of player
+
+			//change spawning area for coins and meteors
+
+			//modify createFlyman so that initial spawning point is a function of window
+
+			//register callbacks for custom resize events triggered for targetArea, player, coins, and meteors
+
+				//modify createMeteorShower, createCoinShower so that random spawn points are function of window size and so that random size of
+					//meteors and coins is adjusted as well
+
+
+
+		});
+
+	}
+
+
+	
+	var getInitialPlayerSpawnPoint = function(){
+
+		var wHeight = window.outerHeight;
+		var wWidth = window.outerWidth;
+
+		var initialLeft = Math.floor(wWidth/2.0);
+		var initialTop = Math.floor(wHeight/3.0);
+
+		return [initialLeft,initialTop];
+	}
+
+
+	var spawnPlayer = function(targetArea){
+
+		var initialSP = getInitialPlayerSpawnPoint();
+
+		createFlyMan(targetArea, initialSP[1],initialSP[0], 100, 80, 500, "main-flyman");
+	}
+
+	var storeGameData = function(){
+		//use localStorage to store player's data after win
+	};
+
 	var startGame = function(){
 
 		var targetArea = $("#target-area");
@@ -1143,21 +1246,28 @@ $(document).ready(function(){
 
 		showMainTitle(targetArea,"Meteor Escape",3000);
 
+		//TODO: initial cloud spawn points should be window dependent
 		createRandomClouds(targetArea,10);
 
-		createFlyMan(targetArea, 300,500, 100, 80, 500, "main-flyman");
+		spawnPlayer(targetArea);
 
+		//TODO: initial coin spawn points should be window dependent
 		var coinShowerID = createCoinShower(targetArea);
 		sessionStorage.setItem("coinShowerID",coinShowerID);
 
+		//TODO: initial meteor spawn points should be window dependent
 		var meteorShowerID = createMeteorShower(targetArea);
 		sessionStorage.setItem("meteorShowerID",meteorShowerID);
 
 		//createRandomFrequencyMeteorShower(targetArea, 1000);
 
+		registerHUDClickHandler(targetArea);
+
+		registerAudioClickHandler();
+
 		registerUserClickHandlers(targetArea);
 
-		setInterval(testForPlayerCollisions,500);
+		setInterval(testForPlayerCollisions,1000);
 
 		//checkGameOver();
 
