@@ -11,9 +11,24 @@ body{
 	box-sizing: border-box;
 }
 
+#game-intro{
+
+	position: fixed;
+	top: 10em;
+	left: 10em;
+	padding: 3em;
+	text-align: center;
+	background-color: #baeff5;
+	border-color: black;
+	border-style: ridge;
+	border-width: 10px;
+	font-family: 'Righteous', cursive;
+
+
+}
 #game-title{
 	font-family: 'Concert One', cursive;
-
+	z-index: 100;
 
 }
 

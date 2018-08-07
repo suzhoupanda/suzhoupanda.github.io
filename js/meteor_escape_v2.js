@@ -2,6 +2,89 @@ $(document).ready(function(){
 
 
 
+var storeAnimationIntervalTimerID = function(key,timerID){
+
+	
+		localStorage.setItem(key,timerID);
+	
+}
+
+var turnOffAllCurrentAnimations = function(){
+
+		for(var key in localStorage){
+			if(localStorage.hasOwnProperty(key)){
+				if(key.includes("animation")){
+					var timerID = localStorage.getItem(key);
+					clearInterval(timerID);
+				}
+			}
+		}
+}
+
+var explodeElement = function(element,isRemoved = false){
+
+		if(!element.is("img")){
+			console.log("Error: the element is NOT an image.  Cannot use explosion animation.")
+			return;
+		}
+
+		if(element.attr("explosionAnimationID")){
+			element.remove();
+			return;
+		}
+
+		if(element.attr('textureAnimationID')){
+			var textureAnimationID = element.attr('textureAnimationID');
+			clearInterval(textureAnimationID);
+		}
+
+		var basePath = "./img/explosion/";
+
+		var explosionTextures = [
+			"regularExplosion01",
+			"regularExplosion02",
+			"regularExplosion03",
+			"regularExplosion04",
+			"regularExplosion05",
+			"regularExplosion06",
+			"regularExplosion07",
+			"regularExplosion08",
+
+		]
+
+		var imageExtension = ".png";
+
+		var i = 0;
+
+		var explosionAnimationID = setInterval(function(){
+
+	
+
+			if(i < explosionTextures.length-1){
+
+				var imagePath = constructImagePath(basePath,explosionTextures[i],imageExtension);
+				element.attr("src",imagePath);
+				i++;
+
+			} else {
+				var timerID = element.attr("explosionAnimationID");
+				clearInterval(timerID);
+				if(isRemoved){
+					element.remove();
+				}
+			}
+		},100);
+
+
+		storeAnimationIntervalTimerID(explosionAnimationID);
+
+
+		element.attr("animation-explosionAnimationID",explosionAnimationID);
+
+
+	}
+	
+
 	var createCoin = function(container,coinType,initialTop, initialLeft, width, height,animationDuration,coinID){
 
 
@@ -77,7 +160,7 @@ $(document).ready(function(){
 
 		var interval = animationDuration/textures.length;
 
-		setInterval(function(){
+		var coinAnimationID = setInterval(function(){
 
 			if(i > textures.length - 1){
 				i = 0;
@@ -93,7 +176,12 @@ $(document).ready(function(){
 
 		},interval);
 
+		storeAnimationIntervalTimerID("animation-coinAnimationID",coinAnimationID);
+
 	}
+
+
+	
 
 	var createMeteor = function(container, meteorType, initialTop, initialLeft, width, height, animationDuration, meteorID){
 
@@ -145,7 +233,7 @@ $(document).ready(function(){
 
 
 
-		setInterval(function(){
+		var meteorAnimationID = setInterval(function(){
 
 
 			element.css("top","+="+animationDuration);
@@ -154,6 +242,9 @@ $(document).ready(function(){
 		
 
 		},0.01);
+
+
+		storeAnimationIntervalTimerID("animation-meteorAnimationID",meteorAnimationID);
 
 	}
 
@@ -171,11 +262,16 @@ $(document).ready(function(){
 		element.attr("src","img/characters/wingMan1.png");
 		element.attr("alt","Flyman");
 
-		element.attr("health",10);
-		element.attr("gold-coins",0);
-		element.attr("silver-coins",0);
-		element.attr("bronze-coins",0);
-		element.attr("isInContact",false);
+		element.attr("data-health",10);
+		element.attr("data-gold-coins",0);
+		element.attr("data-silver-coins",0);
+		element.attr("data-bronze-coins",0);
+		element.attr("data-isInContact",false);
+
+		element.on("player:player-dead", function(){
+
+			explodeElement($(this));
+		});
 
 		var styles = {
 			"top": initialTop + "px",
@@ -239,11 +335,23 @@ $(document).ready(function(){
 
 		element.attr("textureAnimationID",textureAnimationID);
 
+		storeAnimationIntervalTimerID("animation-textureAnimationID",textureAnimationID);
+
 		
 	};
 
 	
 		
+
+	var registerGameTitleEventHandlers = function(){
+		$("#game-title").on('game-title:game-over', function(){
+			$(this).text("Game Over!");
+		});
+
+		$("#game-title").on('game-title:game-win',function(){
+			$(this).text("Congratulations! You win!");
+		});
+	};
 
 
 	
@@ -345,18 +453,59 @@ $(document).ready(function(){
 		return fBottom > maxBottom;
 	}
 
+
+	var disableControlButtons = function(){
+
+		var upButton = $("#up");
+		var downButton = $("#down");
+		var leftButton = $("#left");
+		var rightButton = $("#right");
+
+		upButton.off("click");
+
+		downButton.off("click");
+
+		leftButton.off("click");
+
+		rightButton.off("click");
+	}
+
+	var isButtonDisabled = function(controlButton){
+
+		var isDisabled = controlButton.attr('data-isDisabled');
+
+		if(isDisabled != undefined && isDisabled == true){
+			return true;
+		} else {
+			return false;
+		}
+
+	};
+
 	var registerUserClickHandlers = function(targetArea){
 
 		
 		var flyman = $("#main-flyman");
 
-		$("#up").on('click', function(){
+		var upButton = $("#up");
+		var downButton = $("#down");
+		var rightButton = $("#right");
+		var leftButton = $("#left");
+
+
+		upButton.on('click', function(){
+
+			
+
 			if(!isTooFarTop(targetArea)){
 				flyman.css("top","-=50");
 			} 
 		});
 
-		$("#down").on('click', function(){
+		downButton.on('click', function(){
+
+		
+
 			if(!isTooFarBottom(targetArea)){
 				flyman.css("top","+=50");
 			}
@@ -364,14 +513,18 @@ $(document).ready(function(){
 		});
 
 
-		$("#right").on('click', function(){
+		rightButton.on('click', function(){
+
+
 			if(!isTooFarRight(targetArea)){
 				flyman.css("left","+=50");
 			}
 
 		});
 
-		$("#left").on('click', function(){
+		leftButton.on('click', function(){
+
+
 			if(!isTooFarLeft(targetArea)){
 				flyman.css("left","-=50")
 			}
@@ -609,65 +762,6 @@ $(document).ready(function(){
 		return basePath + imageName + imageExtension;
 	}
 
-	var explodeElement = function(element,isRemoved = false){
-
-		if(!element.is("img")){
-			console.log("Error: the element is NOT an image.  Cannot use explosion animation.")
-			return;
-		}
-
-		if(element.attr("explosionAnimationID")){
-			element.remove();
-			return;
-		}
-
-		if(element.attr('textureAnimationID')){
-			var textureAnimationID = element.attr('textureAnimationID');
-			clearInterval(textureAnimationID);
-		}
-
-		var basePath = "./img/explosion/";
-
-		var explosionTextures = [
-			"regularExplosion01",
-			"regularExplosion02",
-			"regularExplosion03",
-			"regularExplosion04",
-			"regularExplosion05",
-			"regularExplosion06",
-			"regularExplosion07",
-			"regularExplosion08",
-
-		]
-
-		var imageExtension = ".png";
-
-		var i = 0;
-
-		var textureAnimationID = setInterval(function(){
-
-	
-
-			if(i < explosionTextures.length-1){
-
-				var imagePath = constructImagePath(basePath,explosionTextures[i],imageExtension);
-				element.attr("src",imagePath);
-				i++;
-
-			} else {
-				var textureAnimationID = element.attr("explosionAnimationID");
-				clearInterval(textureAnimationID);
-				if(isRemoved){
-					element.remove();
-				}
-			}
-		},100);
-
-
-		element.attr("explosionAnimationID",textureAnimationID);
-
-
-	}
 	
 
 
@@ -750,24 +844,27 @@ $(document).ready(function(){
 
 	var adjustPlayerHealth = function(player,deltaHealth){
 
-		if(player.attr("health") != undefined){
+		if(player.attr("data-health") != undefined){
 
-				var originalHealth = player.attr("health");
+				var originalHealth = player.attr("data-health");
 				var updatedHealth = parseInt(originalHealth) + deltaHealth;
 
 				if(updatedHealth > 0){
 					updateHUD(updatedHealth);
-					player.attr("health", updatedHealth);
+					player.attr("data-health", updatedHealth);
 				} else {
-					player.attr("health", 0);
-					explodeElement(player);
+					player.attr("data-health", 0);
 					updateHUD(0);
-					setPlayerLoss();
+					$("#game-title").trigger("game-title:game-over");
+					player.trigger("player:player-dead");
+					turnOffAllCurrentAnimations();
+					disableControlButtons();
+					showGameSummary(false);
 
 				}
 
 		
-				console.log("The new player health is " + player.attr("health"));
+				console.log("The new player health is " + player.attr("data-health"));
 
 		} else {
 			console.log("The player does not have an attribute 'health' ");
@@ -779,13 +876,17 @@ $(document).ready(function(){
 		
 		switch(coinType){
 			case "gold":
-				if(player.attr("gold-coins") != undefined){
-					var originalGoldCount = player.attr("gold-coins");
+				if(player.attr("data-gold-coins") != undefined){
+					var originalGoldCount = player.attr("data-gold-coins");
 					var updatedGoldCount = parseInt(originalGoldCount) + deltaCoinAmount;
-					player.attr("gold-coins",updatedGoldCount);
+					player.attr("data-gold-coins",updatedGoldCount);
 					updateHUD(null,updatedGoldCount,null,null);
 					if(updatedGoldCount >= 10){
-						setPlayerWin();
+						$("#game-title").trigger("game-title:game-win");
+						turnOffAllCurrentAnimations();
+						disableControlButtons();
+						showGameSummary(true);
+
 					}
 					console.log("The player's gold coin coun is now: " + updatedGoldCount);
 				} else {
@@ -793,13 +894,18 @@ $(document).ready(function(){
 				}
 				break;
 			case "silver":
-				if(player.attr("silver-coins") != undefined){
-					var originalSilverCount = player.attr("silver-coins");
+				if(player.attr("data-silver-coins") != undefined){
+					var originalSilverCount = player.attr("data-silver-coins");
 					var updatedSilverCount = parseInt(originalSilverCount) + deltaCoinAmount;
-					player.attr("silver-coins",updatedSilverCount);
+					player.attr("data-silver-coins",updatedSilverCount);
 					updateHUD(null,null,updatedSilverCount,null);
 					if(updatedGoldCount >= 20){
-						setPlayerWin();
+						$("#game-title").trigger("game-title:game-win");
+						turnOffAllCurrentAnimations();
+						disableControlButtons();
+						showGameSummary(true);
+
+
 					}
 					console.log("The player's silver coin coun is now: " + updatedSilverCount);
 
@@ -808,13 +914,18 @@ $(document).ready(function(){
 				}
 				break; 
 			case "bronze":
-				if(player.attr("bronze-coins") != undefined){
-					var originalBronzeCount = player.attr("bronze-coins");
+				if(player.attr("data-bronze-coins") != undefined){
+					var originalBronzeCount = player.attr("data-bronze-coins");
 					var updatedBronzeCount = parseInt(originalBronzeCount) + deltaCoinAmount;
-					player.attr("bronze-coins",updatedBronzeCount);
+					player.attr("data-bronze-coins",updatedBronzeCount);
 					updateHUD(null,null,null,updatedBronzeCount);
 					if(updatedGoldCount >= 30){
-						setPlayerWin();
+						$("#game-title").trigger("game-title:game-win");
+						turnOffAllCurrentAnimations();
+						disableControlButtons();
+						showGameSummary(true);
+
+
 					}
 					console.log("The player's bronze coin coun is now: " + updatedBronzeCount);
 
@@ -849,15 +960,8 @@ $(document).ready(function(){
 
 				console.log("Starting to process player contact...");
 
-				sessionStorage.setItem("playerDidBeginContact",true);
 
-				//console.log("The player with position (top,left)  (" + player.position().top + ", " +  player.position().left + ")" + " was contacted");
-				
-				// var isInContact = player.attr("isInContact");
 
-				//if(isInContact != undefined && isInContact != false){
-				//if(sessionStorage.getItem('playerDidBeginContact') == false){
-						// player.attr('isInContact',true);
 
 						adjustPlayerHealth(player,-1);
 
@@ -872,7 +976,6 @@ $(document).ready(function(){
 
 					},100);
 
-					// player.attr("isInContact",true);
 
 					setTimeout(function(){
 						console.log("Turning off player contact");
@@ -881,14 +984,9 @@ $(document).ready(function(){
 						sessionStorage.setItem("playerDidBeginContact",false);
 						player.attr("isInContact",false);
 					},1500);
-				//} 
-
-					
-				
-				//}
+			
 			},
 			function(meteor){
-				//console.log("The meteor with position " + meteor.position() + " was contacted");
 			},function(player){
 
 			},
@@ -966,7 +1064,11 @@ $(document).ready(function(){
 
 		},1000);
 
-		return meteorCreatorID;
+		storeAnimationIntervalTimerID("animation-meteorCreatorID",meteorCreatorID);
+		
+		
+
+	
 
 	}
 
@@ -1000,6 +1102,9 @@ $(document).ready(function(){
 			meteorNumber++;
 
 		},frequency);
+
+
+		storeAnimationIntervalTimerID("animation-meteorCreatorID",meteorCreatorID);
 
 
 	}
@@ -1089,49 +1194,11 @@ $(document).ready(function(){
 
 		},1000);
 
-		return coinShowerID;
+		storeAnimationIntervalTimerID("animation-CoinShowerID",coinShowerID);
+	
 
 	}
 
-
-	var setPlayerWin = function(){
-
-		if(!playerHasLost){
-			sessionStorage.setItem("hasWonGame",true);
-		}
-
-	}
-
-	var setPlayerLoss = function(){
-		
-		if(!playerHasWon){
-			sessionStorage.setItem("hasLostGame",true);
-		}
-
-	}
-
-	var playerHasWon = function(){
-
-		var hasWonGame = sessionStorage.getItem("hasWonGame");
-
-		if(hasWonGame == undefined){
-			sessionStorage.setItem("hasWonGame",false);
-		}
-
-		return sessionStorage.getItem("hasWonGame");
-	}
-
-
-	var playerHasLost = function(){
-
-		var hasLostGame = sessionStorage.getItem("hasLostGame");
-
-		if(hasLostGame == undefined){
-			sessionStorage.setItem("hasLostGame",false);
-		}
-
-		return sessionStorage.getItem("hasLostGame");
-	}
 
 	var disableMeteorShower = function(){
 
@@ -1182,6 +1249,46 @@ $(document).ready(function(){
 		}, 500);
 	}
 
+
+	var showGameSummary = function(hasWon){
+
+		var gameSummary = $("<div></div>");
+
+		var title = $("<h1></h1>");
+
+		title.text(hasWon ? "Congratulations! You won!" : "Sorry, better luck next time!");
+
+		gameSummary.append(title);
+
+		var restartButton = $("<button>");
+
+		restartButton.text("Play again?");
+
+		restartButton.on("click",function(){
+			location.reload();
+		});
+
+
+		gameSummary.append(restartButton);
+
+		var styles = {
+			"position":"fixed",
+			"top":"10em",
+			"left":"10em",
+			"padding":"3em",
+			"background-color": "#baeff5",
+			"border-color": "black",
+			"border-style":"ridge",
+			"border-width": "10px",
+			"font-family": "'Righteous', cursive",
+			"text-align":"center"
+		}
+
+		gameSummary.css(styles);
+
+		$("body").append(gameSummary);
+	}
+
 	var registerResizeHandlers = function(){
 
 		$(window).on("resize",function(){
@@ -1205,6 +1312,13 @@ $(document).ready(function(){
 
 		});
 
+	}
+
+	var registerTargetAreaEventHandlers = function(targetArea){
+
+		targetArea.on("target-area:turn-off-animations",function(){
+			turnOffAllCurrentAnimations();
+		});
 	}
 
 
@@ -1232,17 +1346,9 @@ $(document).ready(function(){
 		//use localStorage to store player's data after win
 	};
 
-	var startGame = function(){
+	var runGame = function(targetArea){
 
-		var targetArea = $("#target-area");
-
-		sessionStorage.setItem("hasWonGame",false);
-		sessionStorage.setItem("hasLostGame",false);
-
-
-		sessionStorage.setItem("playerDidBeginContact",false);
-
-		setupBackgroundWithChildImage(targetArea);
+	
 
 		showMainTitle(targetArea,"Meteor Escape",3000);
 
@@ -1252,14 +1358,11 @@ $(document).ready(function(){
 		spawnPlayer(targetArea);
 
 		//TODO: initial coin spawn points should be window dependent
-		var coinShowerID = createCoinShower(targetArea);
-		sessionStorage.setItem("coinShowerID",coinShowerID);
+		createCoinShower(targetArea);
 
 		//TODO: initial meteor spawn points should be window dependent
-		var meteorShowerID = createMeteorShower(targetArea);
-		sessionStorage.setItem("meteorShowerID",meteorShowerID);
+		createMeteorShower(targetArea);
 
-		//createRandomFrequencyMeteorShower(targetArea, 1000);
 
 		registerHUDClickHandler(targetArea);
 
@@ -1267,15 +1370,34 @@ $(document).ready(function(){
 
 		registerUserClickHandlers(targetArea);
 
-		setInterval(testForPlayerCollisions,1000);
+		registerGameTitleEventHandlers();
 
-		//checkGameOver();
+		setInterval(testForPlayerCollisions,1000);
 
 		var clearFunctionID = clearExcessObjects(targetArea);
 
 		
 
 	}
+
+
+
+var startGame = function(){
+	var targetArea = $("#target-area");
+
+	setupBackgroundWithChildImage(targetArea);
+
+	$("#game-ready-button").on("click",function(){
+
+
+
+		$(this).parent().hide();
+
+		runGame(targetArea);
+	});
+}
+
+	
 
 	startGame();
 
