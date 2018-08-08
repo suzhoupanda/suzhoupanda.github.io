@@ -1,0 +1,17 @@
+
+
+body{
+	box-sizing: content-box;
+}
+
+#game-title{
+	font-family: 'Kreon';
+}
+
+#space-background{
+	width: 100%;
+	height: auto;
+	border-color: yellow;
+	border-width: 10px;
+	border-style: ridge;
+}
