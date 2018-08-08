@@ -14,6 +14,9 @@
 
 //TODO: vary character widths 
 
+//TODO: consider preloading images into an array or jQuery image object and then looping through them by changing the z-index, opacity, etc.
+
+
 
 $(document).ready(function(){
 
