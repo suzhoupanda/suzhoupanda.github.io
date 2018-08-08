@@ -1,7 +1,18 @@
 
 //TODO: optimize by pre-loading images, define function on for the entire document scope
-
+	//Bugfix: character texture animations not loading
+	
 //TODO: define class for character so that animations for the character can run and stopped more conveniently 
+
+//TODO: use a progress bar for HUD to represent number killed, health, etc.
+
+//TODO: make sure to clear the storage of all existing IDs, etc.
+
+//TODO: character moves in upward movement until it encounters border then moves in opposite direction; likewise for horizontal movement
+
+//TODO: if character is behind cloud, then it cannot be fired upon
+
+//TODO: vary character widths 
 
 
 $(document).ready(function(){
@@ -301,7 +312,152 @@ $(document).ready(function(){
 
 	}
 
+
+	var isTooFarTop = function(targetArea,object, movementOffset){
+
+		var oTop = object.offset().top;
+		
+		var maxTop = targetArea.offset().top + movementOffset;
+
+		return oTop < maxTop;
+		
+	}
+
+	var isTooFarRight = function(targetArea, object,movementOffset){
+
+		
+		var oRight = object.offset().left + object.width();
+
+		var maxRight = targetArea.offset().left + targetArea.width() - movementOffset;
+	
+		return oRight > maxRight;
+	}
+
+	var isTooFarLeft = function(targetArea,object,movementOffset){
+
+		var oLeft = object.offset().left;
+
+		var maxLeft = targetArea.offset().left + movementOffset;
+
+		return oLeft < maxLeft;
+	}
+
+	var isTooFarBottom = function(targetArea,object,movementOffset){
+
+
+		var oBottom = object.offset().top + object.height();
+
+		var maxBottom = targetArea.offset().top + targetArea.height() - movementOffset;
+
+		return oBottom > maxBottom;
+	}
+
+	var checkForWallCollision = function(targetArea,character,movementOffset){
+		
+			var isMovingRight = character.attr("data-isMovingRight");
+			var isMovingTop = character.attr("data-isMovingTop");
+
+			if(isTooFarRight(targetArea,character,movementOffset) && isMovingRight){
+				character.attr("data-isMovingRight",false);
+			} 
+
+			if(isTooFarLeft(targetArea,character,movementOffset) && !isMovingRight){
+				console.log("IS TOO FAR LEFT!!");
+
+				character.attr("data-isMovingRight",true);
+			}
+
+			if(isTooFarTop(targetArea,character,movementOffset) && isMovingTop){
+				character.attr("data-isMovingTop",false);
+			} 
+
+			if(isTooFarBottom(targetArea,character,movementOffset) && !isMovingTop){
+				console.log("IS TOO FAR BOTTOM!!");
+				character.attr("data-isMovingTop",true);
+			}
+
+
+	}
+
+	var moveCharacter = function(character,deltaX,deltaY){
+
+
+			var isMovingRight = parseInt(character.attr("data-isMovingRight"));
+
+			if(isMovingRight == true){
+				var movementInfo = {
+					"left":"+="+deltaX+"px"
+				}
+				character.css(movementInfo);
+			} else if(isMovingRight == false) {
+				var movementInfo = {
+					"left":"-=" + deltaX + "px"
+				}
+				character.css(movementInfo);
+			}
+
+			var isMovingTop = parseInt(character.attr("data-isMovingTop"));
+
+			if(isMovingTop == true){
+				var movementInfo = {
+					"top":"-=" + deltaY + "px"
+				}
+				character.css(movementInfo);
+
+			}else if(isMovingTop == false){
+				var movementInfo = {
+					"top":"+=" + deltaY + "px"
+				}
+				character.css(movementInfo);
+			}
+	}
+
+	var configureCharacterMovementAnimation = function(targetArea, character,deltaX,deltaY,movementOffset){
+
+		var coinToss1 = Math.floor(Math.random()*2), coinToss2 = Math.floor(Math.random()*2)
+
+		var isMovingUp = coinToss1, isMovingRight = coinToss2;
+
+
+		character.attr("data-isMovingTop",isMovingUp);
+		character.attr("data-isMovingRight",isMovingRight);
+
+		var characterMovementID = setInterval(function(){
+
+			checkForWallCollision(targetArea,character,movementOffset);
+
+			moveCharacter(character,deltaX,deltaY);
+			
+
+
+
+		},300);
+
+		localStorage.setItem("characterMovement"+"-"+character.attr("id"),"characterMovementID");
+
+	}
+
+	var stopCharacterMovement = function(character){
+		//TODO: not yet implemented
+	}
+
+	var stopAllCharacterMovement = function(){
+		//TODO: not yet implemented
+
+	}
+
+
+	var disableCrosshairMovement = function(targetArea){
+
+	
+		targetArea.off("click").off("mouseenter").off("mouseleave");
+
+	
+	}
+
+
 	var moveCrossHair = function(crosshair,xPos,yPos){
+
 
 			if(isAbove(crosshair,xPos,yPos) && isToRight(crosshair,xPos,yPos)){
 				crosshair.css({
@@ -355,13 +511,44 @@ $(document).ready(function(){
 			var xPos = e.originalEvent.clientX;
 			var yPos = e.originalEvent.clientY;
 
-			console.log("X-Pos: " + xPos + ", Y-Pos: " + yPos);
+			//console.log("X-Pos: " + xPos + ", Y-Pos: " + yPos);
 
 			moveCrossHair(crosshair,xPos,yPos);
+			
 
 		
 		});
 	}
+
+
+	var isOverlapping = function(div1,div2){
+
+		var w1 = div1.outerWidth()
+		var h1 = div1.outerHeight();
+		var offset1 = div1.offset();
+		var left1 = offset1.left;
+		var top1 = offset1.top;
+		var bottom1 = top1 + h1;
+		var right1 = left1 + w1;
+
+		var w2 = div2.outerWidth()
+		var h2 = div2.outerHeight();
+		var offset2 = div2.offset();
+		var left2 = offset2.left;
+		var top2 = offset2.top;
+		var bottom2 = top2 + h2;
+		var right2 = left2 + w2;
+
+		var hasVerticalContact = !((bottom1 < top2) || (bottom2 < top1))
+		var hasHorizontalContact = !((left1 > right2) || (left2 > right1))
+
+		return hasVerticalContact && hasHorizontalContact;
+
+	};
+
+
+
+	var TARGETED_CHARACTER_IDS = [];
 
 	var appendCrosshair = function(targetArea){
 
@@ -375,16 +562,57 @@ $(document).ready(function(){
 		var styles = {
 			"position":"absolute",
 			"left": centerPoint[0] + "px",
-			"top": centerPoint[1] + "px"
+			"top": centerPoint[1] + "px",
+			"z-index":"10"
 		}
 
 		crosshair.attr("src",crossHairImagePath).css(styles).on("click",function(){
 			console.log("Crosshair has been clicked");
 
-			
-			
+			console.log(TARGETED_CHARACTER_IDS.length);
+
+			if(TARGETED_CHARACTER_IDS.length > 0){
+				$.each(TARGETED_CHARACTER_IDS,function(index,characterID){
+					console.log("Character destroyed");
+
+					$("#"+characterID).remove();
+				});
+			}
 
 		});
+
+		crosshair.on("mouseenter",function(){
+			console.log("Mouse is NOW over crosshair...Begin testing for overlap enemies");
+
+			var activeTargetingID = setInterval(function(){
+				console.log("Testing for targeted characters....");
+
+				targetArea.children('.character').each(function(index){
+					if(isOverlapping($(this),crosshair)){
+
+						var targetedCharacterID = $(this).attr("id");
+
+						if(!TARGETED_CHARACTER_IDS.includes(targetedCharacterID)){
+							console.log("Adding character to targeted characters...");
+							TARGETED_CHARACTER_IDS.push(targetedCharacterID);
+						}
+					}
+				});
+
+			},200);
+
+			crosshair.attr("activeTargetingID",activeTargetingID);
+
+		}).on("mouseleave",function(){
+			console.log("Mouse is NO LONGER over crosshair...Stop testing for overlap with enemies");
+				TARGETED_CHARACTERS = [];
+
+				var activeTargetingID = crosshair.attr("activeTargetingID");
+
+				if(activeTargetingID){
+					clearInterval(activeTargetingID);
+				}
+		})
 
 		configureCrossHairForTargetAreaMovement(crosshair,targetArea);
 
@@ -433,10 +661,34 @@ $(document).ready(function(){
 	var configureCharacterBaseStyles = function(character){
 		
 		var baseStyles = {
-			"position":"absolute"
+			"position":"absolute",
+			"z-index":"5",
+			"width": "8%",
+			"height": "15%"
 		}
 
-		character.css(baseStyles);
+		character.css(baseStyles).addClass('character');
+
+	}
+
+
+	var configureIDforCharacter = function(character){
+
+		var className = character.attr('class');
+
+		var storageKey = "number-of-"+className;
+
+		if(localStorage.getItem(storageKey)){
+			var currentNumber = localStorage.getItem(storageKey);
+			currentNumber++;
+			localStorage.setItem(storageKey,currentNumber);
+			character.attr("id",className + currentNumber);
+
+		} else {
+			localStorage.setItem(storageKey,1);
+			character.attr("id",className + currentNumber);
+
+		}
 	}
 
 
@@ -444,6 +696,8 @@ $(document).ready(function(){
 		var spikeball = $("<img>");
 
 		configureCharacterBaseStyles(spikeball);
+
+		configureIDforCharacter(spikeball);
 
 		var basePath = "./img/characters/";
 
@@ -456,7 +710,8 @@ $(document).ready(function(){
 
 		configureDefaultTexture(spikeball,basePath,textures[0],imageExtension);
 
-		var spikeBallAnimationID = configureAnimation(spikeball,"/img/characters/",".png",textures,3000);
+		//var spikeBallAnimationID = configureAnimation(spikeball,"/img/characters/",".png",textures,3000);
+
 
 		return spikeball;
 	}
@@ -465,6 +720,10 @@ $(document).ready(function(){
 		var flyMan = $("<img>");
 
 		configureCharacterBaseStyles(flyMan);
+
+
+		configureIDforCharacter(flyMan);
+
 
 		var basePath = "./img/characters/";
 
@@ -481,10 +740,82 @@ $(document).ready(function(){
 		configureDefaultTexture(flyMan,basePath,textures[0],imageExtension);
 
 
-		var flymanAnimation2D = configureAnimation(flyMan,"/img/characters/",".png",textures,3000);
+		//var flymanAnimation2D = configureAnimation(flyMan,"/img/characters/",".png",textures,3000);
 
 		return flyMan;
 
+	}
+
+
+	
+
+	//Ineffective: character moves instantaneously, character is not rendered during each interval, computations are completed so quickly that 
+	//character is moved to destination in a single instant
+
+	var moveCharacterToPointSlow = function(character,toLeft,toTop,numberIntervals,duration){
+
+		var deltaX = (character.offset().left - toLeft)/numberIntervals;
+		var deltaY = -(character.offset().top - toTop)/numberIntervals;
+
+		var movementTime = duration;
+
+
+		var moveCharacterByIncrement = function(i){
+
+			if(i >= numberIntervals){
+				return;
+			} 
+
+		var characterMovementID = setTimeout(function(){
+
+				var movementInfo = {
+					"top": deltaY + "px",
+					"left": deltaX + "px"
+				}
+
+				character.css(movementInfo);
+
+				i++;
+
+				moveCharacterByIncrement(i);
+
+				},movementTime);
+
+		localStorage.setItem(character.attr("id")+"-movementID",characterMovementID);
+
+
+		}	
+
+
+		moveCharacterByIncrement(0);
+
+	}
+
+	//Ineffective: character moves instantaneously, character is not rendered during each interval, computations are completed so quickly that 
+	//character is moved to destination in a single instant
+	var moveCharacterToPoint = function(character,toLeft,toTop,numberIntervals,duration){
+
+		var i = 0;
+
+		var deltaX = (character.offset().left - toLeft)/numberIntervals;
+		var deltaY = -(character.offset().top - toTop)/numberIntervals;
+
+		var movementID = setInterval(function(){
+
+			if(i < numberIntervals){
+
+				var movementInfo = {
+					"top": deltaY + "px",
+					"left": deltaX + "px"
+				}
+
+				character.css(movementInfo);
+
+			} else {
+				clearInterval(movementID);
+			}
+
+		},duration);
 	}
 
 	var appendCharacterAtRandomPosition = function(targetArea,characterName){
@@ -494,12 +825,15 @@ $(document).ready(function(){
 		switch(characterName){
 			case "flyman":
 				character = createFlyman();
+				configureCharacterMovementAnimation(targetArea, character,30,30,30);
 				break;
 			case "spikeball":
 				character = createSpikeball();
+				configureCharacterMovementAnimation(targetArea, character,30,30,5);
 				break;
 			default:
 				character = createSpikeball();
+				configureCharacterMovementAnimation(targetArea, character,30,30,10);
 				break;
 		}
 
@@ -515,6 +849,8 @@ $(document).ready(function(){
 		character.css(positionInfo);
 
 		targetArea.append(character);
+
+
 	}
 
 
