@@ -95,7 +95,28 @@ $(document).ready(function(){
 
 
 		var title = createIntroScreenTitle(titleText);
+
+		var adbox = $("<div></div>");
+
+		adbox.addClass("container");
+
+		adbox.html("<script async src=\"//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js\"></script>\
+			<ins class=\"adsbygoogle\"\
+    			 style=\"display:block; text-align:center;\"\
+    			 data-ad-layout=\"in-article\"\
+    			 data-ad-format=\"fluid\"\
+    				 data-ad-client=\"ca-pub-3595969991114166\"\
+    				 data-ad-slot=\"6717344725\"></ins>\
+			<script>\
+   				 (adsbygoogle = window.adsbygoogle || []).push({});\
+			</script>")
+		
+  
+   		
+			
 		introWindow.append(title);
+
+		introWindow.append(adbox);
 
 		var text1 = createIntroScreenText(introText1);
 		introWindow.append(text1);
@@ -338,9 +359,11 @@ $(document).ready(function(){
 
 	var isTooFarLeft = function(targetArea,object,movementOffset){
 
+
 		var oLeft = object.offset().left;
 
 		var maxLeft = targetArea.offset().left + movementOffset;
+
 
 		return oLeft < maxLeft;
 	}
@@ -357,57 +380,99 @@ $(document).ready(function(){
 
 	var checkForWallCollision = function(targetArea,character,movementOffset){
 		
-			var isMovingRight = character.attr("data-isMovingRight");
-			var isMovingTop = character.attr("data-isMovingTop");
 
-			if(isTooFarRight(targetArea,character,movementOffset) && isMovingRight){
-				character.attr("data-isMovingRight",false);
-			} 
 
-			if(isTooFarLeft(targetArea,character,movementOffset) && !isMovingRight){
-				console.log("IS TOO FAR LEFT!!");
+			if(isTooFarLeft(targetArea,character,movementOffset)){
+				// console.log("Was moving left...now moving right");
+				// console.log("IS TOO FAR LEFT!!");
+				// character.trigger("character:start-move-right");
 
-				character.attr("data-isMovingRight",true);
+				character.trigger("character:hit-wall");
+
+
 			}
 
-			if(isTooFarTop(targetArea,character,movementOffset) && isMovingTop){
-				character.attr("data-isMovingTop",false);
+			if(isTooFarRight(targetArea,character,movementOffset)){
+				// console.log("Was moving right...now moving left");
+
+				// character.trigger("character:start-move-left");
+
+				character.trigger("character:hit-wall");
+
+
 			} 
 
-			if(isTooFarBottom(targetArea,character,movementOffset) && !isMovingTop){
-				console.log("IS TOO FAR BOTTOM!!");
-				character.attr("data-isMovingTop",true);
+
+
+			if(isTooFarBottom(targetArea,character,movementOffset)){
+				// console.log("Was moving down...now moving up");
+				// character.trigger("character:start-move-top");
+
+				character.trigger("character:hit-wall");
+
+
 			}
 
+			
+
+			if(isTooFarTop(targetArea,character,movementOffset)){
+				// console.log("Was moving up...now moving down");
+
+				// character.trigger("character:start-move-bottom");
+
+				character.trigger("character:hit-wall");
+
+
+			} 
+
+
+
+	}
+
+	var isMovingRight = function(character){
+
+		var isMovingRight = character.attr("data-isMovingRight");
+
+		console.log("isMovingRight: " + isMovingRight);
+
+		return isMovingRight == true
+	}
+
+	var isMovingTop = function(character){
+
+		var isMovingTop = character.attr("data-isMovingTop");
+
+
+		console.log("isMovingTop: " + isMovingTop);
+
+
+		return isMovingTop == true
 
 	}
 
 	var moveCharacter = function(character,deltaX,deltaY){
 
 
-			var isMovingRight = parseInt(character.attr("data-isMovingRight"));
 
-			if(isMovingRight == true){
+			if(isMovingRight(character)){
 				var movementInfo = {
 					"left":"+="+deltaX+"px"
 				}
 				character.css(movementInfo);
-			} else if(isMovingRight == false) {
+			} else {
 				var movementInfo = {
 					"left":"-=" + deltaX + "px"
 				}
 				character.css(movementInfo);
-			}
+			} 
 
-			var isMovingTop = parseInt(character.attr("data-isMovingTop"));
-
-			if(isMovingTop == true){
+			if(isMovingTop(character)){
 				var movementInfo = {
 					"top":"-=" + deltaY + "px"
 				}
 				character.css(movementInfo);
 
-			}else if(isMovingTop == false){
+			}else {
 				var movementInfo = {
 					"top":"+=" + deltaY + "px"
 				}
@@ -415,8 +480,8 @@ $(document).ready(function(){
 			}
 	}
 
-	var configureCharacterMovementAnimation = function(targetArea, character,deltaX,deltaY,movementOffset){
 
+	var randomizeCharacterDirection = function(character){
 		var coinToss1 = Math.floor(Math.random()*2), coinToss2 = Math.floor(Math.random()*2)
 
 		var isMovingUp = coinToss1, isMovingRight = coinToss2;
@@ -424,6 +489,13 @@ $(document).ready(function(){
 
 		character.attr("data-isMovingTop",isMovingUp);
 		character.attr("data-isMovingRight",isMovingRight);
+	}
+
+
+
+	var configureCharacterMovementAnimation = function(targetArea, character,deltaX,deltaY,movementOffset){
+
+		randomizeCharacterDirection(character);
 
 		var characterMovementID = setInterval(function(){
 
@@ -553,6 +625,41 @@ $(document).ready(function(){
 
 	var TARGETED_CHARACTER_IDS = [];
 
+
+	var getCharacterFromID = function(characterID){
+
+		return $("#"+characterID);
+	}
+
+
+	var updateCharacterKillCount = function(characterID){
+
+			if(characterID.includes("evilsun")){
+
+				var currentKillCount = parseInt(localStorage.getItem("evilsun-killcount"));
+				var updatedKillCount = currentKillCount + 1;
+				localStorage.setItem("evilsun-killcount",updatedKillCount);
+
+			} else if(characterID.includes("flyman")){
+
+				var currentKillCount = parseInt(localStorage.getItem("flyman-killcount"));
+				var updatedKillCount = currentKillCount + 1;
+				localStorage.setItem("flyman-killcount",updatedKillCount);
+
+			} else if(characterID.includes("spikeball")){
+
+				var currentKillCount = parseInt(localStorage.getItem("spikeball-killcount"));
+				var updatedKillCount = currentKillCount + 1;
+				localStorage.setItem("spikeball-killcount",updatedKillCount);
+
+			} else if(characterID.includes("evilcloud")){
+				var currentKillCount = parseInt(localStorage.getItem("evilcloud-killcount"));
+				var updatedKillCount = currentKillCount + 1;
+				localStorage.setItem("evilcloud-killcount",updatedKillCount);
+		}
+	}
+
+
 	var appendCrosshair = function(targetArea){
 
 
@@ -578,7 +685,12 @@ $(document).ready(function(){
 				$.each(TARGETED_CHARACTER_IDS,function(index,characterID){
 					console.log("Character destroyed");
 
-					$("#"+characterID).remove();
+					var character = getCharacterFromID(characterID);
+					explodeElement(character);
+					updateCharacterKillCount(characterID);
+
+
+
 				});
 			}
 
@@ -694,6 +806,125 @@ $(document).ready(function(){
 		}
 	}
 
+	var configureCharacterEventHandlers = function(character){
+
+		character.on("character:hit-wall",function(){
+
+			randomizeCharacterDirection(character);
+			appendExistingCharacterAtRandomPosition(character,null,null);
+		});
+
+		// character.on("character:start-move-top",function(){
+			
+	
+		// 	startMovingCharacterUp(character);
+
+		// });
+
+
+		// character.on("character:start-move-right",function(){
+		
+
+		// 	startMovingCharacterRight(character);
+
+		// });
+
+
+		// character.on("character:start-move-left",function(){
+		// 	character.attr("data-isMovingRight",false);
+
+		// });
+
+		// character.on("character:start-move-bottom",function(){
+		// 	character.attr("data-isMovingTop",false);
+
+
+		// });
+
+
+	}
+
+
+
+var constructImagePath = function(basePath,imageName,imageExtension){
+
+		return basePath + imageName + imageExtension;
+	}
+
+	
+
+var explodeElement = function(element,isRemoved = false){
+
+		if(!element.is("img")){
+			console.log("Error: the element is NOT an image.  Cannot use explosion animation.")
+			return;
+		}
+
+		if(element.attr("explosionAnimationID")){
+			element.remove();
+			return;
+		}
+
+		if(element.attr('textureAnimationID')){
+			var textureAnimationID = element.attr('textureAnimationID');
+			clearInterval(textureAnimationID);
+		}
+
+		var basePath = "./img/explosion/";
+
+		var explosionTextures = [
+			"regularExplosion01",
+			"regularExplosion02",
+			"regularExplosion03",
+			"regularExplosion04",
+			"regularExplosion05",
+			"regularExplosion06",
+			"regularExplosion07",
+			"regularExplosion08",
+
+		]
+
+		var imageExtension = ".png";
+
+		var i = 0;
+
+		var explosionAnimationID = setInterval(function(){
+
+	
+
+			if(i < explosionTextures.length-1){
+
+				var imagePath = constructImagePath(basePath,explosionTextures[i],imageExtension);
+				element.attr("src",imagePath);
+				i++;
+
+			} else {
+				var timerID = element.attr("explosionAnimationID");
+				clearInterval(timerID);
+				if(isRemoved){
+					element.remove();
+				}
+			}
+		},100);
+
+
+		storeAnimationIntervalTimerID(explosionAnimationID);
+
+
+		element.attr("animation-explosionAnimationID",explosionAnimationID);
+
+
+	}
+
+	var storeAnimationIntervalTimerID = function(key,timerID){
+
+	
+		localStorage.setItem(key,timerID);
+	
+}
+
+	
+
 
 	var createSpikeball = function(){
 		var spikeball = $("<img>");
@@ -701,6 +932,11 @@ $(document).ready(function(){
 		configureCharacterBaseStyles(spikeball);
 
 		configureIDforCharacter(spikeball);
+
+		configureCharacterEventHandlers(spikeball);
+
+		spikeball.addClass('spikeball');
+
 
 		var basePath = "./img/characters/";
 
@@ -724,9 +960,11 @@ $(document).ready(function(){
 
 		configureCharacterBaseStyles(flyMan);
 
-
 		configureIDforCharacter(flyMan);
 
+		configureCharacterEventHandlers(flyMan);
+
+		flyMan.addClass('flyman');
 
 		var basePath = "./img/characters/";
 
@@ -750,7 +988,114 @@ $(document).ready(function(){
 	}
 
 
+	var updateHUD = function(characterClass,numberKilled){
+
+		var currentKillCount = $("#hud").attr("data-number-killed-" + characterClass);
+		var updatedKillCount = currentKillCount + numberKilled;
+		$("#hud").attr("data-number-killed-" + characterClass,updatedKillCount);
+
+		$("#hud").find("#"+characterClass+"-killed").text(updatedKillCount.toString());
+
+		// var max = $("#hud").attr("data-max-"+characterClass);
+		// var percentage = Math.round((numberKilled/max)*100);
+		// $("#hud").find("#"+characterClass+"-counter").css("width:" + percentage + "%");
+
+
+
+	}
+
+
 	
+
+	var registerProgressModalHandler = function(){
+
+		$('#progress-modal').on('show.bs.modal', function (e) {
+
+
+		console.log("Determing enemies killed for each enemy....");
+
+  	
+  		var modalBody = $(this).find(".modal-body");
+
+  
+
+  		modalBody.children().each(function(index){
+
+  	
+  			var counter = $(this).children("span");
+  			counter.empty();
+
+  			var counterID = counter.attr("id");
+
+			if(counterID.includes("evilsun")){
+
+				var currentKillCount = parseInt(localStorage.getItem("evilsun-killcount"));
+				var updatedKillCount = currentKillCount + 1;
+				localStorage.setItem("evilsun-killcount",updatedKillCount);
+				counter.text(updatedKillCount.toString());
+
+			} else if(counterID.includes("flyman")){
+
+				var currentKillCount = parseInt(localStorage.getItem("flyman-killcount"));
+				var updatedKillCount = currentKillCount + 1;
+				localStorage.setItem("flyman-killcount",updatedKillCount);
+				counter.text(updatedKillCount.toString());
+
+			} else if(counterID.includes("spikeball")){
+
+				var currentKillCount = localStorage.getItem("spikeball-killcount");
+				var updatedKillCount = currentKillCount + 1;
+				localStorage.setItem("spikeball-killcount",updatedKillCount);
+				counter.text(updatedKillCount.toString());
+
+			} else if(counterID.includes("evilcloud")){
+				var currentKillCount = localStorage.getItem("evilcloud-killcount");
+				var updatedKillCount = currentKillCount + 1;
+				localStorage.setItem("evilcloud-killcount",updatedKillCount);
+				counter.text(updatedKillCount.toString());
+
+
+
+  			}
+  		});
+
+  			
+
+	})
+
+	}
+
+	var initializeHUD = function(maxSpikeBall,maxEvilSun,maxEvilCloud,maxFlyMan){
+
+		$("#hud").attr("data-number-killed-spikeball",0);
+		$("#hud").attr("data-number-killed-evilsun",0);
+		$("#hud").attr("data-number-killed-evilcloud",0);
+		$("#hud").attr("data-number-killed-flyman",0);
+
+		$("#hud").attr("data-max-spikeball",maxSpikeBall);
+		$("#hud").attr("data-max-evilsun",maxEvilSun);
+		$("#hud").attr("data-max-evilcloud",maxEvilCloud);
+		$("#hud").attr("data-max-flyman",maxFlyMan);
+
+		$("#hud").on("hud:spikeball-died",function(){
+			updateHUD("spikeball",1);
+		});
+
+		$("#hud").on("hud:evilcloud-died",function(){
+			updateHUD("evilcloud",1);
+		});
+
+		$("#hud").on("hud:evilsun-died",function(){
+			updateHUD("evilsun",1);
+		});
+
+		$("#hud").on("hud:flyman-died",function(){
+			updateHUD("flyman",1);
+		});
+
+	}
+
+
 
 	//Ineffective: character moves instantaneously, character is not rendered during each interval, computations are completed so quickly that 
 	//character is moved to destination in a single instant
@@ -821,6 +1166,67 @@ $(document).ready(function(){
 		},duration);
 	}
 
+
+	
+	var appendExistingCharacterAtRandomLeftPosition = function(character){
+		appendExistingCharacterAtRandomPosition(character, true, null);
+	}
+
+	var appendExistingCharacterAtRandomBottomPosition = function(character){
+		appendExistingCharacterAtRandomPosition(character, null, true);
+
+	}
+
+	var appendExistingCharacterAtRandomPosition = function(character,alongLeft,alongBottom){
+
+		var targetArea = $("#target-area");
+
+		var randomPos = getRandomPositionInTargetArea(targetArea);
+		var randomLeft = randomPos[0];
+		var randomTop = randomPos[1];
+
+
+		var topPosition = randomTop;
+		var leftPosition = randomLeft;
+
+		if(alongLeft != null && alongLeft == true){
+			leftPosition = targetArea.offset().left + 100;
+		}
+
+		if(alongBottom != null && alongBottom == true){
+			topPosition = (targetArea.offset().top + targetArea.height() - 100)
+		}
+
+		var positionInfo = {
+			"left": topPosition + "px",
+			"top" : leftPosition + "px"
+		}
+
+		character.css(positionInfo);
+
+		targetArea.append(character);
+	}
+
+
+	var startMovingCharacterUp = function(character){
+
+
+		character.attr("data-isMovingTop",true);
+		character.css({
+			"top":"-=50px"
+		});
+	}
+
+
+	var startMovingCharacterRight = function(character){
+
+
+		character.attr("data-isMovingRight",true);
+		character.css({
+			"left":"+=50px"
+		});
+	}
+
 	var appendCharacterAtRandomPosition = function(targetArea,characterName){
 
 		var character;
@@ -856,6 +1262,29 @@ $(document).ready(function(){
 
 	}
 
+	var initializeLocalStorage = function(){
+
+		if(localStorage.getItem("evilsun-killcount")){
+			delete localStorage["evilsun-killcount"];
+		}
+
+		if(localStorage.getItem("spikeball-killcount")){
+			delete localStorage["spikeball-killcount"];
+		}
+
+		if(localStorage.getItem("evilcloud-killcount")){
+			delete localStorage["evilcloud-killcount"];
+		}
+
+		if(localStorage.getItem("flyman-killcount")){
+			delete localStorage["flyman-killcount"];
+		}
+
+		localStorage.setItem("evilsun-killcount",0);
+		localStorage.setItem("evilcloud-killcount",0);
+		localStorage.setItem("spikeball-killcount",0);
+		localStorage.setItem("flyman-killcount",0);
+	}
 
 	clearPositionDataFromLocalStorage();
 
@@ -863,10 +1292,15 @@ $(document).ready(function(){
 
 		appendCloudGroup(targetArea, 5);
 
+		
+		initializeLocalStorage();
+
 		var randomPositions = getRandomPositionsFromLocalStorage();
 		for(var index in randomPositions){
 			console.log(randomPositions[index]);
 		}
+
+		registerProgressModalHandler();
 
 		appendCrosshair(targetArea);
 

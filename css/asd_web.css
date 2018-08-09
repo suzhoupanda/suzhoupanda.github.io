@@ -4,6 +4,7 @@ body{
 	box-sizing: content-box;
 }
 
+
 #game-title{
 	position: fixed;
 	top: 20px;
@@ -22,3 +23,19 @@ body{
 	border-width: 10px;
 	border-style: ridge;
 }
+
+#hud-toggle{
+	position: fixed;
+	top: 0px;
+	right: 0px;
+	z-index: 50;
+	width: 8em;
+	height: 2em;
+
+}
+
+
+.progress-bar{
+	margin-bottom: 1em;
+}
+
