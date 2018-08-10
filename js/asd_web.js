@@ -1746,7 +1746,7 @@ var explodeElement = function(element,isRemoved = true){
 
 			appendCrosshair(targetArea);
 
-			startFlymanGenerator(2000);
+			startFlymanGenerator(5000);
 
 			checkForGameWinLossConditions(targetArea);
 		});
