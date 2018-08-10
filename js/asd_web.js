@@ -16,7 +16,130 @@
 
 //TODO: consider preloading images into an array or jQuery image object and then looping through them by changing the z-index, opacity, etc.
 
+/** 
 
+
+
+	//Ineffective: character moves instantaneously, character is not rendered during each interval, computations are completed so quickly that 
+	//character is moved to destination in a single instant
+
+	var moveCharacterToPointSlow = function(character,toLeft,toTop,numberIntervals,duration){
+
+		var deltaX = (character.offset().left - toLeft)/numberIntervals;
+		var deltaY = -(character.offset().top - toTop)/numberIntervals;
+
+		var movementTime = duration;
+
+
+		var moveCharacterByIncrement = function(i){
+
+			if(i >= numberIntervals){
+				return;
+			} 
+
+		var characterMovementID = setTimeout(function(){
+
+				var movementInfo = {
+					"top": deltaY + "px",
+					"left": deltaX + "px"
+				}
+
+				character.css(movementInfo);
+
+				i++;
+
+				moveCharacterByIncrement(i);
+
+				},movementTime);
+
+		localStorage.setItem(character.attr("id")+"-movementID",characterMovementID);
+
+
+		}	
+
+
+		moveCharacterByIncrement(0);
+
+	}
+
+	//Ineffective: character moves instantaneously, character is not rendered during each interval, computations are completed so quickly that 
+	//character is moved to destination in a single instant
+	var moveCharacterToPoint = function(character,toLeft,toTop,numberIntervals,duration){
+
+		var i = 0;
+
+		var deltaX = (character.offset().left - toLeft)/numberIntervals;
+		var deltaY = -(character.offset().top - toTop)/numberIntervals;
+
+		var movementID = setInterval(function(){
+
+			if(i < numberIntervals){
+
+				var movementInfo = {
+					"top": deltaY + "px",
+					"left": deltaX + "px"
+				}
+
+				character.css(movementInfo);
+
+			} else {
+				clearInterval(movementID);
+			}
+
+		},duration);
+	}
+
+
+
+var initializeHUD = function(maxSpikeBall,maxEvilSun,maxEvilCloud,maxFlyMan){
+
+		$("#hud").attr("data-number-killed-spikeball",0);
+		$("#hud").attr("data-number-killed-evilsun",0);
+		$("#hud").attr("data-number-killed-evilcloud",0);
+		$("#hud").attr("data-number-killed-flyman",0);
+
+		$("#hud").attr("data-max-spikeball",maxSpikeBall);
+		$("#hud").attr("data-max-evilsun",maxEvilSun);
+		$("#hud").attr("data-max-evilcloud",maxEvilCloud);
+		$("#hud").attr("data-max-flyman",maxFlyMan);
+
+		$("#hud").on("hud:spikeball-died",function(){
+			updateHUD("spikeball",1);
+		});
+
+		$("#hud").on("hud:evilcloud-died",function(){
+			updateHUD("evilcloud",1);
+		});
+
+		$("#hud").on("hud:evilsun-died",function(){
+			updateHUD("evilsun",1);
+		});
+
+		$("#hud").on("hud:flyman-died",function(){
+			updateHUD("flyman",1);
+		});
+
+	}
+
+
+	var updateHUD = function(characterClass,numberKilled){
+
+		var currentKillCount = $("#hud").attr("data-number-killed-" + characterClass);
+		var updatedKillCount = currentKillCount + numberKilled;
+		$("#hud").attr("data-number-killed-" + characterClass,updatedKillCount);
+
+		$("#hud").find("#"+characterClass+"-killed").text(updatedKillCount.toString());
+
+		// var max = $("#hud").attr("data-max-"+characterClass);
+		// var percentage = Math.round((numberKilled/max)*100);
+		// $("#hud").find("#"+characterClass+"-counter").css("width:" + percentage + "%");
+
+
+
+	}
+
+
+**/
 
 $(document).ready(function(){
 
@@ -141,10 +264,11 @@ $(document).ready(function(){
 		
 		var introScreen = createIntroScreen(
 			"How to Play",
-			"Kill enemies with the crosshair.  Click on the target area to move the crosshair.  \
-			To fire upon an enemy, click inside the crosshair.",
-			"Position the crosshair over an enemy and click inside the crosshair to fire. \
-			An enemy must be inside the crosshair in order to be killed.",completionHandler)
+			"Kill enemies with the crosshair.  Click on the target area to move the crosshair. \
+			To kill the enemy, position the crosshair over the enemy and click on the cross hair.",
+
+			"Kill over 10 enemies to win the game.  If 20 or more enemies are on screen, \
+			the enemy has taken over the earth and you. lose",completionHandler)
 
 		targetArea.append(introScreen);
 
@@ -243,7 +367,7 @@ $(document).ready(function(){
 	}
 
 
-	var clearPositionDataFromLocalStorage = function(){
+	var clearAllGameKeysFromLocalStorage = function(){
 		for(var positionKey in localStorage){
 			if(localStorage.hasOwnProperty(positionKey)){
 				delete localStorage[positionKey];
@@ -297,6 +421,12 @@ $(document).ready(function(){
 		 return basePath + imageName + imageExtension;
 	}
 
+	/** 
+	
+	Helper Functions to test the location of mouseclick with respect to an object on screen; use these functions to help determine the movement of
+	the crosshair in response to mouseclick events 
+
+	**/
 
 	var isToRight = function(object,clickX,clickY){
 
@@ -335,6 +465,108 @@ $(document).ready(function(){
 		return clickY > bottom;
 
 	}
+
+
+	/** 
+
+	Disable the all of the event handlers attached to the target area; 
+	This is to make the target area unresponsive to mouseclicks and immobilize the crosshair 
+	when the game state is game over, game win, and game pause
+
+	**/
+
+	var disableCrosshairMovement = function(targetArea){
+
+	
+		targetArea.off("click").off("mouseenter").off("mouseleave");
+
+	
+	}
+
+
+	/** 
+
+	Helper function to move the crosshair in reponse to mouseclick; the crosshair will move towards the mouseclick
+
+	**/
+
+
+
+	var moveCrossHair = function(crosshair,xPos,yPos){
+
+
+			if(isAbove(crosshair,xPos,yPos) && isToRight(crosshair,xPos,yPos)){
+				crosshair.css({
+					"left":"+=20px",
+					"top":"-=20px"
+				});
+			} else if(isAbove(crosshair,xPos,yPos) && isToLeft(crosshair,xPos,yPos)){
+				crosshair.css({
+					"left":"-=20px",
+					"top":"-=20px"
+				});
+			} else if(isBelow(crosshair,xPos,yPos) && isToRight(crosshair,xPos,yPos)){
+				crosshair.css({
+					"left":"+=20px",
+					"top":"+=20px"
+				});
+			} else if(isBelow(crosshair,xPos,yPos) && isToLeft(crosshair,xPos,yPos)){
+
+				crosshair.css({
+					"left":"-=20px",
+					"top":"+=20px"
+				});
+			}else if(isAbove(crosshair,xPos,yPos)){
+
+				crosshair.css({
+					"top":"-=20px"
+				});
+			} else if(isBelow(crosshair,xPos,yPos)){
+
+				crosshair.css({
+					"top":"+=20px"
+				});
+			} else if(isToRight(crosshair,xPos,yPos)){
+
+				crosshair.css({
+					"left":"+=20px"
+				});
+			} else if(isToLeft(crosshair,xPos,yPos)){
+
+				crosshair.css({
+					"left":"-=20px"
+				});
+			}
+	}
+
+
+	/** 
+
+	Helper function to attach an event handler to the target area so as to allow it to respond to mouseclicks and thereby
+		allow the user to guide the movement of the crosshair
+
+	**/
+
+	
+
+	var configureCrossHairForTargetAreaMovement = function(crosshair, targetArea){
+
+		targetArea.on("click",function(e){
+			var xPos = e.originalEvent.clientX;
+			var yPos = e.originalEvent.clientY;
+
+			moveCrossHair(crosshair,xPos,yPos);
+			
+
+		
+		});
+	}
+
+
+
+	/** 
+		Helper functions to restrict the movement of enemy characters within the boundaries of the target area
+	**/
 
 
 	var isTooFarTop = function(targetArea,object, movementOffset){
@@ -433,7 +665,6 @@ $(document).ready(function(){
 
 		var isMovingRight = character.attr("data-isMovingRight");
 
-		console.log("isMovingRight: " + isMovingRight);
 
 		return isMovingRight == true
 	}
@@ -443,7 +674,6 @@ $(document).ready(function(){
 		var isMovingTop = character.attr("data-isMovingTop");
 
 
-		console.log("isMovingTop: " + isMovingTop);
 
 
 		return isMovingTop == true
@@ -522,79 +752,6 @@ $(document).ready(function(){
 	}
 
 
-	var disableCrosshairMovement = function(targetArea){
-
-	
-		targetArea.off("click").off("mouseenter").off("mouseleave");
-
-	
-	}
-
-
-	var moveCrossHair = function(crosshair,xPos,yPos){
-
-
-			if(isAbove(crosshair,xPos,yPos) && isToRight(crosshair,xPos,yPos)){
-				crosshair.css({
-					"left":"+=20px",
-					"top":"-=20px"
-				});
-			} else if(isAbove(crosshair,xPos,yPos) && isToLeft(crosshair,xPos,yPos)){
-				crosshair.css({
-					"left":"-=20px",
-					"top":"-=20px"
-				});
-			} else if(isBelow(crosshair,xPos,yPos) && isToRight(crosshair,xPos,yPos)){
-				crosshair.css({
-					"left":"+=20px",
-					"top":"+=20px"
-				});
-			} else if(isBelow(crosshair,xPos,yPos) && isToLeft(crosshair,xPos,yPos)){
-
-				crosshair.css({
-					"left":"-=20px",
-					"top":"+=20px"
-				});
-			}else if(isAbove(crosshair,xPos,yPos)){
-
-				crosshair.css({
-					"top":"-=20px"
-				});
-			} else if(isBelow(crosshair,xPos,yPos)){
-
-				crosshair.css({
-					"top":"+=20px"
-				});
-			} else if(isToRight(crosshair,xPos,yPos)){
-
-				crosshair.css({
-					"left":"+=20px"
-				});
-			} else if(isToLeft(crosshair,xPos,yPos)){
-
-				crosshair.css({
-					"left":"-=20px"
-				});
-			}
-	}
-
-	
-
-	var configureCrossHairForTargetAreaMovement = function(crosshair, targetArea){
-
-		targetArea.on("click",function(e){
-			var xPos = e.originalEvent.clientX;
-			var yPos = e.originalEvent.clientY;
-
-			//console.log("X-Pos: " + xPos + ", Y-Pos: " + yPos);
-
-			moveCrossHair(crosshair,xPos,yPos);
-			
-
-		
-		});
-	}
-
 
 	var isOverlapping = function(div1,div2){
 
@@ -632,6 +789,36 @@ $(document).ready(function(){
 	}
 
 
+	/** Updates the kill count for each enemy character based on whether or not the character contains the class corresponding to the character name **/
+	var updateCharacterKillCount_v2 = function(character){
+
+			if(character.hasClass("evilsun")){
+
+				var currentKillCount = parseInt(localStorage.getItem("evilsun-killcount"));
+				var updatedKillCount = currentKillCount + 1;
+				localStorage.setItem("evilsun-killcount",updatedKillCount);
+
+			} else if(character.hasClass("flyman")){
+
+				var currentKillCount = parseInt(localStorage.getItem("flyman-killcount"));
+				var updatedKillCount = currentKillCount + 1;
+				localStorage.setItem("flyman-killcount",updatedKillCount);
+
+			} else if(character.hasClass("spikeball")){
+
+				var currentKillCount = parseInt(localStorage.getItem("spikeball-killcount"));
+				var updatedKillCount = currentKillCount + 1;
+				localStorage.setItem("spikeball-killcount",updatedKillCount);
+
+			} else if(character.hasClass("evilcloud")){
+				var currentKillCount = parseInt(localStorage.getItem("evilcloud-killcount"));
+				var updatedKillCount = currentKillCount + 1;
+				localStorage.setItem("evilcloud-killcount",updatedKillCount);
+			}
+
+	}
+
+	/** Updates the kill count for each enemy character based on whether or not the characterID string contains the name of the character **/
 	var updateCharacterKillCount = function(characterID){
 
 			if(characterID.includes("evilsun")){
@@ -656,7 +843,7 @@ $(document).ready(function(){
 				var currentKillCount = parseInt(localStorage.getItem("evilcloud-killcount"));
 				var updatedKillCount = currentKillCount + 1;
 				localStorage.setItem("evilcloud-killcount",updatedKillCount);
-		}
+			}
 	}
 
 
@@ -686,8 +873,28 @@ $(document).ready(function(){
 					console.log("Character destroyed");
 
 					var character = getCharacterFromID(characterID);
+					updateCharacterKillCount_v2(character);
 					explodeElement(character);
-					updateCharacterKillCount(characterID);
+
+					if(character.hasClass("flyman")){
+
+						updateOnScreenCharacterCount("flyman",-1);
+
+					} else if(character.hasClass("spikeball")){
+
+							updateOnScreenCharacterCount("spikeball",-1);
+
+
+					} else if(character.hasClass("evilsun")){
+
+							updateOnScreenCharacterCount("evilsun",-1);
+
+
+					} else if(character.hasClass("evilcloud")){
+
+						updateOnScreenCharacterCount("evilcloud",-1);
+
+					}
 
 
 
@@ -853,7 +1060,7 @@ var constructImagePath = function(basePath,imageName,imageExtension){
 
 	
 
-var explodeElement = function(element,isRemoved = false){
+var explodeElement = function(element,isRemoved = true){
 
 		if(!element.is("img")){
 			console.log("Error: the element is NOT an image.  Cannot use explosion animation.")
@@ -887,6 +1094,7 @@ var explodeElement = function(element,isRemoved = false){
 		var imageExtension = ".png";
 
 		var i = 0;
+
 
 		var explosionAnimationID = setInterval(function(){
 
@@ -988,183 +1196,88 @@ var explodeElement = function(element,isRemoved = false){
 	}
 
 
-	var updateHUD = function(characterClass,numberKilled){
 
-		var currentKillCount = $("#hud").attr("data-number-killed-" + characterClass);
-		var updatedKillCount = currentKillCount + numberKilled;
-		$("#hud").attr("data-number-killed-" + characterClass,updatedKillCount);
-
-		$("#hud").find("#"+characterClass+"-killed").text(updatedKillCount.toString());
-
-		// var max = $("#hud").attr("data-max-"+characterClass);
-		// var percentage = Math.round((numberKilled/max)*100);
-		// $("#hud").find("#"+characterClass+"-counter").css("width:" + percentage + "%");
+	/** Pass in the <span> counter element whose text node needs to be updated **/
+	var updateTextForCounter = function(counter){
 
 
+  			var counterID = counter.attr("id");
 
-	}
+  			console.log("Updating text for counter with ID: " + counterID);
+
+			if(counterID.includes("evilsun")){
 
 
-	
+				var killCount = localStorage.getItem("evilsun-killcount");
+
+  				console.log("The current kill count for " + counterID + " is: " + killCount);
+
+				if(killCount){
+
+					counter.text(killCount.toString());
+				}
+				
+
+			} else if(counterID.includes("flyman")){
+
+				var killCount = localStorage.getItem("flyman-killcount");
+
+				  console.log("The current kill count for " + counterID + " is: " + killCount);
+
+
+				if(killCount){
+					counter.text(killCount.toString());
+				}
+
+			} else if(counterID.includes("spikeball")){
+
+				var killCount = localStorage.getItem("spikeball-killcount");
+
+
+				 console.log("The current kill count for " + counterID + " is: " + killCount);
+
+
+				if(killCount){
+					counter.text(killCount.toString());
+				}
+
+			} else if(counterID.includes("evilcloud")){
+
+					var killCount = localStorage.getItem("evilcloud-killcount");
+
+
+				  	console.log("The current kill count for " + counterID + " is: " + killCount);
+
+
+				if(killCount){
+				
+					counter.text(killCount.toString());
+				}
+			}
+		}
+
+
+
 
 	var registerProgressModalHandler = function(){
 
 		$('#progress-modal').on('show.bs.modal', function (e) {
 
-
-		console.log("Determing enemies killed for each enemy....");
-
+			console.log("Determing enemies killed for each enemy....");
   	
-  		var modalBody = $(this).find(".modal-body");
+  			var modalBody = $(this).find(".modal-body");
 
-  
+  			modalBody.children().each(function(index){
 
-  		modalBody.children().each(function(index){
-
-  	
-  			var counter = $(this).children("span");
-  			counter.empty();
-
-  			var counterID = counter.attr("id");
-
-			if(counterID.includes("evilsun")){
-
-				var currentKillCount = parseInt(localStorage.getItem("evilsun-killcount"));
-				var updatedKillCount = currentKillCount + 1;
-				localStorage.setItem("evilsun-killcount",updatedKillCount);
-				counter.text(updatedKillCount.toString());
-
-			} else if(counterID.includes("flyman")){
-
-				var currentKillCount = parseInt(localStorage.getItem("flyman-killcount"));
-				var updatedKillCount = currentKillCount + 1;
-				localStorage.setItem("flyman-killcount",updatedKillCount);
-				counter.text(updatedKillCount.toString());
-
-			} else if(counterID.includes("spikeball")){
-
-				var currentKillCount = localStorage.getItem("spikeball-killcount");
-				var updatedKillCount = currentKillCount + 1;
-				localStorage.setItem("spikeball-killcount",updatedKillCount);
-				counter.text(updatedKillCount.toString());
-
-			} else if(counterID.includes("evilcloud")){
-				var currentKillCount = localStorage.getItem("evilcloud-killcount");
-				var updatedKillCount = currentKillCount + 1;
-				localStorage.setItem("evilcloud-killcount",updatedKillCount);
-				counter.text(updatedKillCount.toString());
-
-
-
-  			}
-  		});
-
+  				var counter = $(this).children("span");
   			
+  				updateTextForCounter(counter);
 
-	})
-
-	}
-
-	var initializeHUD = function(maxSpikeBall,maxEvilSun,maxEvilCloud,maxFlyMan){
-
-		$("#hud").attr("data-number-killed-spikeball",0);
-		$("#hud").attr("data-number-killed-evilsun",0);
-		$("#hud").attr("data-number-killed-evilcloud",0);
-		$("#hud").attr("data-number-killed-flyman",0);
-
-		$("#hud").attr("data-max-spikeball",maxSpikeBall);
-		$("#hud").attr("data-max-evilsun",maxEvilSun);
-		$("#hud").attr("data-max-evilcloud",maxEvilCloud);
-		$("#hud").attr("data-max-flyman",maxFlyMan);
-
-		$("#hud").on("hud:spikeball-died",function(){
-			updateHUD("spikeball",1);
-		});
-
-		$("#hud").on("hud:evilcloud-died",function(){
-			updateHUD("evilcloud",1);
-		});
-
-		$("#hud").on("hud:evilsun-died",function(){
-			updateHUD("evilsun",1);
-		});
-
-		$("#hud").on("hud:flyman-died",function(){
-			updateHUD("flyman",1);
-		});
+  				})
+  			})
 
 	}
 
-
-
-	//Ineffective: character moves instantaneously, character is not rendered during each interval, computations are completed so quickly that 
-	//character is moved to destination in a single instant
-
-	var moveCharacterToPointSlow = function(character,toLeft,toTop,numberIntervals,duration){
-
-		var deltaX = (character.offset().left - toLeft)/numberIntervals;
-		var deltaY = -(character.offset().top - toTop)/numberIntervals;
-
-		var movementTime = duration;
-
-
-		var moveCharacterByIncrement = function(i){
-
-			if(i >= numberIntervals){
-				return;
-			} 
-
-		var characterMovementID = setTimeout(function(){
-
-				var movementInfo = {
-					"top": deltaY + "px",
-					"left": deltaX + "px"
-				}
-
-				character.css(movementInfo);
-
-				i++;
-
-				moveCharacterByIncrement(i);
-
-				},movementTime);
-
-		localStorage.setItem(character.attr("id")+"-movementID",characterMovementID);
-
-
-		}	
-
-
-		moveCharacterByIncrement(0);
-
-	}
-
-	//Ineffective: character moves instantaneously, character is not rendered during each interval, computations are completed so quickly that 
-	//character is moved to destination in a single instant
-	var moveCharacterToPoint = function(character,toLeft,toTop,numberIntervals,duration){
-
-		var i = 0;
-
-		var deltaX = (character.offset().left - toLeft)/numberIntervals;
-		var deltaY = -(character.offset().top - toTop)/numberIntervals;
-
-		var movementID = setInterval(function(){
-
-			if(i < numberIntervals){
-
-				var movementInfo = {
-					"top": deltaY + "px",
-					"left": deltaX + "px"
-				}
-
-				character.css(movementInfo);
-
-			} else {
-				clearInterval(movementID);
-			}
-
-		},duration);
-	}
 
 
 	
@@ -1227,6 +1340,55 @@ var explodeElement = function(element,isRemoved = false){
 		});
 	}
 
+
+	var getRandomCharacterName = function(){
+
+		var allCharacters = ["flyman","spikeball"];
+
+		var randomIndex = Math.floor(Math.random()*allCharacters.length);
+
+		return allCharacters[randomIndex];
+
+	}
+
+
+	var startFlymanGenerator = function(timeInterval){
+
+
+		var timerID = setInterval(function(){
+
+			appendCharacterAtRandomPosition(targetArea,"flyman");
+
+		}, timeInterval);
+
+		localStorage.setItem("flymanGeneratorID",timerID);
+	}
+
+	var disableFlymanGenerator = function(){
+
+
+		var idString = localStorage.getItem("flymanGeneratorID");
+
+		if(idString){
+
+			var flymanGeneratorID = parseInt(idString);
+
+			clearInterval(flymanGeneratorID);
+		}
+	}
+
+
+	var startRandomCharacterGenerator = function(targetArea,timeInterval){
+
+		var timerID = setInterval(function(){
+
+			var characterName = getRandomCharacterName();
+
+			appendCharacterAtRandomPosition(targetArea,characterName);
+
+		}, timeInterval);
+	}
+
 	var appendCharacterAtRandomPosition = function(targetArea,characterName){
 
 		var character;
@@ -1245,6 +1407,9 @@ var explodeElement = function(element,isRemoved = false){
 				configureCharacterMovementAnimation(targetArea, character,30,30,10);
 				break;
 		}
+
+		updateOnScreenCharacterCount(characterName,1);
+
 
 		var randomPos = getRandomPositionInTargetArea(targetArea);
 		var randomLeft = randomPos[0];
@@ -1284,17 +1449,198 @@ var explodeElement = function(element,isRemoved = false){
 		localStorage.setItem("evilcloud-killcount",0);
 		localStorage.setItem("spikeball-killcount",0);
 		localStorage.setItem("flyman-killcount",0);
+
+		localStorage.setItem("total-onscreen-evilsun",0);
+		localStorage.setItem("total-onscreen-spikeball",0);
+		localStorage.setItem("total-onscreen-evilcloud",0);
+		localStorage.setItem("total-onscreen-flyman",0);
+
 	}
 
-	clearPositionDataFromLocalStorage();
+
+	var updateOnScreenCharacterCount = function(characterName, delta){
+
+		var characterCount_string = localStorage.getItem("total-onscreen-"+characterName);
+
+		if(characterCount_string){
+			var characterCount = parseInt(characterCount_string);
+			var updatedCount = characterCount + delta;
+			localStorage.setItem("total-onscreen-"+characterName,updatedCount);
+		} else {
+			localStorage.setItem("total-onscreen-"+characterName,delta);
+		}
+	}
+
+
+	var getTotalOnscreenEnemies = function(){
+		var evilSun_onScreen = parseInt(localStorage.getItem("total-onscreen-evilsun"));
+		var evilCloud_onScreen = parseInt(localStorage.getItem("total-onscreen-evilcloud"));
+		var spikeBall_onScreen = parseInt(localStorage.getItem("total-onscreen-spikeball"));
+		var flyMan_onScreen = parseInt(localStorage.getItem("total-onscreen-flyman"));
+
+		return evilSun_onScreen + evilCloud_onScreen + spikeBall_onScreen + flyMan_onScreen;
+
+	}
+
+	var getTotalKillCount = function(){
+		var evilSun_killCount = parseInt(localStorage.getItem("evilsun-killcount"));
+		var evilCloud_killCount = parseInt(localStorage.getItem("evilcloud-killcount"));
+		var spikeBall_killCount = parseInt(localStorage.getItem("spikeball-killcount"));
+		var flyMan_killCount = parseInt(localStorage.getItem("flyman-killcount"));
+
+		return evilSun_killCount + evilCloud_killCount + spikeBall_killCount + flyMan_killCount;
+
+	}
+
+	var isTotalOnScreenCountAboveMax = function(maxOnScreenEnemies){
+
+		console.log("The total on screen enemies is: " + getTotalOnscreenEnemies());
+		return getTotalOnscreenEnemies() > maxOnScreenEnemies;
+	}
+
+
+	var isTotalKillCountAboveMax = function(maxKillCount){
+
+		console.log("Checking total kill count...Total kill count is: " + getTotalKillCount());
+
+		return getTotalKillCount() > maxKillCount
+
+	}
+
+
+	var removeAllCharacters = function(targetArea){
+
+		targetArea.children(".character").each(function(index){
+			if($(this).hasClass("character")){
+				$(this).remove();
+			}
+		});
+	}
+
+	var checkForGameWinLossConditions = function(targetArea){
+
+		var timerID = setInterval(function(){
+
+			if(isTotalKillCountAboveMax(10)){
+				console.log("Game Win! Total enemies killed is above max!");
+				disableFlymanGenerator();
+				disableCrosshairMovement(targetArea);
+				showGameSummary(true);
+				disableGameOverCheckTimer();
+
+				removeAllCharacters(targetArea);
+
+				return;
+			};
+
+			if(isTotalOnScreenCountAboveMax(20)){
+				console.log("Game Loss! Total on screen enemies is above max!");
+				disableFlymanGenerator();
+				disableCrosshairMovement(targetArea);
+				showGameSummary(false);
+				disableGameOverCheckTimer();
+				removeAllCharacters(targetArea);
+
+				return;
+			};
+
+
+		},500);
+
+		localStorage.setItem("checkGameOverConditionID",timerID);
+	}
+
+	var disableGameOverCheckTimer = function(){
+
+		var timerID_string = localStorage.getItem("checkGameOverConditionID");
+
+		if(timerID_string){
+			var timerID = parseInt(timerID_string);
+			clearInterval(timerID);
+		}
+	}
+
+
+
+
+
+	var showGameSummary = function(hasWon){
+
+		var gameSummary = $("<div></div>");
+
+		var title = $("<h1></h1>");
+
+		title.text(hasWon ? "Congratulations! You won!" : "Game Over! Enemies have taken over the screen!");
+
+		gameSummary.append(title);
+
+		var restartButton = $("<button>");
+
+		restartButton.text("Play again?");
+
+		restartButton.on("click",function(){
+			location.reload();
+		});
+
+
+		gameSummary.append(restartButton);
+
+		var styles = {
+			"position":"fixed",
+			"top":"10em",
+			"left":"10em",
+			"padding":"3em",
+			"background-color": "#baeff5",
+			"border-color": "black",
+			"border-style":"ridge",
+			"border-width": "10px",
+			"font-family": "'Righteous', cursive",
+			"text-align":"center"
+		}
+
+
+		var backHomeButton = $("<button>");
+
+		backHomeButton.text("Home");
+
+		var styles2 = {
+			"margin-left":"5px"
+		}
+
+		backHomeButton.css(styles2);
+
+		backHomeButton.attr("id","back-home-button");
+
+		backHomeButton.on("click",function(){
+			window.location.href = "./index.html";
+		});
+
+		gameSummary.append(backHomeButton);
+
+		gameSummary.css(styles);
+
+		$("body").append(gameSummary);
+	}
+
+
+	/** Clear all the timer IDs from local storage both at the start of the game and at the end **/
+
+	var clearTimerIDs = function(){
+
+	}
+
+
+
+
+	clearAllGameKeysFromLocalStorage();
+
+	initializeLocalStorage();
 
 	presentIntroScreen(targetArea, function(){
 
 		appendCloudGroup(targetArea, 5);
 
 		
-		initializeLocalStorage();
-
 		var randomPositions = getRandomPositionsFromLocalStorage();
 		for(var index in randomPositions){
 			console.log(randomPositions[index]);
@@ -1304,9 +1650,9 @@ var explodeElement = function(element,isRemoved = false){
 
 		appendCrosshair(targetArea);
 
-		appendCharacterAtRandomPosition(targetArea,"flyman");
+		startFlymanGenerator(5000);
 
-
+		checkForGameWinLossConditions(targetArea);
 	});
 
 });
