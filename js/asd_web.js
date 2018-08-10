@@ -143,7 +143,24 @@ var initializeHUD = function(maxSpikeBall,maxEvilSun,maxEvilCloud,maxFlyMan){
 
 $(document).ready(function(){
 
+
+	/** CONSTANTS **/
+
+	//Local Storage Keys
+
+	var GAME_WIN_LOSS_CHECK_KEY = "gameWinLossCheckKey";
+	var FLYMAN_GENERATOR_KEY = "flymanGeneratorKey";
+	var RANDOM_CHARACTER_GENERATOR_KEY = "randomCharacterGeneratorKey";
+
+	var TARGETED_CHARACTER_IDS = [];
+
 	var targetArea = $("#target-area");
+	var TARGET_AREA = $("#target-area");
+
+	var getAllLocalStorageKeys = function(){
+
+		return[GAME_WIN_LOSS_CHECK_KEY,FLYMAN_GENERATOR_KEY];
+	}
 
 
 	var createIntroScreenTitle = function(titleText){
@@ -367,13 +384,7 @@ $(document).ready(function(){
 	}
 
 
-	var clearAllGameKeysFromLocalStorage = function(){
-		for(var positionKey in localStorage){
-			if(localStorage.hasOwnProperty(positionKey)){
-				delete localStorage[positionKey];
-			}
-		}
-	}
+
 
 	var getRandomPositionsFromLocalStorage = function(){
 
@@ -738,12 +749,23 @@ $(document).ready(function(){
 
 		},300);
 
-		localStorage.setItem("characterMovement"+"-"+character.attr("id"),"characterMovementID");
+		localStorage.setItem("characterMovement"+"-"+character.attr("id"),characterMovementID);
 
 	}
 
-	var stopCharacterMovement = function(character){
+
+
+	var stopCharacterMovementAnimation = function(character){
 		//TODO: not yet implemented
+		var characterID = character.attr("id");
+		var key = "characterMovement-" + characterID;
+
+		var characterMovementID_string = localStorage.getItem(key);
+
+		if(characterMovementID_string){
+			var characterMovementID = parseInt(characterMovementID_string);
+			clearInterval(characterMovementID);		
+		}
 	}
 
 	var stopAllCharacterMovement = function(){
@@ -780,7 +802,6 @@ $(document).ready(function(){
 
 
 
-	var TARGETED_CHARACTER_IDS = [];
 
 
 	var getCharacterFromID = function(characterID){
@@ -869,6 +890,21 @@ $(document).ready(function(){
 		}
 	}
 
+
+	var destroyCharacter = function(character){
+
+		if(character.hasClass("character")){
+			explodeElement(character);
+
+			updateCharacterKillCount_v2(character);
+
+			decrementOnScreenCharacterCount(character);
+
+			character.removeClass("character");
+		}
+
+	}
+
 	var appendCrosshair = function(targetArea){
 
 
@@ -896,16 +932,7 @@ $(document).ready(function(){
 
 					var character = getCharacterFromID(characterID);
 
-					if(character.attr("explosionAnimationID")){
-						console.log("Explosion animation underway...");
-					} else {
-						explodeElement(character);
-					}
-				
-
-
-					
-
+					destroyCharacter(character);
 
 
 				});
@@ -1091,14 +1118,10 @@ var explodeElement = function(element,isRemoved = true){
 			return;
 		}
 
-		// if(element.attr("explosionAnimationID")){
-		// 	element.remove();
-		// 	return;
-		// }
-
-
-		updateCharacterKillCount_v2(element);
-		decrementOnScreenCharacterCount(element);
+		/** If the explosionAnimationID has already been set, the character is already in the process of exploding **/
+		if(element.attr("explosionAnimationID")){
+		 	return;
+		 }
 
 		if(element.attr('textureAnimationID')){
 			var textureAnimationID = element.attr('textureAnimationID');
@@ -1148,7 +1171,7 @@ var explodeElement = function(element,isRemoved = true){
 		storeAnimationIntervalTimerID(explosionAnimationID);
 
 
-		element.attr("animation-explosionAnimationID",explosionAnimationID);
+		element.attr("explosionAnimationID",explosionAnimationID);
 
 
 	}
@@ -1390,21 +1413,10 @@ var explodeElement = function(element,isRemoved = true){
 
 		}, timeInterval);
 
-		localStorage.setItem("flymanGeneratorID",timerID);
+		localStorage.setItem(FLYMAN_GENERATOR_KEY,timerID);
 	}
 
-	var disableFlymanGenerator = function(){
-
-
-		var idString = localStorage.getItem("flymanGeneratorID");
-
-		if(idString){
-
-			var flymanGeneratorID = parseInt(idString);
-
-			clearInterval(flymanGeneratorID);
-		}
-	}
+	
 
 
 	var startRandomCharacterGenerator = function(targetArea,timeInterval){
@@ -1416,7 +1428,13 @@ var explodeElement = function(element,isRemoved = true){
 			appendCharacterAtRandomPosition(targetArea,characterName);
 
 		}, timeInterval);
+
+
+		localStorage.setItem(RANDOM_CHARACTER_GENERATOR_KEY,timerID);
+
 	}
+
+
 
 	var appendCharacterAtRandomPosition = function(targetArea,characterName){
 
@@ -1576,17 +1594,7 @@ var explodeElement = function(element,isRemoved = true){
 
 		},500);
 
-		localStorage.setItem("checkGameOverConditionID",timerID);
-	}
-
-	var disableGameOverCheckTimer = function(){
-
-		var timerID_string = localStorage.getItem("checkGameOverConditionID");
-
-		if(timerID_string){
-			var timerID = parseInt(timerID_string);
-			clearInterval(timerID);
-		}
+		localStorage.setItem(GAME_WIN_LOSS_CHECK_KEY,timerID);
 	}
 
 
@@ -1652,36 +1660,99 @@ var explodeElement = function(element,isRemoved = true){
 	}
 
 
-	/** Clear all the timer IDs from local storage both at the start of the game and at the end **/
+	/** CLEAN-UP FUNCTIONS
+
+	Clear all the timer IDs from local storage both at the start of the game and at the end **/
+
+	/**All timers should be cleared from local storage upon completion, including:
+
+		- Character generator/spawning timers
+		- Character animation timers
+		- Collision checking timers
+		- Game win/loss conditino evaluation timers
+
+	**/
+
+
+	var clearAllGameKeysFromLocalStorage = function(){
+		for(var positionKey in localStorage){
+			if(localStorage.hasOwnProperty(positionKey)){
+				delete localStorage[positionKey];
+			}
+		}
+	}
+
 
 	var clearTimerIDs = function(){
+		$.each(getAllLocalStorageKeys(),function(index,key){
 
+			var storedTimerID_string = localStorage.getItem(key);
+
+			if(storedTimerID_string){
+				var storedTimerID = parseInt(storedTimerID_string);
+				clearInterval(storedTimerID);
+			}
+		});
+	}
+
+	var disableGameOverCheckTimer = function(){
+
+		var timerID_string = localStorage.getItem(GAME_WIN_LOSS_CHECK_KEY);
+
+		if(timerID_string){
+			var timerID = parseInt(timerID_string);
+			clearInterval(timerID);
+		}
+	}
+
+	var disableFlymanGenerator = function(){
+
+
+		var idString = localStorage.getItem(FLYMAN_GENERATOR_KEY);
+
+		if(idString){
+
+			var flymanGeneratorID = parseInt(idString);
+
+			clearInterval(flymanGeneratorID);
+		}
+	}
+
+
+		var disableRandomCharacterGenerator = function(){
+
+		var timerID_string = localStorage.getItem(RANDOM_CHARACTER_GENERATOR_KEY);
+
+		if(timerID_string){
+			var timer_ID = parseInt(timerID_string);
+			clearInterval(timer_ID);
+		}
 	}
 
 
 
 
-	clearAllGameKeysFromLocalStorage();
+	var startGame = function(){
+		clearAllGameKeysFromLocalStorage();
 
-	initializeLocalStorage();
+		initializeLocalStorage();
 
-	presentIntroScreen(targetArea, function(){
+		presentIntroScreen(targetArea, function(){
 
-		appendCloudGroup(targetArea, 5);
+			appendCloudGroup(targetArea, 5);
 
-		
-		var randomPositions = getRandomPositionsFromLocalStorage();
-		for(var index in randomPositions){
-			console.log(randomPositions[index]);
-		}
+	
+			registerProgressModalHandler();
 
-		registerProgressModalHandler();
+			appendCrosshair(targetArea);
 
-		appendCrosshair(targetArea);
+			startFlymanGenerator(2000);
 
-		startFlymanGenerator(5000);
+			checkForGameWinLossConditions(targetArea);
+		});
+	}
 
-		checkForGameWinLossConditions(targetArea);
-	});
+	startGame();
+	
 
 });
