@@ -847,6 +847,28 @@ $(document).ready(function(){
 	}
 
 
+	var decrementOnScreenCharacterCount = function(character){
+		if(character.hasClass("flyman")){
+
+				updateOnScreenCharacterCount("flyman",-1);
+
+		} else if(character.hasClass("spikeball")){
+
+				updateOnScreenCharacterCount("spikeball",-1);
+
+
+		} else if(character.hasClass("evilsun")){
+
+				updateOnScreenCharacterCount("evilsun",-1);
+
+
+		} else if(character.hasClass("evilcloud")){
+
+				updateOnScreenCharacterCount("evilcloud",-1);
+
+		}
+	}
+
 	var appendCrosshair = function(targetArea){
 
 
@@ -873,28 +895,16 @@ $(document).ready(function(){
 					console.log("Character destroyed");
 
 					var character = getCharacterFromID(characterID);
-					updateCharacterKillCount_v2(character);
-					explodeElement(character);
 
-					if(character.hasClass("flyman")){
-
-						updateOnScreenCharacterCount("flyman",-1);
-
-					} else if(character.hasClass("spikeball")){
-
-							updateOnScreenCharacterCount("spikeball",-1);
-
-
-					} else if(character.hasClass("evilsun")){
-
-							updateOnScreenCharacterCount("evilsun",-1);
-
-
-					} else if(character.hasClass("evilcloud")){
-
-						updateOnScreenCharacterCount("evilcloud",-1);
-
+					if(character.attr("explosionAnimationID")){
+						console.log("Explosion animation underway...");
+					} else {
+						explodeElement(character);
 					}
+				
+
+
+					
 
 
 
@@ -1060,6 +1070,20 @@ var constructImagePath = function(basePath,imageName,imageExtension){
 
 	
 
+var removeCharacterClasses = function(element){
+
+	var allCharacterNames = ["flyman","spikeball","evilsun","evilcloud"];
+
+	element.removeClass("character");
+
+	$.each(function(index,characterName){
+		if(element.hasClass(characterName)){
+			element.removeClass(characterName);
+		}
+	});
+
+}
+
 var explodeElement = function(element,isRemoved = true){
 
 		if(!element.is("img")){
@@ -1067,14 +1091,19 @@ var explodeElement = function(element,isRemoved = true){
 			return;
 		}
 
-		if(element.attr("explosionAnimationID")){
-			element.remove();
-			return;
-		}
+		// if(element.attr("explosionAnimationID")){
+		// 	element.remove();
+		// 	return;
+		// }
+
+
+		updateCharacterKillCount_v2(element);
+		decrementOnScreenCharacterCount(element);
 
 		if(element.attr('textureAnimationID')){
 			var textureAnimationID = element.attr('textureAnimationID');
 			clearInterval(textureAnimationID);
+
 		}
 
 		var basePath = "./img/explosion/";
