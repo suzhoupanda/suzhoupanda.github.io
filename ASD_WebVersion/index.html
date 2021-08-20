@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+
+<meta http-equiv = "Content-type" content = "text/html; charset = utf-8"> <title>Sample HTML5 File</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Bangers&family=Press+Start+2P&family=Sigmar+One&display=swap" rel="stylesheet">
+
+<style>
+
+/*
+
+font-family: 'Bangers', cursive;
+font-family: 'Press Start 2P', cursive;
+font-family: 'Sigmar One', cursive;
+
+*/
+
+	#game-container{
+		width:  90%;
+		height:  40em;
+		margin:  0 auto;
+		background-color: dodgerblue;
+		border:  black 2px solid;
+		font-family: 'Press Start 2P', cursive;
+
+	}
+
+</style>
+
+
+
+
+<script type = "text/javascript" charset = "utf-8">
+
+	var GAME_HAS_STARTED = false;
+
+            // This function will be called once the page loads completely
+
+
+  
+  //three JS files that need to be loaded one after the other
+  var libs = [
+    'js/uigenerator.js',
+    'js/animation.js',
+    'js/gamesettings.js',
+    'js/global_constants.js',
+    'js/sprite.js',
+    'js/player.js',
+    'js/alien.js',
+    'js/wingman.js',
+    'js/evilsun.js',
+    'js/evilcloud.js',
+    'js/hud.js',
+    'js/spritegenerator.js',
+    'js/aliengenerator.js',
+    'js/wingmangenerator.js',
+    'js/evilsungenerator.js',
+    'js/evilcloudgenerator.js',
+    'js/inputhelper.js',
+    'js/levelconfiguration.js',
+    'js/levelloader.js',
+    'js/game.js'
+  ];
+  
+  var injectLibFromStack = function(){
+      if(libs.length > 0){
+        
+        //grab the next item on the stack
+        var nextLib = libs.shift();
+        var headTag = document.getElementsByTagName('head')[0];
+        
+        //create a script tag with this library
+        var scriptTag = document.createElement('script');
+        scriptTag.src = nextLib;
+        
+        //when successful, inject the next script
+        scriptTag.onload = function(e){
+          console.log("---> loaded: " + e.target.src);
+          injectLibFromStack();
+        };    
+        
+        //append the script tag to the <head></head>
+        headTag.appendChild(scriptTag);
+        console.log("injecting: " + nextLib);
+      }
+      else return;
+  }
+  
+
+
+
+
+        </script>
+    </head>
+    <body onload = "injectLibFromStack();">
+
+    	<a href="#" id="startButton">
+    		Start Game
+    	</a>
+
+    	<div id="game-container">
+
+    	</div>
+
+
+    	<script type="text/javascript">
+    		
+            function startGame(){
+            	if(!GAME_HAS_STARTED){
+
+				var gameContainer = document.getElementById("game-container");
+
+				//Declare the global game settings as a constant
+				var game = new Game(gameContainer);
+
+
+				game.startGame();
+
+				GAME_HAS_STARTED = true;
+            	}
+
+			}
+
+			var startButton = document.getElementById("startButton");
+			startButton.addEventListener("click", startGame);
+    	</script>
+    </body>
+
+
+</html>
